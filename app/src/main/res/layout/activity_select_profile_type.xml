@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/background_theme">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_20sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="@dimen/_27sdp"
+                android:layout_height="@dimen/_27sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:visibility="gone"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/back_icon">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/img_intro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_below="@+id/img_back"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/_65sdp"
+                android:layout_marginTop="@dimen/_100sdp"
+                android:src="@drawable/intor4" />
+
+            <TextView
+                android:id="@+id/welcome_bac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_intro"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/paytoneone_regular"
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_55sdp"
+                android:gravity="center_horizontal|top"
+                android:text="@string/i_am_a"
+                android:textAppearance="@style/i_am_a" />
+
+
+
+            <FrameLayout
+                android:id="@+id/fl_player"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/welcome_bac"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_25sdp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:src="@drawable/button_bg_bottom" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:visibility="visible"
+                    android:background="@drawable/button_bg" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/paytoneone_regular"
+                    android:text="@string/player"
+                    android:textAppearance="@style/player" />
+
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_coach"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/fl_player"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:src="@drawable/button_bg_bottom" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:visibility="visible"
+                    android:background="@drawable/button_bg" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/paytoneone_regular"
+                    android:text="@string/coach"
+                    android:textAppearance="@style/coach" />
+
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_academy"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/fl_coach"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:id="@+id/vector1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:src="@drawable/button_bg_bottom" />
+
+                <ImageView
+                    android:id="@+id/vector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:visibility="visible"
+                    android:background="@drawable/button_bg" />
+
+
+
+                <TextView
+                    android:id="@+id/get_started"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/paytoneone_regular"
+                    android:text="@string/academy"
+                    android:textAppearance="@style/academy" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

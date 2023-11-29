@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context=".Activity.SavedPostActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+        android:id="@+id/savedPostRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/white"
+        android:divider="@color/gray"
+        android:dividerHeight="@dimen/_3sdp"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <TextView
+        android:id="@+id/tvNotFoundSavedPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fitsSystemWindows="true"
+        android:fontFamily="@font/opensans_semibold"
+        android:gravity="center"
+        android:text="@string/notfound"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+</RelativeLayout>

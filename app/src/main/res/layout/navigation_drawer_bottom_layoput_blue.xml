@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blue_intro_color">
+
+
+    <TextView
+        android:id="@+id/about_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/about_us"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:textAppearance="@style/about_us"
+        android:fontFamily="@font/opensans_semibold"
+        android:lineSpacingExtra="-7sp"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/partner_wit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/partner_wit"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:textAppearance="@style/partner_wit"
+        android:lineSpacingExtra="-7sp"
+        android:fontFamily="@font/opensans_semibold"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/campus_amba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="@string/campus_amba"
+        android:textAppearance="@style/campus_amba"
+        android:lineSpacingExtra="-7sp"
+        android:fontFamily="@font/opensans_semibold"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/blog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="@string/blog"
+        android:textAppearance="@style/blog"
+        android:lineSpacingExtra="-7sp"
+        android:fontFamily="@font/opensans_semibold"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/careers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/careers"
+        android:textAppearance="@style/careers"
+        android:lineSpacingExtra="-7sp"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/faqs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/faqs"
+        android:textAppearance="@style/faqs"
+        android:lineSpacingExtra="-7sp"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/media_relea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/media_relea"
+        android:textAppearance="@style/media_relea"
+        android:lineSpacingExtra="-7sp"
+        android:gravity="center_horizontal|top"
+        />
+
+    <TextView
+        android:id="@+id/notice_boar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/notice_boar"
+        android:textAppearance="@style/notice_boar"
+        android:lineSpacingExtra="-7sp"
+        android:gravity="center_horizontal|top"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_20sdp">
+        <TextView
+            android:id="@+id/user_agreem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_agreem"
+            android:fontFamily="@font/opensans_regular"
+            android:textAppearance="@style/user_agreem"
+            android:lineSpacingExtra="@dimen/_10sdp"
+            android:gravity="top"
+            />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:background="@drawable/line_vertical"
+            />
+
+        <TextView
+            android:id="@+id/terms_of_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/terms_of_us"
+            android:fontFamily="@font/opensans_regular"
+            android:textAppearance="@style/terms_of_us"
+            android:lineSpacingExtra="@dimen/_10sdp"
+            android:gravity="top"
+            />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:background="@drawable/line_vertical"
+            />
+
+        <TextView
+            android:id="@+id/privacy_pol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/privacy_pol"
+            android:fontFamily="@font/opensans_regular"
+            android:textAppearance="@style/privacy_pol"
+            android:lineSpacingExtra="@dimen/_10sdp"
+            android:gravity="center_horizontal|top"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_20sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:src="@drawable/facebook_navigation_drawer"/>
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@drawable/insta_navigation_drawer"/>
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@drawable/youtube_navigation_drawer"/>
+        <ImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@drawable/linkedin_navigation_drawer"/>
+
+    </LinearLayout>
+
+</LinearLayout>

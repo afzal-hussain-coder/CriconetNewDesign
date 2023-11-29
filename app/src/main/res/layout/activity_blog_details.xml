@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    tools:context=".Activity.BlogDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBlogDetailsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Lorem Ipsum do Rit Lam Maginu Splee Rit Lam Ipsum"
+                android:textAppearance="@style/blog_details_title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/indian_team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transparent_retangle_shape_with_corner"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Samantha Lisker"
+                    android:textColor="@color/purple_700" />
+
+                <TextView
+                    android:id="@+id/tvBlogTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:background="@drawable/transparent_retangle_shape_with_corner"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="26 min read"
+                    android:textColor="@color/purple_700" />
+
+            </LinearLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_160sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/myblogimage"
+                app:riv_corner_radius="@dimen/_7sdp">
+
+            </com.makeramen.roundedimageview.RoundedImageView>
+
+            <TextView
+                android:id="@+id/tvBlogDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet oy lacus a ipsum. Lorem ipsum dolor sit amet, consecte ascing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in irdiet odio lacus a ipsum. "
+                android:textAppearance="@style/details_text" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+                <TextView
+                    android:id="@+id/tvCommentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/opensans_bold"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:drawableEnd="@drawable/arrow_circle_down_black_24dp"
+                    android:text="10 Comments"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/blue_intro_color"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/facebook_navigation_drawer"/>
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/insta_navigation_drawer"/>
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/youtube_navigation_drawer"/>
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:src="@drawable/linkedin_navigation_drawer"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvBlogComments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leave_a_comment"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/blue_intro_color"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:textSize="@dimen/_10sdp">
+
+            </TextView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/messageTextInputLayout"
+                style="@style/OutlinedRoundBoxFilledMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:hint="@string/type_your_me"
+                android:textAppearance="@style/type_your_m"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/blue_intro_color"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/ErrorTextAppearance"
+                app:hintTextAppearance="@style/HintTextAppearance"
+                app:hintTextColor="@color/blue_intro_color">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/messageTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="top"
+                    android:cursorVisible="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/blue_intro_color"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameTextInputLayout"
+                style="@style/OutlinedRoundBoxFilledMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:hint="@string/name_star"
+                android:textAppearance="@style/type_your_m"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/blue_intro_color"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/ErrorTextAppearance"
+                app:hintTextAppearance="@style/HintTextAppearance"
+                app:hintTextColor="@color/blue_intro_color">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="top"
+                    android:cursorVisible="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/blue_intro_color"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextInputLayout"
+                style="@style/OutlinedRoundBoxFilledMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:hint="@string/email_"
+                android:textAppearance="@style/type_your_m"
+                android:textColorHint="@color/gray"
+                app:boxStrokeColor="@color/blue_intro_color"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/ErrorTextAppearance"
+                app:hintTextAppearance="@style/HintTextAppearance"
+                app:hintTextColor="@color/blue_intro_color">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="top"
+                    android:cursorVisible="true"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/blue_intro_color"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <FrameLayout
+                android:id="@+id/fl_submit"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/tv_forgot"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_40sdp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:id="@+id/vector1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:src="@drawable/button_bg_bottom" />
+
+                <ImageView
+                    android:id="@+id/vector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@drawable/button_bg"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/get_started"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:text="@string/submit"
+                    android:textAppearance="@style/login" />
+
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="purple_200">#800000</color>
+    <color name="purple_500">#800000</color>
+    <color name="purple_700">#800000</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+
+    <!--new design color-->
+    <color name="blue_intro_color">#0E2245</color>
+    <color name="indicator_selector">#E2D188</color>
+
+
+
+    <!--old app color-->
+    <color name="verified_user_color">#55ACEE</color>
+    <color name="liked_color">#DB7373</color>
+    <color name="disliked_color">#fc9b1b</color>
+    <color name="app_green">#8bbb51</color>
+    <color name="black_semi_transparent">#B1000000</color>
+    <color name="white_semi_transparent">#51000000</color>
+    <color name="gray">#D0D0D0</color>
+    <color name="grayLight">#D3D3D3</color>
+    <color name="bckground">#4a4a4a</color>
+    <color name="darkGray">#808080</color>
+    <color name="dimGray">#696969</color>
+
+    <color name="blue">#2778C9</color>
+
+<!--    <color name="textColorHighlight">#4DD81B60</color>-->
+<!--    <color name="purple">#673AB7</color>-->
+<!--    <color name="purpleAlpha15">#26673AB7</color>-->
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/gray</color>
+
+
+
+
+</resources>

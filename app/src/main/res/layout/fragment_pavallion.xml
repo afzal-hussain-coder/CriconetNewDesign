@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.PavilionFragment">
+
+    <include layout="@layout/toolbar_pavallion"
+        android:id="@+id/toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_add_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/white"
+        android:visibility="gone">
+        <View
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="#1A000000"/>
+
+        <LinearLayout
+            android:id="@+id/li_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/add_post_background_top"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/add_post_ball"/>
+            <EditText
+                android:id="@+id/up_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:background="@null"
+                android:padding="@dimen/_5sdp"
+                android:gravity="top|start"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular"
+                android:hint="@string/share_your_"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:textAppearance="@style/share_your_"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/li_edit"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_searchUser"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:scrollbars="vertical"
+                android:layout_height="@dimen/_100sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <View
+                android:id="@+id/v2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/li_edit"
+                android:background="#1A000000"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/li_mid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/li_search"
+            android:weightSum="3"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/add_post_background_left"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/add_post_photo_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/photos"
+                    android:textAppearance="@style/photos">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/add_post_background_mid"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_7sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/add_post_video_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/videos"
+                    android:textAppearance="@style/videos">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:background="@drawable/add_post_background_right"
+                android:orientation="horizontal">
+                <Spinner
+                    android:id="@+id/spn_privacy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:entries="@array/privacy2"
+                    android:theme="@style/spinnerPagee"
+                    android:backgroundTint="@color/purple_700"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_login"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_below="@id/li_mid"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:background="@drawable/button_bg_top" />
+
+            <ImageView
+                android:id="@+id/vector1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/button_bg_bottom" />
+
+            <ImageView
+                android:id="@+id/vector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:contentDescription="@string/app_name"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:visibility="visible"
+                android:background="@drawable/button_bg" />
+
+
+
+            <TextView
+                android:id="@+id/get_started"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineHeight="@dimen/_27sdp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/post"
+                android:textAppearance="@style/post"
+                tools:targetApi="p" />
+
+        </FrameLayout>
+
+        <View
+            android:id="@+id/v5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_below="@+id/fl_login"
+            android:background="@color/gray"/>
+
+
+    </RelativeLayout>
+
+    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+        android:id="@+id/post_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_add_post"
+        android:background="@color/white"
+        android:divider="@color/gray"
+        android:dividerHeight="@dimen/_3sdp"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <TextView
+        android:id="@+id/notfound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fitsSystemWindows="true"
+        android:fontFamily="@font/opensans_semibold"
+        android:gravity="center"
+        android:text="@string/notfound"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <include layout="@layout/nav_header_pavallion"
+        android:visibility="gone"/>
+
+</RelativeLayout>

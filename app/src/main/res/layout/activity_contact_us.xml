@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/blue_intro_color"
+    tools:context=".CommonUI.ContactUsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_160sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/contact_us_image"
+                    app:riv_corner_radius="@dimen/_5sdp">
+
+                </com.makeramen.roundedimageview.RoundedImageView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTextField_username"
+                    style="@style/OutlinedRoundBoxFilled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_social"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/full_name_"
+                    android:textAppearance="@style/full_name_"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutEmail"
+                    style="@style/OutlinedRoundBoxFilled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/email_"
+                    android:textAppearance="@style/email_"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailInputLayoutEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneInputLayoutEmail"
+                    style="@style/OutlinedRoundBoxFilled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_social"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/primary_pho"
+                    android:textAppearance="@style/primary_pho"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneInputLayoutEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/typeTextInputLayout"
+                    style="@style/OutlinedRoundBoxFilledSinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/type_of_boo"
+                    app:endIconTint="@color/white"
+                    android:textAppearance="@style/type_of_boo"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <AutoCompleteTextView
+                        android:theme="@style/ThemeOverlay.AppCompat"
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="none"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/white"
+                        tools:text="" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/subjectTextInputLayout"
+                    style="@style/OutlinedRoundBoxFilled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/subject_"
+                    android:textAppearance="@style/subject_"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/subjectTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/messageTextInputLayout"
+                    style="@style/OutlinedRoundBoxFilledMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:hint="@string/type_your_m"
+                    android:textAppearance="@style/type_your_m"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/messageTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/white"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <FrameLayout
+                    android:id="@+id/fl_submit"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_below="@id/tv_forgot"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_40sdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:id="@+id/vector1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:id="@+id/vector"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:id="@+id/get_started"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/submit"
+                        android:textAppearance="@style/login" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

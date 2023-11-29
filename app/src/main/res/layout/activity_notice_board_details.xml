@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".Activity.NoticeBoardDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNoticeBoardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_bold"
+                android:text="e-Coaching Update"
+                android:textAppearance="@style/blog_details_title" />
+            <TextView
+                android:id="@+id/tvNoticeBoardDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_10sdp"
+                android:text="Lorem Ipsum Fo Rit Mainun Lorem Ipsum Fo Rit"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp">
+                <TextView
+                    android:id="@+id/tvBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/blue_intro_color"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:text=" By: Lorem Ipsum, New Delhi"
+                    />
+                <TextView
+                    android:id="@+id/tvViewsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:textColor="@color/blue_intro_color"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:text="387k+ views"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_160sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/noticiimage"
+                app:riv_corner_radius="@dimen/_7sdp">
+
+            </com.makeramen.roundedimageview.RoundedImageView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvBowling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rIV_myBlog"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@drawable/transparent_retangle_shape_with_corner"
+                    android:gravity="center"
+                    android:text="Bowling"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_8sdp" />
+                <TextView
+                    android:id="@+id/tvBatting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rIV_myBlog"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@drawable/transparent_retangle_shape_with_corner"
+                    android:gravity="center"
+                    android:text="Bowling"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_8sdp"/>
+                <TextView
+                    android:id="@+id/tFielding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rIV_myBlog"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@drawable/transparent_retangle_shape_with_corner"
+                    android:gravity="center"
+                    android:text="Fielding"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_8sdp"
+                     />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBlogDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet oy lacus a ipsum. Lorem ipsum dolor sit amet, consecte ascing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in irdiet odio lacus a ipsum. "
+                android:textAppearance="@style/details_text" />
+
+
+            <TextView
+                android:id="@+id/indian_team"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rIV_myBlog"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@drawable/transparent_retangle_shape_with_corner"
+                android:gravity="center"
+                android:text="Indian Team"
+                android:textAppearance="@style/indian_team" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

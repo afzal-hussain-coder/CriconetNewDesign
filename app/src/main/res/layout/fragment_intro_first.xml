@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_intro"
+        android:layout_width="@dimen/_165sdp"
+        android:layout_height="@dimen/_212sdp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/_31sdp"
+        android:layout_marginTop="@dimen/_91sdp"
+        android:src="@drawable/inro1" />
+
+
+    <TextView
+        android:id="@+id/watch_learn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_intro"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/paytoneone_regular"
+        android:layout_marginLeft="@dimen/_21sdp"
+        android:layout_marginTop="@dimen/_55sdp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/watch_learn"
+        android:textAppearance="@style/watch_learn" />
+
+    <TextView
+        android:id="@+id/the_best_ha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/watch_learn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/_33sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="@dimen/_2sdp"
+        android:text="@string/the_best_ha"
+        android:textAppearance="@style/the_best_ha" />
+
+</RelativeLayout>

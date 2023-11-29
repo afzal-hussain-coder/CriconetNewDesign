@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">CriconetNewDesign</string>
+    <string name="watch_learn">Watch. Learn. Bond.</string>
+    <string name="the_best_ha">The best hangout for cricket lovers, right on your phone.</string>
+    <string name="enjoy_live_streaming">Enjoy Live Streaming</string>
+    <string name="live_streaming_intro">The stream your local and domestic leagues.club level tournaments live on Criconet.</string>
+    <string name="find_best_academies">Find Best Academies</string>
+    <string name="find_best_academies_into">Our academy-led hybrid coaching model connects local talents to the top cricket academies</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_bac">Welcome Back</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="e_mail_">E-mail</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="recover">Recover</string>
+    <string name="register">Register</string>
+    <string name="don_t_have_">Don\'t have an account?</string>
+    <string name="don_t_have_nRegister">Register</string>
+    <string name="by_proceedi">By proceeding, you agree to our Terms of Use and confirm you have read our Privacy and Cookie Statement.</string>
+    <string name="forget_password_intro">We need your registered e-mail address to send you a reset-password link.</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="resend_otp">Resend Code</string>
+    <string name="forgot_passwordd">Forgot Password</string>
+    <string name="start_your_">Start Your Journey</string>
+    <string name="name">Name</string>
+    <string name="name_star">Name*</string>
+    <string name="age">Age</string>
+    <string name="phone">Phone No</string>
+    <string name="gender_">Gender:</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="by_creating">By creating an account, I agree to your Terms &amp; Conditions</string>
+    <string name="already_hav">Already have an account?</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="submit">Submit</string>
+    <string name="i_am_a">I am a</string>
+    <string name="player">Player</string>
+    <string name="coach">Coach</string>
+    <string name="academy">Academy</string>
+    <string name="nimesh_shar">Nimesh Sharma</string>
+    <string name="xyz_academy">Visit Profile</string>
+    <string name="about_us">About Us</string>
+    <string name="partner_wit">Partner With Us</string>
+    <string name="campus_amba">Campus Ambassador</string>
+    <string name="blog">Blog</string>
+    <string name="careers">Careers</string>
+    <string name="faqs">FAQs</string>
+    <string name="media_relea">Media Release</string>
+    <string name="notice_boar">Notice Board</string>
+    <string name="user_agreem">User Agreement</string>
+    <string name="terms_of_us">Terms of Use</string>
+    <string name="privacy_pol">Privacy Policy</string>
+    <string name="super_6">Super 6</string>
+    <string name="teams">Teams</string>
+    <string name="albums">Albums</string>
+    <string name="my_blogs">My Blogs</string>
+    <string name="pages">Pages</string>
+    <string name="saved_posts">Saved Posts</string>
+    <string name="e_pavilion">e-Pavilion</string>
+    <string name="e_coaching">e-Coaching</string>
+    <string name="e_streaming">e-Streaming</string>
+    <string name="e_academy">e-Academy</string>
+    <string name="share_your_">Share Your Thoughts...</string>
+    <string name="photos">Photos</string>
+    <string name="videos">Videos</string>
+    <string-array name="privacy2" translatable="false">
+        <item>Everyone</item>
+        <item>Only me</item>
+        <item>Follower</item>
+        <item>Following</item>
+    </string-array>
+    <string name="post">Post</string>
+    <string name="book_a_coac">Book a coach</string>
+    <string name="booking_his">Booking history</string>
+    <string name="record_vide">Record video</string>
+    <string name="my_video_ga">My video gallery</string>
+    <string name="training_ti">Training tips</string>
+    <string name="view_live_m">View live matches</string>
+    <string name="view_archiv">View archives</string>
+    <string name="book_live_s">Book live streaming</string>
+    <string name="join_the_se">Join the Session</string>
+    <string name="upcoming_se">Upcoming Sessions</string>
+    <string name="past_sessio">Past Sessions</string>
+    <string name="manage_acad">Manage Academy</string>
+    <string name="manage_atte">Manage Attendance</string>
+    <string name="manage_stud">Manage Students</string>
+    <string name="manage_coac">Manage Coaches</string>
+    <string name="ground_owne">Ground Owner</string>
+    <string name="ambassador">Ambassador</string>
+    <string name="schedule_on">Schedule Online Session</string>
+
+    <!--old app version-->
+    <string name="notfound">Sorry  No Data found</string>
+    <string name="ok">OK</string>
+    <string name="video_uploding_please_wait">Do not press back or refresh the page. Kindly wait while we process your request.</string>
+    <string name="loading">Loading..</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="share_a_new_photo">Shared a new photo</string>
+    <string name="post_a_new_photo">Posted a new Photo</string>
+    <string name="post_a_new_video">Posted a new video</string>
+    <string name="likes">Like</string>
+    <string name="dislikes" translatable="false">Disliked</string>
+    <string name="comments">Comment</string>
+    <string name="commentss">Comments</string>
+    <string name="share">Share</string>
+    <string name="Liked">Liked</string>
+    <string name="Like">Like</string>
+    <string name="error_server">Error in server</string>
+    <string name="Enter_your_reason_to_report_this_post">Enter your reason to report this post?</string>
+    <string name="criconet">Criconet</string>
+    <string name="change_profile_pic">Changed their profile picture</string>
+    <string name="change_profile_picc">Changed their profile picture</string>
+    <string name="Shared_a_YouTube_Video">Shared a YouTube Video</string>
+    <string name="Shared_a_new_Link">Shared a new Link</string>
+    <string name="Shared_a_Message">Shared a Message</string>
+    <string name="Choose_Post_Photo">Choose Photo</string>
+    <string name="choose_post_video">Choose Video</string>
+    <string name="Post_reported_Successfully">Post reported Successfully.</string>
+    <string name="page_description">Page Description*</string>
+    <string name="page_descriptionn">Enter Post Description*</string>
+    <string name="Delete">Delete</string>
+    <string name="editpost">EditPost</string>
+    <string name="update">Update</string>
+    <string name="Are_you_sure_you_want_to_Report_this_feed">Are you sure you want to report this feed?</string>
+    <string name="enter_reason">Enter Reason</string>
+    <string name="report">Report</string>
+    <string name="find_the_an">Find the answers to all of our most frequently asked questions. If you have any questions, please</string>
+    <string name="contact_us_">contact us.</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="full_name_">Full Name*</string>
+    <string name="email_">Email*</string>
+    <string name="primary_pho">Primary Phone Number*</string>
+    <string name="subject_">Subject*</string>
+    <string name="type_your_m">Type your message here</string>
+    <string name="type_your_me">Type your message here*</string>
+    <string-array name="typeOfBooking">
+        <item>Ground Owner</item>
+        <item>Live Streaming</item>
+        <item>e-Coaching</item>
+        <item>Cricket Coach</item>
+        <item>Other</item>
+    </string-array>
+    <string name="type_of_boo">Type of booking*</string>
+    <string name="posted_by_a">Posted by</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="add">Add</string>
+    <string name="reply">Reply</string>
+
+</resources>
