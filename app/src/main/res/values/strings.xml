@@ -148,5 +148,24 @@
     <string name="leave_a_comment">Leave a comment</string>
     <string name="add">Add</string>
     <string name="reply">Reply</string>
+    <string name="view_details">View Details</string>
+    <string name="book_now">Book Now</string>
+    <string name="watch_tips">Watch Tips</string>
+    <string name="editReply">Edit reply</string>
+    <string name="deleteReply">Delete reply</string>
+    <string name="report_comment">Report comment</string>
+    <string name="share_via">Share via...</string>
+    <string name="coach_details">Coach Details</string>
+    <string name="book">Book</string>
+    <string name="booking_history">Booking History</string>
+    <string name="select_e_session_from_date">Select e-Session from Date</string>
+    <string name="Select_e_Session_to_Date">Select e-Session to Date</string>
+    <string name="chat">Chat</string>
+    <string name="join_session">Join Session</string>
+    <string name="filters">Filters</string>
+    <string name="cancel_booking">Cancel Booking</string>
+    <string name="book_another_session">Book Another Session</string>
+    <string name="booking_details">Booking Details</string>
+
 
 </resources>

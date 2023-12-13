@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    tools:context=".Activity.BlogDetailsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorEnabled="true"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="@dimen/_15sdp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="@dimen/_3sdp"
+        app:sliderIndicatorRadius="@dimen/_2sdp"
+        app:sliderIndicatorSelectedColor="@color/indicator_selector"
+        app:sliderIndicatorUnselectedColor="@color/purple_700"
+        app:sliderScrollTimeInSec="1" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/slider">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvBlogDetailsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_bold"
+                android:text="XYZ Cricket Academy"
+                android:textAppearance="@style/blog_details_title" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tilak_nagar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/blue_intro_color"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="23, Tilak Nagar, Delhi"
+                    />
+
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/vertical_line">
+
+                </View>
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:background="@drawable/vertical_line">
+
+                </View>
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:drawableLeft="@drawable/academy_call_image"
+                    android:textColor="@color/blue_intro_color"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="98976XXXXX"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:text="Batting"
+                    android:textColor="@color/purple_700" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:background="@drawable/chip_bg"
+                    android:text="Fielding"
+                    android:textColor="@color/purple_700" />
+                <TextView
+                    android:id="@+id/indian_team"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:background="@drawable/chip_bg"
+                    android:text="Bowling"
+                    android:textColor="@color/purple_700" />
+
+                <TextView
+                    android:id="@+id/tvBlogTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:backgroundTint="@color/purple_700"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:background="@drawable/chip_bg"
+                    android:text="Tactical"
+                    android:textColor="@color/purple_700" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/blue_intro_color"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"
+                    android:background="@color/purple_700">
+
+                </View>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Fees- 4,500 INR/ Month"
+                        />
+
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/vertical_line">
+
+                    </View>
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/vertical_line">
+
+                    </View>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Training Type- Group/ Personal"
+                        />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@color/purple_700">
+
+                </View>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_bold"
+                android:text="About"
+                android:textAppearance="@style/blog_details_title" />
+            <TextView
+                android:id="@+id/tvBlogDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet oy lacus a ipsum. Lorem ipsum dolor sit amet, consecte ascing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in irdiet odio lacus a ipsum. "
+                android:textAppearance="@style/details_text" />
+
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginTop="@dimen/_20sdp"
+               android:orientation="horizontal">
+               <FrameLayout
+                   android:id="@+id/fl_watchTips"
+                   android:layout_width="@dimen/_100sdp"
+                   android:layout_height="@dimen/_35sdp"
+                   android:layout_below="@id/tv_forgot"
+                   android:layout_gravity="center_horizontal">
+
+                   <ImageView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="@drawable/button_bg_top" />
+
+                   <ImageView
+                       android:id="@+id/vector1"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_marginTop="@dimen/_17sdp"
+                       android:src="@drawable/button_bg_bottom" />
+
+                   <ImageView
+                       android:id="@+id/vector"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_marginTop="@dimen/_2sdp"
+                       android:layout_marginBottom="@dimen/_2sdp"
+                       android:background="@drawable/button_bg"
+                       android:visibility="visible" />
+
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:layout_gravity="center"
+                       android:fontFamily="@font/opensans_semibold"
+                       android:lineHeight="@dimen/_27sdp"
+                       android:text="@string/watch_tips"
+                       android:textAppearance="@style/login" />
+
+               </FrameLayout>
+               <FrameLayout
+                   android:id="@+id/fl_submit"
+                   android:layout_width="@dimen/_100sdp"
+                   android:layout_height="@dimen/_35sdp"
+                   android:layout_below="@id/tv_forgot"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_marginStart="@dimen/_20sdp">
+
+                   <ImageView
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:background="@drawable/button_bg_top" />
+
+                   <ImageView
+                       android:id="@+id/vector2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_marginTop="@dimen/_17sdp"
+                       android:src="@drawable/button_bg_bottom" />
+
+                   <ImageView
+                       android:id="@+id/vector3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_marginTop="@dimen/_2sdp"
+                       android:layout_marginBottom="@dimen/_2sdp"
+                       android:background="@drawable/button_bg"
+                       android:visibility="visible" />
+
+
+                   <TextView
+                       android:id="@+id/get_started"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerInParent="true"
+                       android:layout_gravity="center"
+                       android:fontFamily="@font/opensans_semibold"
+                       android:lineHeight="@dimen/_27sdp"
+                       android:text="@string/book_now"
+                       android:textAppearance="@style/login" />
+
+               </FrameLayout>
+           </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/purple_700"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Social Media"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/facebook_navigation_drawer"
+                    app:tint="@color/purple_700" />
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    app:tint="@color/purple_700"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/insta_navigation_drawer"/>
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    app:tint="@color/purple_700"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/youtube_navigation_drawer"/>
+                <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    app:tint="@color/purple_700"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/linkedin_navigation_drawer"/>
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

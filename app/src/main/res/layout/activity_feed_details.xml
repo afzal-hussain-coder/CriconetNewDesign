@@ -673,8 +673,6 @@
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_comment"
@@ -792,9 +790,10 @@
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/rIVAttached"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:scaleType="fitXY"></com.makeramen.roundedimageview.RoundedImageView>
+                            android:scaleType="centerCrop"></com.makeramen.roundedimageview.RoundedImageView>
 
                         <ImageView
                             android:id="@+id/imgClose"

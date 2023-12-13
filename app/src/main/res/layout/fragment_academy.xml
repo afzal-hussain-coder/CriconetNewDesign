@@ -9,6 +9,15 @@
     <include layout="@layout/toolbar_academy"
         android:id="@+id/toolbar"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAcademy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_20sdp"
+        android:fadingEdge="vertical"
+        android:layout_below="@+id/toolbar">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <include layout="@layout/nav_header_acdemy"

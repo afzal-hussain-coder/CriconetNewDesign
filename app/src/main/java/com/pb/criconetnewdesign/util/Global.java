@@ -859,7 +859,7 @@ public class Global {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             date = formatter.parse(dateTime);
-            realdate = new SimpleDateFormat("dd-MM-yyyy").format(date);
+            realdate = new SimpleDateFormat("dd-MMM-yyyy").format(date);
 
         } catch (ParseException e) {
             e.printStackTrace();

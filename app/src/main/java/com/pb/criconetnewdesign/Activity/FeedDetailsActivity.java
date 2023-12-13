@@ -207,6 +207,16 @@ public class FeedDetailsActivity extends AppCompatActivity{
             activityFeedDetailsBinding.rlScroll.requestLayout();
         });
 
+        activityFeedDetailsBinding.tvPostBlue.setOnClickListener(v -> {
+            activityFeedDetailsBinding.flAttachedImage.setVisibility(GONE);
+            LinearLayout.LayoutParams layoutParams =
+                    new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+            activityFeedDetailsBinding.rlScroll.setLayoutParams(layoutParams);
+            activityFeedDetailsBinding.rlScroll.requestLayout();
+            image_uri=null;
+            activityFeedDetailsBinding.editComment.setText("");
+        });
+
         activityFeedDetailsBinding.imgAtTheRate.setOnClickListener(v -> {
             activityFeedDetailsBinding.rlMain.setVisibility(GONE);
             activityFeedDetailsBinding.rvSearchUser.setVisibility(VISIBLE);

@@ -106,8 +106,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     }
 
     private void BottomSheetDialog(){
-         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mContext);
-         bottomSheetDialog.setContentView(R.layout.bottom_setting_layout);
-         bottomSheetDialog.show();
+        final BottomSheetDialog dialog = new BottomSheetDialog(mContext,R.style.BottomSheetDialogTheme);
+        dialog.setContentView(R.layout.bottom_setting_layout);
+        dialog.show();
     }
 }

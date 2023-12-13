@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.model.pavilionModel.SearchUser;
 
@@ -64,6 +66,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.MyViewHolder
 //        holder.child_rv.setHasFixedSize(true);
 //        childAdapter.notifyDataSetChanged();
 
+        holder.ib_setting_reply.setOnClickListener(v -> {
+            BottomSheetDialog();
+        });
+
     }
 
     @Override
@@ -73,17 +79,25 @@ public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private CircleImageView iv_profile_image;
-        private TextView tv_name;
+        private TextView tv_replay;
+        private RecyclerView rv_replaycomment;
+        private ImageButton ib_setting_reply;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-//            this.iv_profile_image = itemView.findViewById(R.id.iv_profile_image);
-//            this.tv_name = itemView.findViewById(R.id.tv_name);
+            this.tv_replay = itemView.findViewById(R.id.tv_replay);
+            this.rv_replaycomment = itemView.findViewById(R.id.rv_replaycomment);
+            this.ib_setting_reply = itemView.findViewById(R.id.ib_setting_reply);
         }
     }
 
     public interface searchUserItemClick{
          public void getSearchUserName(String username);
+    }
+
+    private void BottomSheetDialog(){
+        final BottomSheetDialog dialog = new BottomSheetDialog(mContext,R.style.BottomSheetDialogTheme);
+        dialog.setContentView(R.layout.bottom_setting_layout);
+        dialog.show();
     }
 }

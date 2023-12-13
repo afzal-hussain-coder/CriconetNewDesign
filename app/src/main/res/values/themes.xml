@@ -17,6 +17,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+
     <style name="OutlinedRoundBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxBackgroundMode">outline</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/_50sdp</item>
@@ -74,5 +76,7 @@
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+
 
 </resources>
