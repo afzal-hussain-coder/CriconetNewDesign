@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,34 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.pb.criconetnewdesign.Fragment.AcademyFragment;
-import com.pb.criconetnewdesign.Fragment.CoachFragment;
+import com.pb.criconetnewdesign.Fragment.CoachFragments.CoachFragment;
 import com.pb.criconetnewdesign.Fragment.PavilionFragment;
 import com.pb.criconetnewdesign.Fragment.StreamingFragment;
 import com.pb.criconetnewdesign.R;
-import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
-import com.pb.criconetnewdesign.util.Global;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Context mContext;
     Activity mActivity;
-
-
     ImageView img_p,img_e,img_s,img_a;
     LinearLayout li_p,li_e,li_s,li_a;
     RelativeLayout li_mP,li_mE,li_mS,li_mA;

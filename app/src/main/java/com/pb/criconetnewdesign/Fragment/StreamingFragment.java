@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pb.criconetnewdesign.Activity.BlogActivity;
 import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
+import com.pb.criconetnewdesign.Activity.Streaming.BookLiveStreamingActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
@@ -89,11 +90,10 @@ public class StreamingFragment extends Fragment {
 
     private void drawerNavigation(RelativeLayout layout_nav){
 
-//        TextView book_a_coac = layout_nav.findViewById(R.id.book_a_coac);
-//        book_a_coac.setOnClickListener(v -> {
-//            layout_nav.startAnimation(animation);
-//            layout_nav.setVisibility(View.GONE);
-//        });
+        TextView book_live_s = layout_nav.findViewById(R.id.book_live_s);
+        book_live_s.setOnClickListener(v -> {
+           startActivity(new Intent(getActivity(), BookLiveStreamingActivity.class));
+        });
 //
 //        TextView my_blogs = layout_nav.findViewById(R.id.my_blogs);
 //        my_blogs.setOnClickListener(v -> {

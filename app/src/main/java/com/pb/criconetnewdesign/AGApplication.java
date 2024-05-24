@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 
 import com.danikula.videocache.HttpProxyCacheServer;
+import com.google.firebase.FirebaseApp;
 
 public class AGApplication extends Application {
     //...15-07-22 for Notification channel creation..
@@ -61,12 +62,13 @@ public class AGApplication extends Application {
         _Context=this;
         //createRtcEngine();
         //Timber.plant(new Timber.DebugTree());
-        proxy = new HttpProxyCacheServer(_Context);
+        //proxy = new HttpProxyCacheServer(_Context);
         //mChatManager = new ChatManager(this);
         //mChatManager.init();
         //mChatManager.enableOfflineMessage(true);
 
         //sAnalytics = GoogleAnalytics.getInstance(this);
+        FirebaseApp.initializeApp(this);
         createNotificationChannel();
 
     }

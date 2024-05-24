@@ -32,6 +32,10 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         holder.itemView.setOnClickListener(v -> {
             coachItemClickListener.viewDetails(position);
         });
+
+        holder.UserBookingListItemBinding.flSendFeedback.setOnClickListener(v -> {
+            coachItemClickListener.sendFeedback(position);
+        });
        // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
 //
 //        holder.UserBookingListItemBinding.getRoot().setOnClickListener(v -> coachItemClickListener.viewDetails(position));
@@ -62,5 +66,6 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         void viewDetails(int id);
         void bookCoach(int id);
         void shareCoach();
+        void sendFeedback(int id);
     }
 }

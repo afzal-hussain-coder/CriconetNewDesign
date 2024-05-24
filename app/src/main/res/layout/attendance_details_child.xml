@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-10dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp">
+
+        <TextView
+            android:id="@+id/tvStudentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Neil Seth"
+            android:textColor="@color/indicator_selector"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvStudentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Persant"
+            android:textColor="@color/indicator_selector"
+            android:textSize="@dimen/_12sdp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

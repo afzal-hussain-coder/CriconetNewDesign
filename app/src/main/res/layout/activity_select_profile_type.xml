@@ -136,6 +136,7 @@
                 android:layout_width="@dimen/_180sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_below="@id/fl_coach"
+                android:visibility="gone"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_15sdp">
 

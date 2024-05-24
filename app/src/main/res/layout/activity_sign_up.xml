@@ -51,42 +51,98 @@
                 android:weightSum="2">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/li_gmail_login"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/social_login_bg_rectangular"
+                    android:layout_below="@+id/welcome_bac"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/_7sdp"
-                    android:paddingBottom="@dimen/_7sdp">
+                    android:weightSum="2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal">
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/social_login_bg_rectangular"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_7sdp"
+                        android:paddingBottom="@dimen/_7sdp">
 
-                        <ImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/google_icon">
-
-                        </ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/_7sdp"
-                            android:fontFamily="@font/opensans_semibold"
-                            android:text="@string/login_with_google"
-                            android:textAppearance="@style/gmail_login" />
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/google_icon">
+
+                            </ImageView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="@string/login_with_google"
+                                android:textAppearance="@style/gmail_login" />
+                        </LinearLayout>
+
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/li_facebook"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/social_login_bg_rectangular"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_7sdp"
+                        android:paddingBottom="@dimen/_7sdp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/facebook_icon">
+
+                            </ImageView>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="@string/login_with_facebook"
+                                android:textAppearance="@style/facebook_login" />
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -95,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:background="@drawable/social_login_bg_rectangular"
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/_7sdp"
@@ -147,7 +204,7 @@
 
                 <!--this is the actual edit text which takes the input-->
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_username"
+                    android:id="@+id/edit_text_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -199,13 +256,13 @@
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
-                android:hint="@string/age"
+                android:hint="@string/date_of_bairth"
                 android:textAppearance="@style/password"
                 app:boxStrokeColor="@color/purple_500">
 
                 <!--this is the actual edit text which takes the input-->
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_age"
+                    android:id="@+id/edit_text_dob"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -213,6 +270,8 @@
                     android:gravity="center_vertical"
                     android:imeOptions="actionNext"
                     android:inputType="text"
+                    android:focusable="false"
+                    android:clickable="true"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -241,6 +300,35 @@
                     android:fontFamily="@font/opensans_regular"
                     android:gravity="center_vertical"
                     android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/filledTextField_referlCode"
+                style="@style/OutlinedRoundBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/filledTextField_phone"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:hint="@string/enter_referral_code"
+                android:textAppearance="@style/password"
+                app:boxStrokeColor="@color/purple_500">
+
+                <!--this is the actual edit text which takes the input-->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_referalCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@color/black"
@@ -252,7 +340,7 @@
                 android:id="@+id/rl_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/filledTextField_phone"
+                android:layout_below="@+id/filledTextField_referlCode"
                 android:layout_marginStart="@dimen/_45sdp"
                 android:layout_marginTop="@dimen/_9sdp"
                 android:layout_marginEnd="@dimen/_45sdp">
@@ -326,7 +414,7 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:button="@drawable/gender_selector_radio_bg"
-                            android:checked="true"
+                            android:checked="false"
                             android:gravity="center" />
                     </FrameLayout>
 
@@ -415,6 +503,7 @@
                 android:layout_below="@+id/filledTextField_conpassword">
 
                 <CheckBox
+                    android:id="@+id/cb_tearms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

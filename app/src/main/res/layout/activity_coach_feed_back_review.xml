@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Activity.Coach.CoachFeedBackReviewActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_review" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/review_header_bg"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:scaleType="fitXY"
+                    app:riv_corner_radius="@dimen/_5sdp"
+                    android:src="@drawable/coachpic" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_coachName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Nimesh Sharma "
+                        android:textColor="@color/indicator_selector"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_coachExp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="22 Yrs Experience"
+                        android:textColor="@color/indicator_selector"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_coachPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Price: 2,180 INR/ Session"
+                        android:textColor="@color/indicator_selector"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:theme="@style/RatingBar"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_30sdp">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCpp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="Cricket"
+                            android:textColor="@color/indicator_selector"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="@color/blue_intro_color"
+                            app:chipStrokeColor="@color/indicator_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipJava"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="India"
+                            android:textColor="@color/indicator_selector"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="@color/blue_intro_color"
+                            app:chipStrokeColor="@color/indicator_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipPython"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="Tag"
+                            android:textColor="@color/indicator_selector"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="@color/blue_intro_color"
+                            app:chipStrokeColor="@color/indicator_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/dear_studen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/dear_studen"
+                    android:textAppearance="@style/dear_studen"
+                    android:lineSpacingExtra="2sp"
+                    android:translationY="-0.75sp"
+                    android:gravity="top"
+                    />
+                <TextView
+                    android:id="@+id/please_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/please_rate"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textAppearance="@style/please_rate"
+                    android:lineSpacingExtra="2sp"
+                    android:translationY="-0.75sp"
+                    android:gravity="top"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tv_last_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_below="@+id/recycler_feedback"
+                    android:text="@string/submit_your_feedback"
+                    app:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_10sdp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/messageTextInputLayout"
+                    style="@style/OutlinedRoundBoxFilledMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/type_you_have_any_suggestions"
+                    android:textAppearance="@style/type_your_m"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/blue_intro_color"
+                    app:errorEnabled="false"
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/blue_intro_color">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/messageTextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:cursorVisible="true"
+                        android:imeOptions="actionNext"
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/blue_intro_color"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/fl_submit"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_below="@id/tv_forgot"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_40sdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:id="@+id/vector1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:id="@+id/vector"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:id="@+id/get_started"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/submit"
+                        android:textAppearance="@style/login" />
+
+                </FrameLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

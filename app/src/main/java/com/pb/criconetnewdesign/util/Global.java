@@ -2,6 +2,7 @@ package com.pb.criconetnewdesign.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +38,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -55,6 +57,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.pb.criconetnewdesign.AGApplication;
 import com.pb.criconetnewdesign.R;
+import com.pb.criconetnewdesign.model.AmbassadorModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +70,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -118,7 +122,7 @@ public class Global {
     public static final String PROFILE_COMPLETION = "get_profile_score";
 
 
-
+    public static final String REGISTER_API ="user_registration";
     public static final String GET_FEEDBACK_FORM = "get_cancel_feedback_form";
     public static final String CANCEL_BOOKING = "cancel_booking";
     public static final String GET_SPECIALITIES = "get_specialities_cat";
@@ -374,7 +378,7 @@ public class Global {
             alertbox.setPositiveButton(ac.getResources().getString(R.string.ok),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
-                            alertbox.show();
+                            arg0.dismiss();
                           // ac.finish();
 
                         }
@@ -1231,5 +1235,60 @@ public class Global {
         int heightDiff = rootView.getBottom() - r.bottom;
         return heightDiff > softKeyboardHeight * dm.density;
     }
+
+
+    public static String convertUTCDateToMM(String date_string) {
+        if (date_string.isEmpty()) {
+            return "";
+        }
+        //02 Jun 2021,01:20:00
+        //oldFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String dueDateAsNormal = "";
+        try {
+            SimpleDateFormat dateFormatprev = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = dateFormatprev.parse(date_string);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+            dueDateAsNormal = dateFormat.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("date", dueDateAsNormal);
+
+        return dueDateAsNormal;
+    }
+
+    public static ArrayList<AmbassadorModel> getAmbassadorList(){
+        ArrayList<AmbassadorModel> ambassadorModels1 = new ArrayList<>();
+        ambassadorModels1.add(new AmbassadorModel("One Free\n" +
+                "e-Coaching",R.drawable.online_free_e_coaching));
+        ambassadorModels1.add(new AmbassadorModel("T-shirt",R.drawable.tshirt));
+        ambassadorModels1.add(new AmbassadorModel("Water Bottle",R.drawable.bottale));
+        ambassadorModels1.add(new AmbassadorModel("Cricket Ball",R.drawable.cricket_ball));
+        ambassadorModels1.add(new AmbassadorModel("Cricket Pads",R.drawable.cricket_pad));
+        ambassadorModels1.add(new AmbassadorModel("Cricket Bat",R.drawable.cricket_bat));
+        ambassadorModels1.add(new AmbassadorModel("Amazon Gift\n" +
+                "Voucher",R.drawable.amazon_gift));
+        return ambassadorModels1;
+    }
+
+    public static ArrayList<String> getTakeAttendanceList(){
+        ArrayList<String> ambassadorModels1 = new ArrayList<>();
+        ambassadorModels1.add("Neil Seth");
+        ambassadorModels1.add("Akshay Mittal");
+        ambassadorModels1.add("Kumar");
+        ambassadorModels1.add("Manik Singh");
+        ambassadorModels1.add("Bedi Nayak");
+        ambassadorModels1.add("Sumit Singh");
+        ambassadorModels1.add("Neil Seth");
+        ambassadorModels1.add("Akshay Mittal");
+        ambassadorModels1.add("Kumar");
+        ambassadorModels1.add("Manik Singh");
+        ambassadorModels1.add("Bedi Nayak");
+        ambassadorModels1.add("Sumit Singh");
+
+        return ambassadorModels1;
+    }
+
+
 
 }

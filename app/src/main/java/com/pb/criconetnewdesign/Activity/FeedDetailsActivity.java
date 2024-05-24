@@ -197,7 +197,8 @@ public class FeedDetailsActivity extends AppCompatActivity{
         });
 
         activityFeedDetailsBinding.imgCamera.setOnClickListener(v -> {
-            startActivity(new Intent(mContext, CustomeCameraActivity.class));
+            startActivity(new Intent(mContext, CustomeCameraActivity.class)
+                    .putExtra("FROM","FeedDetailsActivity"));
         });
         activityFeedDetailsBinding.imgClose.setOnClickListener(v -> {
             activityFeedDetailsBinding.flAttachedImage.setVisibility(GONE);

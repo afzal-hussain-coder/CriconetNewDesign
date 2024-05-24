@@ -29,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="@dimen/_5sdp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/_5sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/close_black_24dp"
             app:tint="@color/white" />
@@ -114,7 +114,5 @@
 
 
     </LinearLayout>
-
-
 
 </RelativeLayout>

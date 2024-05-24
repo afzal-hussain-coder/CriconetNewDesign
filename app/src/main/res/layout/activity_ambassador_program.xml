@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".CommonUI.AmbassadorProgramActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/total_point"
+                        android:textColor="@color/blue_intro_color"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="@dimen/_15sdp"
+                        android:gravity="top"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="-280"
+                        android:textColor="@color/blue_intro_color"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="@dimen/_15sdp"
+                        android:gravity="top"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/fl_scoreboard"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="@dimen/_10sdp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_bg_top"
+                            android:contentDescription="@string/app_name" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_17sdp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/button_bg_bottom" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:background="@drawable/button_bg"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:lineHeight="@dimen/_27sdp"
+                            android:text="@string/scoreboard"
+                            android:textAppearance="@style/login"
+                            tools:targetApi="p" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/fl_viewForm"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/_10sdp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_bg_top"
+                            android:contentDescription="@string/app_name" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_17sdp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/button_bg_bottom" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:background="@drawable/button_bg"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:lineHeight="@dimen/_27sdp"
+                            android:text="@string/viewform"
+                            android:textAppearance="@style/login"
+                            tools:targetApi="p" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/blue_bg"
+                    android:backgroundTint="@color/blue_intro_color">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAmbassador"
+                        android:layout_width="match_parent"
+                        android:layout_margin="@dimen/_20sdp"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:background="@drawable/blue_bg"
+                    android:padding="@dimen/_10sdp"
+                    android:backgroundTint="@color/purple_700">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tvRefer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/refer_frien_newLine"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:visibility="visible"
+                            android:textColor="@color/indicator_selector"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="@dimen/_15sdp"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:src="@drawable/__illustration__earn_rewards_"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -27,6 +28,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.loader.content.CursorLoader;
@@ -49,12 +51,14 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.android.volley.DefaultRetryPolicy;
@@ -63,15 +67,21 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mancj.slideup.SlideUp;
 import com.pb.criconetnewdesign.Activity.BlogActivity;
+import com.pb.criconetnewdesign.Activity.Coach.RegisterAsACoachProfileActivity;
 import com.pb.criconetnewdesign.Activity.FeedDetailsActivity;
+import com.pb.criconetnewdesign.Activity.LoginActivity;
 import com.pb.criconetnewdesign.Activity.MyBlogsActivity;
 import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
 import com.pb.criconetnewdesign.Activity.SavedPostActivity;
+import com.pb.criconetnewdesign.Activity.User.UserProfileActivity;
+import com.pb.criconetnewdesign.CommonUI.AmbassadorProgramActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.PavilionAdapter.HomeAdapter;
@@ -105,6 +115,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -122,7 +133,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
     public ArrayList<NewPostModel> modelArrayList;
     private HomeAdapter adapter;
     private ImageView user_image, up_image;
-    private RelativeLayout add_photo, add_video, add_chat;
+    private RelativeLayout add_chat;
+    LinearLayout add_photo, add_video;
     private TextView notfound;
     private EditText up_text;
     private String feedText = "";
@@ -156,10 +168,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
     private SlideUp slideUp;
     private View dim, rootViewPost;
     private View slideView;
-    private TextView tv_camera;
-    private TextView tvGallery;
-    private TextView tvCancel;
-    private TextView tv_choose;
     private LinearLayout send_panel;
     private TextView tv_post;
     private ImageView img_addpost, img_close;
@@ -172,6 +180,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
     private String searchUsername = "";
     PageURL pageURL;
     String gameSettingsStataus = "";
+
+    ImageView iv_logout;
 
     public PavilionFragment() {
         // Required empty public constructor
@@ -211,22 +221,41 @@ public class PavilionFragment extends Fragment implements PostListeners {
             layout_nav.setVisibility(View.GONE);
         });
 
+        iv_logout = view.findViewById(R.id.iv_logout);
+        iv_logout.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+            alertDialog.setTitle("");
+            alertDialog.setMessage(getResources().getString(R.string.Do_you_really_want_to_logout));
+            alertDialog.setPositiveButton(getResources().getString(R.string.Yes),
+                    (dialog, which) -> {
+                        if (Global.isOnline(getActivity())) {
+                            logout();
+                        } else {
+                            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                        }
+                    });
+            alertDialog.setNegativeButton(getResources().getString(R.string.No),
+                    (dialog, which) -> {
+                    });
+            alertDialog.show();
+        });
+
         ImageView img_add_post = view.findViewById(R.id.img_add_post);
         ImageView img_close_post = view.findViewById(R.id.img_close_post);
-        RelativeLayout rl_add_post =view.findViewById(R.id.rl_add_post);
+        RelativeLayout rl_add_post = view.findViewById(R.id.rl_add_post);
 
         img_add_post.setOnClickListener(v -> {
             rl_add_post.startAnimation(animation_down);
             rl_add_post.setVisibility(View.VISIBLE);
 
-            new Handler().postDelayed(() -> img_close_post.setVisibility(View.VISIBLE),700);
-            new Handler().postDelayed(() -> img_add_post.setVisibility(View.GONE),300);
+            new Handler().postDelayed(() -> img_close_post.setVisibility(View.VISIBLE), 700);
+            new Handler().postDelayed(() -> img_add_post.setVisibility(View.GONE), 300);
 
 
         });
 
         img_close_post.setOnClickListener(v -> {
-            new Handler().postDelayed(() -> img_add_post.setVisibility(View.VISIBLE),600);
+            new Handler().postDelayed(() -> img_add_post.setVisibility(View.VISIBLE), 600);
             img_close_post.setVisibility(View.GONE);
             rl_add_post.startAnimation(animation_up);
             rl_add_post.setVisibility(View.GONE);
@@ -308,10 +337,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 //        rootViewPost = rootView.findViewById(R.id.root_view);
 //        slideView = rootView.findViewById(R.id.slideView);
 //        dim = rootView.findViewById(R.id.dim);
-//        tv_camera = rootView.findViewById(R.id.tv_camera);
-//        tvGallery = rootView.findViewById(R.id.tvGallery);
-//        tvCancel = rootView.findViewById(R.id.tvCancel);
-//        tv_choose = rootView.findViewById(R.id.tv_choose);
 //        send_panel = rootView.findViewById(R.id.send_panel);
 //        slideUp = new SlideUpBuilder(slideView)
 //                .withListeners(new SlideUp.Listener.Events() {
@@ -342,8 +367,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         post_list = rootView.findViewById(R.id.post_list);
 //        user_image = rootView.findViewById(R.id.user_image);
 //        up_image = rootView.findViewById(R.id.up_image);
-//        add_photo = rootView.findViewById(R.id.add_photo);
-//        add_video = rootView.findViewById(R.id.add_video);
+        add_photo = rootView.findViewById(R.id.add_photo);
+        add_video = rootView.findViewById(R.id.add_video);
 //        add_chat = rootView.findViewById(R.id.add_chat);
         notfound = rootView.findViewById(R.id.notfound);
         up_text = rootView.findViewById(R.id.up_text);
@@ -379,37 +404,37 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
 
                     String search = s.toString();
-                    String[] parts= null;
-                    String lastWord="";
+                    String[] parts = null;
+                    String lastWord = "";
 
 
-                    if(search.contains("\n")){
+                    if (search.contains("\n")) {
                         parts = search.split("\n");
-                    }else{
+                    } else {
                         parts = search.split(" ");
                     }
                     //Toaster.customToast(s.length()+"?"+s.toString()+"..."+parts.length);
 
-                    if(search.startsWith(" ")){
-                       lastWord = search;
-                    }else{
+                    if (search.startsWith(" ")) {
+                        lastWord = search;
+                    } else {
                         lastWord = parts[parts.length - 1];
                     }
 
-                //   lastWord = parts[parts.length - 1];
+                    //   lastWord = parts[parts.length - 1];
 //
-                    String finalWord = lastWord.substring(lastWord.lastIndexOf(" ")+1);
+                    String finalWord = lastWord.substring(lastWord.lastIndexOf(" ") + 1);
 
                     Toaster.customToast(finalWord);
 
-                   // Toaster.customToast(lastWordd);
+                    // Toaster.customToast(lastWordd);
 
                     if (finalWord.contains("@") && finalWord.length() > 3) {
 
                         Matcher matcher = Pattern.compile("@\\s*(\\w+)").matcher(finalWord);
 
                         while (matcher.find()) {
-                            if(searchUsername.isEmpty()){
+                            if (searchUsername.isEmpty()) {
                                 if (Global.isOnline(getActivity())) {
                                     getUserSearchList(matcher.group(1));
                                 } else {
@@ -456,7 +481,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     }
                 }
 
-                if(rv_searchUser.getVisibility() == View.VISIBLE){
+                if (rv_searchUser.getVisibility() == View.VISIBLE) {
                     rv_searchUser.setVisibility(View.GONE);
                 }
 //                Toast.makeText(getActivity(), postType, Toast.LENGTH_SHORT).show();
@@ -486,22 +511,24 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         });
 
-//        add_photo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                postType = POST_TYPE_IMAGE;
-//                selectImage();
-//
-//            }
-//        });
-//
-//        add_video.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                postType = POST_TYPE_VIDEO;
-//                selectVideo();
-//            }
-//        });
+        add_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postType = POST_TYPE_IMAGE;
+                openCameraAndGalleryDialog(postType);
+                //selectImage();
+
+            }
+        });
+
+        add_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postType = POST_TYPE_VIDEO;
+                openCameraAndGalleryDialog(postType);
+                // selectVideo();
+            }
+        });
 //
 //        privacy_setting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -539,11 +566,16 @@ public class PavilionFragment extends Fragment implements PostListeners {
 //            getProfileDetails();
     }
 
-    private void drawerNavigation(RelativeLayout layout_nav){
+    private void drawerNavigation(RelativeLayout layout_nav) {
+
+        TextView xyz_academy = layout_nav.findViewById(R.id.xyz_academy);
+        xyz_academy.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+        });
 
         TextView super_6 = layout_nav.findViewById(R.id.super_6);
         super_6.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("URL","Game"));
+            startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("URL", "Game"));
         });
 
         TextView my_blogs = layout_nav.findViewById(R.id.my_blogs);
@@ -556,22 +588,22 @@ public class PavilionFragment extends Fragment implements PostListeners {
             startActivity(new Intent(getActivity(), SavedPostActivity.class));
         });
 
-       TextView about_us= layout_nav.findViewById(R.id.about_us);
-       about_us.setOnClickListener(v -> {
-           try {
-               startActivity(new Intent(getActivity(), WebViewActivity.class)
-                       .putExtra("URL",pageURL.getAboutUs().getString("url"))
-                       .putExtra("title",pageURL.getAboutUs().getString("title")));
-           } catch (JSONException e) {
-               e.printStackTrace();
-           }
-       });
+        TextView about_us = layout_nav.findViewById(R.id.about_us);
+        about_us.setOnClickListener(v -> {
+            try {
+                startActivity(new Intent(getActivity(), WebViewActivity.class)
+                        .putExtra("URL", pageURL.getAboutUs().getString("url"))
+                        .putExtra("title", pageURL.getAboutUs().getString("title")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
         TextView partner_wit = layout_nav.findViewById(R.id.partner_wit);
         partner_wit.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getPartner().getString("url"))
-                        .putExtra("title",pageURL.getPartner().getString("title")));
+                        .putExtra("URL", pageURL.getPartner().getString("url"))
+                        .putExtra("title", pageURL.getPartner().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -579,18 +611,19 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         TextView campus_amba = layout_nav.findViewById(R.id.campus_amba);
         campus_amba.setOnClickListener(v -> {
-            try {
-                startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getCampus_ambassador().getString("url"))
-                        .putExtra("title",pageURL.getCampus_ambassador().getString("title")));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                startActivity(new Intent(getActivity(), WebViewActivity.class)
+//                        .putExtra("URL",pageURL.getCampus_ambassador().getString("url"))
+//                        .putExtra("title",pageURL.getCampus_ambassador().getString("title")));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+            startActivity(new Intent(getActivity(), AmbassadorProgramActivity.class));
         });
 
         TextView blog = layout_nav.findViewById(R.id.blog);
         blog.setOnClickListener(v -> {
-                startActivity(new Intent(getActivity(), BlogActivity.class));
+            startActivity(new Intent(getActivity(), BlogActivity.class));
 
         });
 
@@ -598,8 +631,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         careers.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getCarrer().getString("url"))
-                        .putExtra("title",pageURL.getCarrer().getString("title")));
+                        .putExtra("URL", pageURL.getCarrer().getString("url"))
+                        .putExtra("title", pageURL.getCarrer().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -609,8 +642,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         faqs.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getFaq().getString("url"))
-                        .putExtra("title",pageURL.getFaq().getString("title")));
+                        .putExtra("URL", pageURL.getFaq().getString("url"))
+                        .putExtra("title", pageURL.getFaq().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -620,8 +653,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         media_relea.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getMediaReleases().getString("url"))
-                        .putExtra("title",pageURL.getMediaReleases().getString("title")));
+                        .putExtra("URL", pageURL.getMediaReleases().getString("url"))
+                        .putExtra("title", pageURL.getMediaReleases().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -629,15 +662,15 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         TextView notice_boar = layout_nav.findViewById(R.id.notice_boar);
         notice_boar.setOnClickListener(v -> {
-                startActivity(new Intent(getActivity(), NoticeBoardActivity.class));
+            startActivity(new Intent(getActivity(), NoticeBoardActivity.class));
         });
 
         TextView user_agreem = layout_nav.findViewById(R.id.user_agreem);
         user_agreem.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getUserAggreement().getString("url"))
-                        .putExtra("title",pageURL.getUserAggreement().getString("title")));
+                        .putExtra("URL", pageURL.getUserAggreement().getString("url"))
+                        .putExtra("title", pageURL.getUserAggreement().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -647,8 +680,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         terms_of_us.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getTearms().getString("url"))
-                        .putExtra("title",pageURL.getTearms().getString("title")));
+                        .putExtra("URL", pageURL.getTearms().getString("url"))
+                        .putExtra("title", pageURL.getTearms().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -658,8 +691,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         privacy_pol.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getTearms().getString("url"))
-                        .putExtra("title",pageURL.getTearms().getString("title")));
+                        .putExtra("URL", pageURL.getTearms().getString("url"))
+                        .putExtra("title", pageURL.getTearms().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -735,13 +768,10 @@ public class PavilionFragment extends Fragment implements PostListeners {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<String, String>();
-                //            "user_id:1735
-                //            s:1
-                //            after_post_id:0"
-                param.put("user_id", "1387");
+                param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("after_post_id", after_post_id);
-                param.put("s", "d46e3041de65228dfe11f66de56f5f02c22e6cf639f96877e600810a3075ec1ddd53728122917009d19a006fd6d25d23c93d3bf4e48eb25f");
-                Log.e("Pavallion",param.toString());
+                param.put("s", SessionManager.get_session_id(prefs));
+                Log.e("Pavallion", param.toString());
                 return param;
             }
         };
@@ -847,7 +877,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 error.printStackTrace();
                 //Global.msgDialog((Activity) mActivity, "Error from server");
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
@@ -883,39 +913,39 @@ public class PavilionFragment extends Fragment implements PostListeners {
         }
     }
 
-    private void selectImage() {
-        slideUp.show();
-        tv_choose.setText(R.string.Choose_Post_Photo);
-        tv_camera.setOnClickListener(v -> {
-            slideUp.hide();
-            openCamera();
-        });
-        tvGallery.setOnClickListener(v -> {
-            slideUp.hide();
-            //multiGallery();
-        });
-        tvCancel.setOnClickListener(v -> {
-            postType = "";
-            slideUp.hide();
-        });
-    }
-
-    private void selectVideo() {
-        slideUp.show();
-        tv_choose.setText(R.string.choose_post_video);
-        tv_camera.setOnClickListener(v -> {
-            slideUp.hide();
-            openCameraVideo();
-        });
-        tvGallery.setOnClickListener(v -> {
-            slideUp.hide();
-            openGalleryVideo();
-        });
-        tvCancel.setOnClickListener(v -> {
-            postType = "";
-            slideUp.hide();
-        });
-    }
+//    private void selectImage() {
+//        slideUp.show();
+//        tv_choose.setText(R.string.Choose_Post_Photo);
+//        tv_camera.setOnClickListener(v -> {
+//            slideUp.hide();
+//            openCamera();
+//        });
+//        tvGallery.setOnClickListener(v -> {
+//            slideUp.hide();
+//            //multiGallery();
+//        });
+//        tvCancel.setOnClickListener(v -> {
+//            postType = "";
+//            slideUp.hide();
+//        });
+//    }
+//
+//    private void selectVideo() {
+//        slideUp.show();
+//        tv_choose.setText(R.string.choose_post_video);
+//        tv_camera.setOnClickListener(v -> {
+//            slideUp.hide();
+//            openCameraVideo();
+//        });
+//        tvGallery.setOnClickListener(v -> {
+//            slideUp.hide();
+//            openGalleryVideo();
+//        });
+//        tvCancel.setOnClickListener(v -> {
+//            postType = "";
+//            slideUp.hide();
+//        });
+//    }
 
     private void openCamera() {
 
@@ -1225,7 +1255,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("post_id", id);
 //                param.put("s", "1");
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1243,7 +1273,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "like_on_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Pavilion",String.valueOf(response));
+                Log.e("Pavilion", String.valueOf(response));
                 loaderView.hideLoader();
                 //progress.dismiss();
                 try {
@@ -1279,7 +1309,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("post_id", id);
 //                param.put("s", "1");
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1295,7 +1325,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "unlike_on_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Pavilion",String.valueOf(response));
+                Log.e("Pavilion", String.valueOf(response));
                 //progress.dismiss();
                 loaderView.hideLoader();
                 try {
@@ -1331,7 +1361,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("post_id", id);
 //                param.put("s", "1");
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1347,7 +1377,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "report_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Pavilion",String.valueOf(response));
+                Log.e("Pavilion", String.valueOf(response));
                 loaderView.hideLoader();
                 // progress.dismiss();
                 try {
@@ -1382,7 +1412,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("s", SessionManager.get_session_id(prefs));
                 param.put("post_id", id);
                 param.put("report_text", message);
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1399,7 +1429,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "fetch_url", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Pavilion",String.valueOf(response));
+                Log.e("Pavilion", String.valueOf(response));
                 //progress.dismiss();
                 loaderView.hideLoader();
                 try {
@@ -1424,7 +1454,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
 //                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("Pavilion",e.toString());
+                    Log.e("Pavilion", e.toString());
                 }
             }
         }, new Response.ErrorListener() {
@@ -1444,7 +1474,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("url", url);
 //                param.put("s", "1");
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1552,7 +1582,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                                 tv_post.setVisibility(View.GONE);
                                 img_close.setVisibility(View.GONE);
                                 img_addpost.setVisibility(View.VISIBLE);
-                                Log.e("Pavilion",response);
+                                Log.e("Pavilion", response);
                                 JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                                 if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
 //                            JSONArray array = jsonObject.getJSONArray("posts");
@@ -1659,7 +1689,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     @Override
     public void onCommentClickListener(NewPostModel post) {
-        Log.e("Pavilion",post.toString());
+        Log.e("Pavilion", post.toString());
         Intent intent = new Intent(getActivity(), FeedDetailsActivity.class);
         intent.putExtra("feed_id", post.getId());
         startActivity(intent);
@@ -1748,7 +1778,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
             loaderView.showLoader();
 
             MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            Log.e("Pavalion", entity.isChunked()+"");
+            Log.e("Pavalion", entity.isChunked() + "");
 //            entity.addPart("s", new StringBody("1"));
             entity.addPart("user_id", new StringBody(SessionManager.get_user_id(prefs)));
             entity.addPart("s", new StringBody(SessionManager.get_session_id(prefs)));
@@ -1825,7 +1855,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                                 tv_post.setVisibility(View.GONE);
                                 img_close.setVisibility(View.GONE);
                                 img_addpost.setVisibility(View.VISIBLE);
-                                Log.e("Pavilion",response);
+                                Log.e("Pavilion", response);
                                 JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                                 if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
 //                            JSONArray array = jsonObject.getJSONArray("posts");
@@ -1911,18 +1941,18 @@ public class PavilionFragment extends Fragment implements PostListeners {
                             rv_searchUser.setVisibility(View.VISIBLE);
                             rv_searchUser.setAdapter(new SearchUserAdapter(getActivity(), searchUserArrayList, username -> {
                                 searchUsername = "@" + username;
-                                if(up_text.getText().toString().trim().length()>0){
+                                if (up_text.getText().toString().trim().length() > 0) {
                                     rv_searchUser.setVisibility(View.GONE);
                                     Matcher matcher = Pattern.compile("@\\s*(\\w+)").matcher(up_text.getText().toString().trim());
-                                    String find="";
+                                    String find = "";
                                     while (matcher.find()) {
                                         find = matcher.group(1);
                                     }
 
                                     StringBuffer stringBuffer = new StringBuffer();
 
-                                    String newText ="";
-                                    newText = remove(up_text.getText().toString().trim(),"@"+find);
+                                    String newText = "";
+                                    newText = remove(up_text.getText().toString().trim(), "@" + find);
                                     stringBuffer.append(newText);
                                     stringBuffer.append(searchUsername);
 
@@ -1930,7 +1960,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
                                     up_text.setSelection(up_text.getText().toString().length());
 
-                                }else{
+                                } else {
                                     rv_searchUser.setVisibility(View.GONE);
                                     up_text.setText(searchUsername);
                                 }
@@ -1959,7 +1989,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("s", "d46e3041de65228dfe11f66de56f5f02c22e6cf639f96877e600810a3075ec1ddd53728122917009d19a006fd6d25d23c93d3bf4e48eb25f");
                 param.put("search_key", searchKey);
 
-                Log.e("Pavilion",param.toString());
+                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1969,9 +1999,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         queue.add(postRequest);
     }
 
-    public String remove(String str, String word)
-    {
-        String strNew = str.substring(0, str.length()-word.length());
+    public String remove(String str, String word) {
+        String strNew = str.substring(0, str.length() - word.length());
 
         System.out.print(strNew);
         return strNew;
@@ -1981,5 +2010,98 @@ public class PavilionFragment extends Fragment implements PostListeners {
     public void onStop() {
         super.onStop();
         post_list.stopVideos();
+    }
+
+    public void logout() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        final JSONObject json = new JSONObject();
+        try {
+            json.put("user_id", SessionManager.get_user_id(prefs));
+            json.put("s", SessionManager.get_session_id(prefs));
+            //Log.e(" data  : ", "" + json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        loaderView.showLoader();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, Global.URL + "logout", json,
+                response -> {
+                    Log.v("logout reponse", "" + response);
+//                        {"status":"Success"}
+                    loaderView.hideLoader();
+                    try {
+                        JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
+                        if (jsonObject.getString("api_status").equals("200")) {
+                            SessionManager.dataclear(prefs);
+                            SessionManager.save_check_agreement(prefs, true);
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else if (jsonObject.getString("api_status").equals("400")) {
+                            Toaster.customToast(jsonObject.optJSONObject("errors").optString("error_text"));
+                        } else {
+                            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            error.printStackTrace();
+            loaderView.hideLoader();
+            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+        });
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
+        queue.add(jsonObjectRequest);
+    }
+
+
+    /**
+     * open camera and gallery using this bottomSliderDialog
+     */
+    public void openCameraAndGalleryDialog(String selectedPostType) {
+
+        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
+        dialog.setContentView(R.layout.dialog_camera_selector);
+
+        TextView tv_choose = dialog.findViewById(R.id.tv_choose);
+        TextView tv_camera = dialog.findViewById(R.id.tv_camera);
+        TextView tvGallery = dialog.findViewById(R.id.tvGallery);
+        TextView tvCancel = dialog.findViewById(R.id.tvCancel);
+
+
+        if (selectedPostType.equalsIgnoreCase("image")) {
+            tv_camera.setOnClickListener(v -> {
+                dialog.dismiss();
+                openCamera();
+            });
+            tvGallery.setOnClickListener(v -> {
+                dialog.dismiss();
+                //multiGallery();
+            });
+            tvCancel.setOnClickListener(v -> {
+                postType = "";
+                dialog.dismiss();
+            });
+        } else {
+            tv_choose.setText(R.string.choose_post_video);
+            tv_camera.setOnClickListener(v -> {
+                slideUp.hide();
+                openCameraVideo();
+            });
+            tvGallery.setOnClickListener(v -> {
+                slideUp.hide();
+                openGalleryVideo();
+            });
+            tvCancel.setOnClickListener(v -> {
+                postType = "";
+                slideUp.hide();
+            });
+        }
+
+
+        dialog.show();
+
     }
 }

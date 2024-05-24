@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Activity.Coach.CoachFeedBackReviewActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    app:civ_border_width="@dimen/_1sdp"
+                    app:civ_border_color="@color/grayLight"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/students_image" />
+
+                <TextView
+                    android:id="@+id/tvChangePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="@string/change_phot"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/blue_intro_color"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_email"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_social"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="abcd@gmail.com"
+                        android:textAppearance="@style/full_name_"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/filledTextField_username"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_social"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="Neil Seith"
+                        android:textAppearance="@style/full_name_"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phoneInputLayoutEmail"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_social"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="7654345678"
+                        android:textAppearance="@style/primary_pho"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phoneInputLayoutEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/addressInputLayout"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/li_social"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="Address"
+                        android:textAppearance="@style/primary_pho"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/addressInputLayoutEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tv_change_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_gravity="start"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="@string/change_pass"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_12sdp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordTextInputLayout"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="@string/password"
+                        android:textAppearance="@style/subject_"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/passwordTextInputEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/conPassTextInputLayout"
+                        style="@style/OutlinedRoundBoxFilled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:hint="@string/confirm_password"
+                        android:textAppearance="@style/subject_"
+                        android:textColorHint="@color/gray"
+                        app:boxStrokeColor="@color/white"
+                        app:errorEnabled="false"
+                        app:errorTextAppearance="@style/ErrorTextAppearance"
+                        app:hintTextAppearance="@style/HintTextAppearance"
+                        app:hintTextColor="@color/white">
+
+                        <!--this is the actual edit text which takes the input-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/conPassTextInputEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    <FrameLayout
+                        android:id="@+id/fl_submit"
+                        android:layout_width="@dimen/_110sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_below="@id/tv_forgot"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_40sdp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/button_bg_top" />
+
+                        <ImageView
+                            android:id="@+id/vector1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_17sdp"
+                            android:src="@drawable/button_bg_bottom" />
+
+                        <ImageView
+                            android:id="@+id/vector"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:background="@drawable/button_bg"
+                            android:visibility="visible" />
+
+
+                        <TextView
+                            android:id="@+id/get_started"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:lineHeight="@dimen/_27sdp"
+                            android:text="@string/submit"
+                            android:textAppearance="@style/login" />
+
+                    </FrameLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</RelativeLayout>

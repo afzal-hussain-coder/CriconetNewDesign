@@ -32,7 +32,11 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.pb.criconetnewdesign.Activity.Coach.RegisterAsACoachProfileActivity;
 import com.pb.criconetnewdesign.Activity.FeedDetailsActivity;
+import com.pb.criconetnewdesign.Activity.User.UserProfileActivity;
+import com.pb.criconetnewdesign.CommonUI.AddTrainingTipsActivity;
+import com.pb.criconetnewdesign.Fragment.CoachFragments.CoachProfesionalInQualifocationFragment;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.databinding.ActivityCustomeCameraBinding;
 import com.pb.criconetnewdesign.util.Toaster;
@@ -53,8 +57,8 @@ public class CustomeCameraActivity extends AppCompatActivity {
     int cameraFacing = CameraSelector.LENS_FACING_BACK;
     Context mContext;
     Activity mActivity;
+    private String FROM = "";
 
-    public static Uri image_uri = null;
 
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
         if (result) {
@@ -92,6 +96,7 @@ public class CustomeCameraActivity extends AppCompatActivity {
             startCamera(cameraFacing);
         }
 
+        FROM = getIntent().getStringExtra("FROM");
 
         activityCustomeCameraBinding.flipCamera.setOnClickListener(view -> {
             if (cameraFacing == CameraSelector.LENS_FACING_BACK) {
@@ -203,8 +208,37 @@ public class CustomeCameraActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                FeedDetailsActivity.image_uri = resultUri;
-                finish();
+
+                switch (FROM) {
+                    case "FeedDetailsActivity":
+                        FeedDetailsActivity.image_uri = resultUri;
+                        finish();
+                        break;
+                    case "CoachProfesionalInQualifocationFragment":
+                        CoachProfesionalInQualifocationFragment.image_uri = resultUri;
+                        finish();
+                        break;
+                    case "AddTrainingTipsActivity":
+                        AddTrainingTipsActivity.image_uri = resultUri;
+                        finish();
+                        break;
+                    case "RegisterAsACoachProfileActivity":
+                        RegisterAsACoachProfileActivity.image_uri = resultUri;
+                        finish();
+                        break;
+                    case "UserProfileActivity":
+                        UserProfileActivity.image_uri = resultUri;
+                        finish();
+                        break;
+
+
+
+                    default: {
+                        finish();
+                    }
+
+                }
+
             }
         }
     }

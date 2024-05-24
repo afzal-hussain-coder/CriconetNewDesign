@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".Activity.Coach.CoachFeedBackReviewActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:orientation="vertical">
+
+<!--        <androidx.core.widget.NestedScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/profile_avatart" />
+
+                <TextView
+                    android:id="@+id/tvChangePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="@string/change_phot"
+                    android:textColor="@color/darkGray"
+                    android:textSize="@dimen/_12sdp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_coachName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Nimesh Sharma"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_coachExp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="22 Yrs Experience"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_coachPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Price: 2,180 INR/ Session"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:theme="@style/RatingBar"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_30sdp">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCpp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="Cricket"
+                            android:textColor="@color/purple_700"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="#FFF"
+                            app:chipStrokeColor="@color/purple_700"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipJava"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="India"
+                            android:textColor="@color/purple_700"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="#FFF"
+                            app:chipStrokeColor="@color/purple_700"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipPython"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_regular"
+                            android:text="Tag"
+                            android:textColor="@color/purple_700"
+                            android:textSize="@dimen/_9sdp"
+                            app:chipBackgroundColor="#FFF"
+                            app:chipStrokeColor="@color/purple_700"
+                            app:chipStrokeWidth="1dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+
+
+
+                </LinearLayout>
+
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:id="@+id/tab_layout"
+                        android:background="@color/white"
+                        app:tabInlineLabel="true"
+                        app:tabTextColor="@color/blue_intro_color"
+                        app:tabIndicatorColor="@color/blue_intro_color"
+                        app:tabSelectedTextColor="@color/purple_700"
+                        app:tabTextAppearance="@style/personal_in"/>
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/view_pager"/>
+
+
+
+            </LinearLayout>
+
+     <!--   </androidx.core.widget.NestedScrollView>-->
+
+    </LinearLayout>
+
+</RelativeLayout>

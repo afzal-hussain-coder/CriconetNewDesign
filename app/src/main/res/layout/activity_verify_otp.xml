@@ -52,14 +52,48 @@
                 android:textAppearance="@style/verify_otp" />
 
 
+            <LinearLayout
+                android:id="@+id/lay_otp_expire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_below="@+id/welcome_bac"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:visibility="visible"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/expire_otp"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_10sdp"/>
+
+                <TextView
+                    android:id="@+id/tv_otp_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:text="@string/timer_txt"
+                    android:textColor="@color/app_light_red"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/filledTextField_otp"
                 style="@style/OutlinedRoundBox"
-                android:layout_below="@+id/welcome_bac"
+                android:layout_below="@+id/lay_otp_expire"
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_otp"
@@ -68,7 +102,7 @@
 
                 <!--this is the actual edit text which takes the input-->
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_text_username"
+                    android:id="@+id/edit_text_otp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:imeOptions="actionNext"
@@ -92,6 +126,7 @@
                 android:layout_marginEnd="@dimen/_50sdp"
                 android:fontFamily="@font/opensans_bold"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
                 android:text="@string/resend_otp"
                 android:textAppearance="@style/forgot"
                 android:gravity="center_horizontal|top"

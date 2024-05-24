@@ -1,4 +1,4 @@
-package com.pb.criconetnewdesign.Fragment;
+package com.pb.criconetnewdesign.Fragment.CoachFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,10 +28,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pb.criconetnewdesign.Activity.BlogActivity;
 import com.pb.criconetnewdesign.Activity.Coach.CoachDetailsActivity;
+import com.pb.criconetnewdesign.Activity.Coach.RegisterAsACoachProfileActivity;
+import com.pb.criconetnewdesign.Activity.Coach.RegisterAsAnECoachActivity;
 import com.pb.criconetnewdesign.Activity.MyBlogsActivity;
 import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
 import com.pb.criconetnewdesign.Activity.SavedPostActivity;
 import com.pb.criconetnewdesign.Activity.User.UserBookingHistory;
+import com.pb.criconetnewdesign.CommonUI.AddTrainingTipsActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.EcoachingAdapter.EcoachingListAdapter;
@@ -40,6 +43,8 @@ import com.pb.criconetnewdesign.util.Global;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class CoachFragment extends Fragment {
@@ -124,21 +129,28 @@ public class CoachFragment extends Fragment {
     }
     private void drawerNavigation(RelativeLayout layout_nav){
 
+        CircleImageView profile_pic = layout_nav.findViewById(R.id.profile_pic);
+        profile_pic.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), RegisterAsACoachProfileActivity.class));
+        });
+
         TextView book_a_coac = layout_nav.findViewById(R.id.book_a_coac);
         book_a_coac.setOnClickListener(v -> {
-            layout_nav.startAnimation(animation);
-            layout_nav.setVisibility(View.GONE);
+           // layout_nav.startAnimation(animation);
+            //layout_nav.setVisibility(View.GONE);
+            startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class));
+
         });
 
         TextView booking_his = layout_nav.findViewById(R.id.booking_his);
         booking_his.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), UserBookingHistory.class));
         });
-//
-//        TextView saved_posts = layout_nav.findViewById(R.id.saved_posts);
-//        saved_posts.setOnClickListener(v -> {
-//            startActivity(new Intent(getActivity(), SavedPostActivity.class));
-//        });
+
+        TextView training_ti = layout_nav.findViewById(R.id.training_ti);
+        training_ti.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), AddTrainingTipsActivity.class));
+        });
 
         TextView about_us= layout_nav.findViewById(R.id.about_us);
         about_us.setOnClickListener(v -> {

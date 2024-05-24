@@ -18,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -26,13 +25,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.pb.criconetnewdesign.Activity.AcademyDetailsActivity;
+import com.pb.criconetnewdesign.Activity.Academy.ManageAcademyCoachActivity;
+import com.pb.criconetnewdesign.Activity.Academy.ManageAttendanceActivity;
+import com.pb.criconetnewdesign.Activity.Academy.ManageStudentActivity;
+import com.pb.criconetnewdesign.Activity.Academy.ScheduleOnlineAcativity;
+import com.pb.criconetnewdesign.Activity.Academy.AcademyDetailsActivity;
 import com.pb.criconetnewdesign.Activity.BlogActivity;
 import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.AcademyAdapter.AcademyListAdapter;
-import com.pb.criconetnewdesign.adapter.EcoachingAdapter.EcoachingListAdapter;
 import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
 import com.pb.criconetnewdesign.util.Global;
 
@@ -105,21 +107,27 @@ public class AcademyFragment extends Fragment {
 
     private void drawerNavigation(RelativeLayout layout_nav){
 
-//        TextView book_a_coac = layout_nav.findViewById(R.id.book_a_coac);
-//        book_a_coac.setOnClickListener(v -> {
-//            layout_nav.startAnimation(animation);
-//            layout_nav.setVisibility(View.GONE);
-//        });
+        TextView schedule_on = layout_nav.findViewById(R.id.schedule_on);
+        schedule_on.setOnClickListener(v -> {
+          startActivity(new Intent(getActivity(), ScheduleOnlineAcativity.class));
+        });
+
+        TextView manage_stud = layout_nav.findViewById(R.id.manage_stud);
+        manage_stud.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), ManageStudentActivity.class));
+        });
 //
-//        TextView my_blogs = layout_nav.findViewById(R.id.my_blogs);
-//        my_blogs.setOnClickListener(v -> {
-//            startActivity(new Intent(getActivity(), MyBlogsActivity.class));
-//        });
-//
-//        TextView saved_posts = layout_nav.findViewById(R.id.saved_posts);
-//        saved_posts.setOnClickListener(v -> {
-//            startActivity(new Intent(getActivity(), SavedPostActivity.class));
-//        });
+        TextView manage_coac = layout_nav.findViewById(R.id.manage_coac);
+        manage_coac.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), ManageAcademyCoachActivity.class));
+        });
+
+        TextView manage_atte = layout_nav.findViewById(R.id.manage_atte);
+        manage_atte.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), ManageAttendanceActivity.class));
+        });
+
+
 
         TextView about_us= layout_nav.findViewById(R.id.about_us);
         about_us.setOnClickListener(v -> {

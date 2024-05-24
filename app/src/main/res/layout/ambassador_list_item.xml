@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/rIvAmbassador"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_110sdp"
+            android:layout_margin="@dimen/_5sdp">
+
+        </com.makeramen.roundedimageview.RoundedImageView>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/indicator_selector"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:text="gdgdaGDUIAGDUI"
+            android:fontFamily="@font/opensans_regular"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.pb.criconetnewdesign.Activity;
+package com.pb.criconetnewdesign.Activity.Academy;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutRecorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_20sdp">
+
+
+        <View
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_4sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:backgroundTint="@color/darkGray"
+            android:background="@drawable/comment_bg"></View>
+
+        <TextView
+            android:id="@+id/txthead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Audio Recorder"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/idTVstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_set_audio"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:textAlignment="center"
+            android:textColor="@color/dimGray"
+            android:textSize="@dimen/_10sdp" />
+
+        <LinearLayout
+            android:id="@+id/li_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/idTVstatus"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <Chronometer
+                android:id="@+id/tv_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:gravity="center_horizontal"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="00:00:00"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="@dimen/_40sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_countDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="00:00:00"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="@dimen/_40sdp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_startRecording"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/_2sdp"
+                app:cardMaxElevation="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_startRecording"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/mic_black_24dp"
+                        app:tint="@color/darkGray">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/tvStartRecording"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="@string/start_recording"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_10sdp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_stopRecording"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardMaxElevation="@dimen/_2sdp"
+                app:cardElevation="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivStopRecording"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/mic_off_black_24dp"
+                        app:tint="@color/darkGray">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/tvStopRecording"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="@string/stop_recording"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_10sdp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_playRecording"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardMaxElevation="@dimen/_2sdp"
+                app:cardElevation="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivPlayRecording"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_play"
+                        app:tint="@color/darkGray">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/tvPlayRecording"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="@string/play_recording"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_10sdp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_stopPlaying"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardMaxElevation="@dimen/_2sdp"
+                app:cardElevation="@dimen/_2sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivStopPlaying"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_pause"
+                        app:tint="@color/darkGray">
+
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/tvStopPlaying"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="@string/stop_playing"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_10sdp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/li_timer"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/btnRecord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@color/grayLight"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/start_recording"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                app:drawableTopCompat="@drawable/mic_black_24dp" />
+
+            <TextView
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@color/grayLight"
+                android:enabled="false"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/stop_recording"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                app:drawableTopCompat="@drawable/mic_off_black_24dp" />
+
+            <TextView
+                android:id="@+id/btnPlay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@color/grayLight"
+                android:enabled="false"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/play_recording"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                app:drawableTopCompat="@drawable/ic_play" />
+
+            <TextView
+                android:id="@+id/btnStopPlay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:background="@color/grayLight"
+                android:enabled="false"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/stop_playing"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                app:drawableTopCompat="@drawable/ic_pause" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:id="@+id/fl_save"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/tv_forgot"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:id="@+id/vector1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:src="@drawable/button_bg_bottom" />
+
+                <ImageView
+                    android:id="@+id/vector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@drawable/button_bg"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:id="@+id/get_started"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:text="@string/save"
+                    android:textAppearance="@style/login" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_cancel"
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_below="@id/tv_forgot"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/gray"
+                    android:background="@drawable/button_bg_top" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_17sdp"
+                    android:background="@drawable/button_bg_bottom"
+                    android:backgroundTint="@color/darkGray"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:background="@drawable/button_bg"
+                    android:backgroundTint="@color/grayLight"
+                    android:visibility="visible" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/black"
+                    android:textAppearance="@style/login" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

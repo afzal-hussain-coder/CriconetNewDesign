@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_130sdp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_bg"
+        android:layout_marginBottom="@dimen/_2sdp">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_15sdp">
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back_icon"
+                app:tint="@color/white">
+
+            </ImageView>
+
+
+            <TextView
+                android:id="@+id/toolbartext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_toRightOf="@+id/img_back"
+                android:fontFamily="@font/paytoneone_regular"
+                android:gravity="center_horizontal"
+                android:text="@string/e_pavilion"
+                android:textAppearance="@style/header" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/rectangle_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:background="@drawable/nav_header_image"
+            tools:ignore="ImageContrastCheck" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_below="@+id/top"
+            android:layout_marginBottom="@dimen/_15sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_pic"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/profile_avatart" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_toRightOf="@+id/profile_pic"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nimesh_shar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="XYZ Cricket Academy"
+                    android:textAppearance="@style/nimesh_shar"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/xyz_academy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="5sp"
+                    android:text="Sector 10, Dwarka, New Delhi"
+                    android:textAppearance="@style/xyz_academy"
+                    android:textSize="@dimen/_10sdp"
+                    android:translationY="-2.69sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_below="@+id/rl_header">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@drawable/blue_bg"
+                android:backgroundTint="@color/blue_intro_color">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/total_coaches"
+                        android:textColor="@color/indicator_selector"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="@dimen/_12sdp"
+                        android:gravity="top"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="-5"
+                        android:textColor="@color/indicator_selector"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="@dimen/_12sdp"
+                        android:gravity="top"
+                        />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_addCoach"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_below="@id/tv_forgot"
+                    android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:id="@+id/vector1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:id="@+id/vector"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/add_coach"
+                        android:textAppearance="@style/login" />
+
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAcademyCoach"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

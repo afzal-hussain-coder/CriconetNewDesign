@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.CoachFragment">
+    tools:context=".Fragment.CoachFragments.CoachFragment">
 
     <include layout="@layout/toolbar_e_coaching"
         android:id="@+id/toolbar"/>

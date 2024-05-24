@@ -8,8 +8,15 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RetryPolicy;
+import com.android.volley.toolbox.StringRequest;
+import com.pb.criconetnewdesign.Activity.Coach.CoachFeedBackReviewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.EcoachingAdapter.UserBookingListAdapter;
 import com.pb.criconetnewdesign.databinding.ActivityUserBookingHistoryBinding;
@@ -20,6 +27,8 @@ import com.pb.criconetnewdesign.util.Global;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserBookingHistory extends AppCompatActivity {
     ActivityUserBookingHistoryBinding activityUserBookingHistoryBinding;
@@ -102,6 +111,12 @@ public class UserBookingHistory extends AppCompatActivity {
             public void shareCoach() {
 
             }
+
+            @Override
+            public void sendFeedback(int id) {
+                startActivity(new Intent(mContext, CoachFeedBackReviewActivity.class));
+
+            }
         }));
 
 
@@ -134,6 +149,8 @@ public class UserBookingHistory extends AppCompatActivity {
         // display our date picker dialog.
         datePickerDialog.show();
     }
+
+
 
 
     @Override

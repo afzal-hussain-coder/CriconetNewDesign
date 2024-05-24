@@ -54,7 +54,9 @@ public class BookingHistoryDropDown extends OSLTextView implements View.OnClickL
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(context.getDrawable(R.drawable.booking_fileter_bg));
         popupWindow.setElevation(10);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            popupWindow.setOverlapAnchor(true);
+        }
         //ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_item, options);
         CustomAdapter adapter = new CustomAdapter(optionList, context);
         // the drop down list is a list view

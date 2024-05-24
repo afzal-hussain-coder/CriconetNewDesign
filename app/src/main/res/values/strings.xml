@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CriconetNewDesign</string>
+    <string name="app_name">criconet</string>
     <string name="watch_learn">Watch. Learn. Bond.</string>
     <string name="the_best_ha">The best hangout for cricket lovers, right on your phone.</string>
     <string name="enjoy_live_streaming">Enjoy Live Streaming</string>
@@ -27,6 +27,8 @@
     <string name="name">Name</string>
     <string name="name_star">Name*</string>
     <string name="age">Age</string>
+    <string name="age_str">Age*</string>
+    <string name="date_of_bairth">D.O.B</string>
     <string name="phone">Phone No</string>
     <string name="gender_">Gender:</string>
     <string name="female">Female</string>
@@ -72,12 +74,17 @@
         <item>Follower</item>
         <item>Following</item>
     </string-array>
+    <string name="booking_con">Booking\nConfirmed</string>
+    <string name="booking_fai">Booking\nFailed</string>
+    <string name="try_again">Try Again</string>
     <string name="post">Post</string>
     <string name="book_a_coac">Book a coach</string>
+    <string name="book_coach">Book Coach</string>
     <string name="booking_his">Booking history</string>
     <string name="record_vide">Record video</string>
     <string name="my_video_ga">My video gallery</string>
     <string name="training_ti">Training tips</string>
+    <string name="add_training_tips">Add Training Tips</string>
     <string name="view_live_m">View live matches</string>
     <string name="view_archiv">View archives</string>
     <string name="book_live_s">Book live streaming</string>
@@ -86,6 +93,7 @@
     <string name="past_sessio">Past Sessions</string>
     <string name="manage_acad">Manage Academy</string>
     <string name="manage_atte">Manage Attendance</string>
+    <string name="attendance">Attendance</string>
     <string name="manage_stud">Manage Students</string>
     <string name="manage_coac">Manage Coaches</string>
     <string name="ground_owne">Ground Owner</string>
@@ -133,6 +141,7 @@
     <string name="full_name_">Full Name*</string>
     <string name="email_">Email*</string>
     <string name="primary_pho">Primary Phone Number*</string>
+    <string name="secondary_pho">Secondary Phone Number*</string>
     <string name="subject_">Subject*</string>
     <string name="type_your_m">Type your message here</string>
     <string name="type_your_me">Type your message here*</string>
@@ -143,6 +152,13 @@
         <item>Cricket Coach</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="typeOfStreaming">
+        <item>Name of the Club</item>
+        <item>Name of Tournament</item>
+        <item>Name of Organization</item>
+    </string-array>
+
     <string name="type_of_boo">Type of booking*</string>
     <string name="posted_by_a">Posted by</string>
     <string name="leave_a_comment">Leave a comment</string>
@@ -166,6 +182,216 @@
     <string name="cancel_booking">Cancel Booking</string>
     <string name="book_another_session">Book Another Session</string>
     <string name="booking_details">Booking Details</string>
+    <string name="watch_live_nets">Watch Live Nets</string>
+    <string name="coach_list">Coach List</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="checkoutdetails">Checkout Details</string>
+    <string name="proceed_to_pay">Proceed to pay</string>
+    <string name="dear_studen">Dear Student,\nThank you for booking your session with Criconet. We would like to know how your session was. Please spare some time to give us your valuable feedback.</string>
+    <string name="please_rate">Please rate your experience on the following parameters:</string>
+    <string name="submit_your_feedback">Submit Your Feedback</string>
+    <string name="Do_you_have_any_suggestions">Do you have any suggestions?</string>
+    <string name="type_you_have_any_suggestions">Type here... if you have any suggestions?</string>
+    <string name="coach_review">Coach Review</string>
+    <string name="regsiter_as_a_coach">Register as a Coach</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="personal_information"> Personal Information</string>
+    <string name="professional_qualifications">Professional Qualifications</string>
+    <string name="available_date_session">Available Date &amp; Session</string>
+    <string name="first_name">First Name</string>
+    <string name="city">City</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="languages">Languages</string>
+    <string name="address_lin">Address Line 1</string>
+    <string name="address_lin2">Address Line 2</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="save">Save</string>
+    <string name="coach_profile_title">Coach Profile Title</string>
+    <string name="achievement">Achievements</string>
+    <string name="total_exper">Total Experience (years)</string>
+    <string name="total_exper_month">Total Experience (months)</string>
+    <string name="what_you_te">What You Teach</string>
+    <string name="skills_stud">Skills Student Learn</string>
+    <string name="other_infor">Other Information</string>
+    <string name="certificate">Certificate Title</string>
+    <string name="certificate_upload">Certificate Upload</string>
+    <string name="amount_per_">Amount per Session</string>
+    <string name="i_agree_to_">I agree to your Terms &amp; Conditions</string>
+    <string name="remove_certificate">Remove Certificate</string>
+    <string name="choose_your">Choose your specialities*</string>
+    <string name="select_tips">Select Tips Category*</string>
+    <string name="enter_title">Enter Title*</string>
+    <string name="enter_descr">Enter Description*</string>
+    <string name="select_priv">Select Privacy for Tips*</string>
+    <string name="select_vide">Select Video</string>
+    <string name="add_image_a">Add Image</string>
+    <string name="audio">Audio</string>
+    <string name="volume_txt">Volume</string>
+    <string name="play_recording">Play\n Recording</string>
+    <string name="stop_recording">Stop\n Recording</string>
+    <string name="stop_recordinggg">Stop Recording</string>
+    <string name="play_recordinggg">Play Recording</string>
 
+    <string name="play_recordingg">Play</string>
+    <string name="stop_recordingg">Stop</string>
+    <string name="start_recording">Start\n Recording</string>
+    <string name="stop_playing">Stop\n Playing</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="ambassador_program">Ambassador Program</string>
+    <string name="ambassador_scoreboard">Ambassador Scoreboard</string>
+    <string name="join_as_a_Ambassador">Join as a Ambassador</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="viewform">View Form</string>
+    <string name="total_point">Total Points</string>
+    <string name="refer_frien">REFER FRIENDS &amp; EARN REWARDS</string>
+    <string name="your_referr">Your Referral Status</string>
+    <string name="number_of_r">Number of Referrals</string>
+    <string name="view_details_underline"><u>View Details</u></string>
+    <string name="ambassador_">Ambassador Account Status</string>
+    <string name="number_of_b">Number of Bookings</string>
+    <string name="contest_poi">Contest Point Status</string>
+    <string name="total_conte">Total Contest Points</string>
+    <string name="refer_frien_newLine">REFER FRIENDS &amp;\nEARN REWARDS</string>
+    <string name="enter_school_name">School/College Name</string>
+    <string name="enter_higestQualification">Highest Qualification</string>
+    <string name="whywantbecomeambassodoar">Why do you want to become a Criconet Campus Ambassador?</string>
+    <string name="knowaboutcriconet">What are the Top 3 things you know about Criconet?</string>
+    <string name="mentiontwothings">"Mention 2 innovative things you would do as a Criconet Campus Ambassador in your school/college."</string>
+    <string name="eventBefore">Have you organized events before? Please share details of the same.</string>
+    <string name="how_many_hours">How many hours can you spend as an Criconet Campus ambassador per week?</string>
+    <string name="passionate">What are the 5 things that you are most passionate about, on your campus?</string>
+    <string name="select_hours">Select Hours</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string-array name="hours">
+        <item>2 Hours</item>
+        <item>4 Hours</item>
+        <item>6 Hours</item>
+        <item>8 Hours</item>
+        <item>10 Hours</item>
+        <item>12 Hours</item>
+        <item>14 Hours</item>
+        <item>16 Hours</item>
+        <item>18 Hours</item>
+        <item>20 Hours</item>
+        <item>22 Hours</item>
+        <item>24 Hours</item>
+    </string-array>
+    <string-array name="minute">
+        <item>0 minute</item>
+        <item>30 minute</item>
+        <item>35 minute</item>
+        <item>40 minute</item>
+        <item>45 minute</item>
+        <item>50 minute</item>
+        <item>55 minute</item>
+    </string-array>
+
+    <string name="min_character_length">Enter School/College Name (Minimum of 5 characters)</string>
+    <string name="min_character_length_qualification">Highest Qualification should be Minimum of 2 characters</string>
+    <string name="region_to_become_criconet_ambassador">Enter reason to become criconet ambassador</string>
+    <string name="Please_enter_description_yes">Enter details of events organized</string>
+    <string name="copy_link_t">Copy Link to Refer</string>
+    <string name="refer_a_fri">Refer a Friend</string>
+    <string name="refer_rewards">Refer &amp; Rewards</string>
+    <string name="topic">Topic</string>
+    <string name="select_sche">Select Schedule Duration</string>
+    <string name="select_hour">Select Hour(s)</string>
+    <string name="select_minus">Select Minutes(s)</string>
+    <string name="select_coac">Select Coach &amp; Students</string>
+    <string name="select_coach">Select Coach</string>
+    <string name="select_stud">Select Student</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="manage_students">Manage Students</string>
+    <string name="total_stude">Total Students</string>
+    <string name="know_more">Know More</string>
+    <string name="students_details">Students Details</string>
+    <string name="add_student">Add Student</string>
+    <string name="check_scores"><u>Check Scores</u></string>
+    <string name="call">Call</string>
+    <string name="about">About</string>
+    <string name="add_students">Add Students</string>
+    <string name="userName">Username*</string>
+    <string name="first_name_strict">First Name*</string>
+    <string name="enter_student_login_password">Enter Student Login Password*</string>
+    <string name="enter_coach_login_password">Enter Coach Login Password*</string>
+    <string name="profile_link">Enter Scoring Profile Link</string>
+    <string name="select_player_type">Select Player Type</string>
+    <string name="select_batting_hand">Select Batting Hand</string>
+    <string name="select_bowling_arm">Select Bowling Arm</string>
+    <string name="select_ball_type">Select Ball Type</string>
+    <string name="select_age_group">Select your age group</string>
+    <string name="select_gender">Select Gender</string>
+    <string name="manage_coach">Manage Coach</string>
+    <string name="add_coach">Add Coach</string>
+    <string name="total_coaches">Total Coaches</string>
+    <string name="select_role">Select Role*</string>
+    <string name="coach_profi">Coach Profile Title*</string>
+    <string name="what_do_you">What do you teach?</string>
+    <string name="total_years">Total Years of Experience*</string>
+    <string name="add_for_tod">Add for today</string>
+    <string name="total_prese">Total Present</string>
+    <string name="total_absen">Total Absent</string>
+    <string name="present">Present</string>
+    <string name="absent">Absent</string>
+    <string name="my_profile">My Profile</string>
+    <string name="change_phot"><u>Change Photo</u></string>
+    <string name="book_cricon">Book Criconet\'s Live Streaming</string>
+    <string name="enjoy_the_b">Enjoy the best ball to ball tracking</string>
+    <string name="select_your">Select Your Type</string>
+    <string name="select_stat">Select State/UT</string>
+    <string name="select_city">Select City</string>
+    <string name="enter_your_">Enter Your Ground Location</string>
+    <string name="change_pass"><u>Change Password</u></string>
+    <string name="email_empty_validation">Email Can’t be empty</string>
+    <string name="email_invalid_validation">Invalid email format</string>
+    <string name="name_empty_validation">User Name Can’t be empty</string>
+    <string name="Special_character_not_allowed">Special character not allowed</string>
+    <string name="date_of_birth">Date of Birth can\'t be empty</string>
+    <string name="name_limit_validation">Full name must be between 3 to 32 Characters</string>
+    <string name="phone_error">Phone number Can’t be empty</string>
+    <string name="error_invalid_phone">Invalid input for Phone Number</string>
+    <string name="password_cannot_empty">Password Can’t be empty</string>
+    <string name="password_too_short">Password is too short</string>
+    <string name="confirm_password_cant_be_empty">Confirm Password Can’t be empty</string>
+    <string name="Password_does_not_match">Password does not match</string>
+    <string name="tearms_condition_validation">By creating your account, Please check our teams</string>
+    <string name="socket_timeout">The Criconet server is not responding</string>
+    <string name="Select_Gender">Select Gender</string>
+    <string name="enter_referral_code">Enter Referral Code</string>
+    <string name="expire_otp">Your code will expire in</string>
+    <string name="timer_txt">2:00</string>
+    <string name="code_msg">Please enter verification code</string>
+    <string name="code_invalid">Verification code not correct</string>
+    <string name="welcome">Welcome!</string>
+    <string name="Do_you_really_want_to_logout">Do you really want to logout?</string>
+    <string name="Username_and_email_id_cant_be_empty">Username or email id can’t be empty!</string>
+    <string name="The_Password_Cant_be_empty">The Password Can’t be empty!</string>
+    <string name="send">Send</string>
+    <string name="phone_no">Enter Phone No*</string>
+    <string name="sent_verificationn">You will get a verification code on your Mobile No.</string>
+    <string name="enter_mobile">Enter Mobile Number</string>
+    <string name="click_continuee">Click to continue</string>
+    <string name="sent_verification_phone">We have sent a verification code on your Mobile No.</string>
+    <string name="otp">Enter Verification Code</string>
+    <string name="Please_enter_mobile_no">Please enter mobile no!</string>
+    <string name="Email_Cant_be_empty">Email Can’t be empty!</string>
+    <string name="Invalid_email_format">Invalid email format!</string>
+    <string name="message_internal_inconsistency">There was an internal inconsistency. \n Please try again.</string>
+    <string name="SignIn_failed">SignIn failed</string>
+    <string name="add_photo">Add Photo!</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 
 </resources>
