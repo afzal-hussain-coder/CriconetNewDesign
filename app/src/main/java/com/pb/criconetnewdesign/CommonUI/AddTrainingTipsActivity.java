@@ -21,6 +21,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -31,7 +32,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,19 +51,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
 import com.pb.criconetnewdesign.AGApplication;
 import com.pb.criconetnewdesign.CustomeCamera.CustomeCameraActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.databinding.ActivityAddTrainingTipsBinding;
 import com.pb.criconetnewdesign.databinding.ToolbarInnerpageBinding;
+import com.pb.criconetnewdesign.model.DataModelSpecialization;
 import com.pb.criconetnewdesign.util.BookingHistoryDropDown;
+import com.pb.criconetnewdesign.util.CustomLoaderView;
 import com.pb.criconetnewdesign.util.DataModel;
+import com.pb.criconetnewdesign.util.Global;
+import com.pb.criconetnewdesign.util.MultipartRequest;
+import com.pb.criconetnewdesign.util.SessionManager;
 import com.pb.criconetnewdesign.util.Toaster;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -73,6 +86,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 
 import jaygoo.widget.wlv.WaveLineView;
@@ -89,6 +103,9 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
     Activity mActivity;
 
     MediaController mediaController;
+    CustomLoaderView loaderView;
+    private RequestQueue queue;
+    private SharedPreferences prefs;
 
     //todo audio recording
 
@@ -128,6 +145,8 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
     private ImageView ivPlay;
     private File songFile;
 
+    String selectedCategoryId ="";
+
 
     //todo get record video using camera
     ActivityResultLauncher<Intent> startActivityIntent = registerForActivityResult(
@@ -152,6 +171,10 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
         mContext = this;
         mActivity = this;
 
+        loaderView = CustomLoaderView.initialize(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        queue = Volley.newRequestQueue(this);
+
         ToolbarInnerpageBinding toolbarInnerpageBinding = activityAddTrainingTipsBinding.toolbar;
         toolbarInnerpageBinding.toolbartext.setText(R.string.add_training_tips);
         toolbarInnerpageBinding.imgBack.setOnClickListener(v -> {
@@ -160,30 +183,24 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
 
 
         initView();
+
+        if (Global.isOnline(mActivity)) {
+            getSpecialities();
+        } else {
+            Global.showDialog(mActivity);
+        }
     }
 
     private void initView() {
 
-        option_category.add(new DataModel("Batting"));
-        option_category.add(new DataModel("Bowling"));
-        option_category.add(new DataModel("Fielding"));
-        option_category.add(new DataModel("Wicket keeping"));
-        option_category.add(new DataModel("Mental"));
-        option_category.add(new DataModel("Tactical"));
-        option_category.add(new DataModel("Physical"));
-        option_category.add(new DataModel("Health and Fitness"));
-        option_category.add(new DataModel("Spots wellness"));
-
-        activityAddTrainingTipsBinding.dropTipsCategory.setOptionList(option_category);
         activityAddTrainingTipsBinding.dropTipsCategory.setClickListener(new BookingHistoryDropDown.onClickInterface() {
             @Override
             public void onClickAction() {
             }
 
             @Override
-            public void onClickDone(String name) {
-
-
+            public void onClickDone(String name,String id) {
+                selectedCategoryId = id;
             }
 
 
@@ -192,20 +209,19 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
             }
         });
 
-        option_privacy.add(new DataModel("Batting"));
-        option_privacy.add(new DataModel("Bowling"));
-        option_privacy.add(new DataModel("Fielding"));
-        option_privacy.add(new DataModel("Wicket keeping"));
-        option_privacy.add(new DataModel("Mental"));
+        option_privacy.add(new DataModel("Only For Academy"));
+        option_privacy.add(new DataModel("Only For Coach"));
+        option_privacy.add(new DataModel("Public"));
 
-        activityAddTrainingTipsBinding.dropPrivacy.setOptionList(option_category);
+
+        activityAddTrainingTipsBinding.dropPrivacy.setOptionList(option_privacy);
         activityAddTrainingTipsBinding.dropPrivacy.setClickListener(new BookingHistoryDropDown.onClickInterface() {
             @Override
             public void onClickAction() {
             }
 
             @Override
-            public void onClickDone(String name) {
+            public void onClickDone(String name,String id) {
 
 
             }
@@ -733,65 +749,139 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
 
     }
 
-   /* public void PostFeedFinal() {
+    private void getSpecialities() {
+        StringRequest postRequest = new StringRequest(Request.Method.GET, Global.URL + Global.GET_SPECIALITIES_CATEGORY, response -> {
+            Gson gson = new Gson();
+            DataModelSpecialization modelArrayList = gson.fromJson(response, DataModelSpecialization.class);
+            if (modelArrayList.getApiStatus().equalsIgnoreCase("200")) {
+                List<DataModelSpecialization.Datum> list = modelArrayList.getData();
+
+                for (int i = 0; i < list.size(); i++) {
+                    option_category.add(new DataModel(list.get(i).getTitle(),list.get(i).getId()));
+                }
+                activityAddTrainingTipsBinding.dropTipsCategory.setOptionList(option_category);
+            }
+
+        }, error -> {
+            error.printStackTrace();
+            Global.msgDialog(mActivity, "Error from server");
+        });
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    public void getAddAcademtTips() {
         try {
-            this.loaderView.showLoader();
+            loaderView.showLoader();
+
             MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            entity.addPart("userId", new StringBody(SessionManager.get_user_id(this.prefs)));
-            entity.addPart("s", new StringBody(SessionManager.get_session_id(this.prefs)));
-            entity.addPart("activeUser", new StringBody(SessionManager.get_get_active_user(this.prefs)));
-            File file = new File(mFileName);
-            FileBody fileBody = new FileBody(file);
-            entity.addPart("myfile", fileBody);
-            // Log.d("set", entity + com.intuit.sdp.BuildConfig.FLAVOR);
-            MultipartRequest req = new MultipartRequest("https://www.selectronicindia.com/manager/webservice/uploadAudioFile", new Response.Listener<String>() { // from class: com.selectronic.MainActivity.8
-                @Override // com.android.volley.Response.Listener
-                public void onResponse(String response) {
-                    try {
-                        MainActivity.this.loaderView.hideLoader();
-                        JSONObject jsonObject = new JSONObject(response.toString());
-                        if (jsonObject.getInt("status_code") == 200) {
-                            if (MainActivity.this.output.exists()) {
-                                MainActivity.this.output.delete();
-                                String unused = MainActivity.mFileName = null;
+
+            Log.d("Param",entity.isChunked()+"");
+
+
+            entity.addPart("s", new StringBody(SessionManager.get_session_id(prefs)));
+            entity.addPart("user_id", new StringBody(SessionManager.get_user_id(prefs)));
+            entity.addPart("academy_id", new StringBody(SessionManager.get_academyId(prefs)));
+            entity.addPart("title", new StringBody(activityAddTrainingTipsBinding.editTextTitle.getText().toString()));
+            entity.addPart("category_id", new StringBody(selectedCategoryId));
+            if(SessionManager.get_academyId(prefs).equalsIgnoreCase("") && SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")){
+                entity.addPart("privacy", new StringBody("1"));
+            }
+            else {
+                //entity.addPart("privacy", new StringBody(privacyId));
+            }
+
+            //entity.addPart("details", new StringBody(des));
+            entity.addPart("training_tips_id", new StringBody(""));
+
+
+//            if (!postFile.isEmpty()) {
+//                File file = new File(postFile);
+//                FileBody fileBody = new FileBody(file);
+//                entity.addPart("video_tips", fileBody);
+//            }
+
+
+            MultipartRequest req = new MultipartRequest(Global.URL + Global.ACADEMY_TRAINING_TIPS,
+                    response -> {
+                        try {
+                            loaderView.hideLoader();
+
+                            Log.d("AddTrainingTips",response);
+
+                            JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
+                            if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
+                                Toaster.customToast(jsonObject.optString("message"));
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+
+                                        /*...13-07-23 commnets by DDR for cocah privacy hide case*/
+
+//                                        if(SessionManager.get_academyId(prefs).equalsIgnoreCase("") || SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")){
+//                                            startActivity(new Intent(mContext,AcademyTipsPreviewActivity.class).putExtra("FROM","2").putExtra("ACADEMY_ID", SessionManager.get_academyId(prefs)));
+//                                            finish();
+//                                        }
+//                                        else {
+//                                            startActivity(new Intent(mContext,AcademyTipsPreviewActivity.class).putExtra("FROM","3").putExtra("ACADEMY_ID", SessionManager.get_academyId(prefs)));
+//                                            finish();
+//                                        }
+
+                                    /*  startActivity(new Intent(mContext,AcademyTipsPreviewActivity.class).putExtra("FROM","3").putExtra("ACADEMY_ID", SessionManager.get_academyId(prefs)));
+                                      finish();*/
+                                        //startActivity(new Intent(mContext,MainActivity.class));
+                                    }
+                                },2000);
+
+                               // edit_title.setText("");
+                               // edit_des.setText("");
+                               // spinner_privacy.setText(getResources().getString(R.string.select_privacy));
+                               // spinner_session.setText(getResources().getString(R.string.select_tips_category));
+
+//                                if(rl_video.getVisibility() == View.VISIBLE){
+//                                    rl_video.setVisibility(View.GONE);
+//                                }
+
+//                            JSONArray array = jsonObject.getJSONArray("posts");
+//                            Global.msgDialog(mContext, jsonObject.optString("msg"));
+                            } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
+                                Global.msgDialog(mActivity, jsonObject.optJSONObject("errors").optString("error_text"));
+                            } else {
+                                Global.msgDialog(mActivity, getResources().getString(R.string.error_server));
                             }
-                            MainActivity.this.startTV.setEnabled(true);
-                            MainActivity.this.playTV.setEnabled(false);
-                            MainActivity.this.stopplayTV.setEnabled(false);
-                            MainActivity.this.tv_uplod.setEnabled(false);
-                            MainActivity.this.tv_cancel.setEnabled(false);
-                            MainActivity.this.stopTV.setEnabled(false);
-                            MainActivity.this.stopTV.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.dark_gray));
-                            MainActivity.this.playTV.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.dark_gray));
-                            MainActivity.this.stopplayTV.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.dark_gray));
-                            MainActivity.this.startTV.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.dark_gray));
-                            MainActivity.this.tv_uplod.setBackgroundColor(Color.parseColor("#F0F6FC"));
-                            MainActivity.this.tv_cancel.setBackgroundColor(Color.parseColor("#FFE5E5"));
-                            Toaster.customToast(jsonObject.getString("message"));
-                        } else if (jsonObject.optString("status_code").equalsIgnoreCase("failed")) {
-                            Global.msgDialog(MainActivity.this.mActivity, jsonObject.optJSONObject("errors").optString("error_text"));
-                        } else {
-                            Global.msgDialog(MainActivity.this.mActivity, MainActivity.this.getResources().getString(R.string.error_serverr));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() { // from class: com.selectronic.MainActivity.9
-                @Override // com.android.volley.Response.ErrorListener
-                public void onErrorResponse(VolleyError error) {
-                    MainActivity.this.loaderView.hideLoader();
-                    error.printStackTrace();
-                }
-            }, entity);
-            Log.d("PostEntity", req.toString());
-            RetryPolicy policy = new DefaultRetryPolicy(50000, 0, 1.0f);
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //progress.dismiss();
+                            loaderView.hideLoader();
+                            error.printStackTrace();
+                        }
+                    },
+                    entity);
+
+            Log.d("PostEntity", entity.toString());
+
+            int socketTimeout = 50000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
             req.setRetryPolicy(policy);
-            this.queue.add(req);
+            queue.add(req);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+
+
+    }
 
     @Override
     protected void onResume() {

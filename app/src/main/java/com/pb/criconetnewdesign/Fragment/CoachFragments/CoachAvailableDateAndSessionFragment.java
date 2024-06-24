@@ -47,7 +47,7 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
     private void initView() {
         fragmentCoachDateSesssionBinding.rvSessionTime.setHasFixedSize(true);
         fragmentCoachDateSesssionBinding.rvSessionTime.setLayoutManager(new GridLayoutManager(requireContext(),2));
-        fragmentCoachDateSesssionBinding.rvSessionTime.setAdapter(new SessionTimeListAdapter(requireContext()));
+        //fragmentCoachDateSesssionBinding.rvSessionTime.setAdapter(new SessionTimeListAdapter(requireContext()));
 
         fragmentCoachDateSesssionBinding.calendorView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
 

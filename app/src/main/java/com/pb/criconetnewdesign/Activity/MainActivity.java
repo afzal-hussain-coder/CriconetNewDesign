@@ -26,11 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
     Context mContext;
     Activity mActivity;
-    ImageView img_p,img_e,img_s,img_a;
-    LinearLayout li_p,li_e,li_s,li_a;
-    RelativeLayout li_mP,li_mE,li_mS,li_mA;
+    ImageView img_p, img_e, img_s, img_a;
+    LinearLayout li_p, li_e, li_s, li_a;
+    RelativeLayout li_mP, li_mE, li_mS, li_mA;
 
-    int clickItemNavigation=0;
+    int clickItemNavigation = 0;
+    Animation animation;
 
 
     @Override
@@ -39,8 +40,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mActivity = this;
         mContext = this;
+
+
+        animation = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
+
         PavilionFragment fragment1 = new PavilionFragment();
         moveToFragment(fragment1);
+
+
+
         inItView();
     }
 
@@ -48,16 +56,58 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(clickItemNavigation==0){
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            clickItemNavigation = bundle.getInt("type");
+        }
+
+
+        if (clickItemNavigation == 0) {
             PavilionFragment fragment1 = new PavilionFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==1){
+        } else if (clickItemNavigation == 1) {
+
             CoachFragment fragment1 = new CoachFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==2){
+
+            if (img_e.getVisibility() == View.GONE) {
+                img_e.setVisibility(View.VISIBLE);
+                img_e.startAnimation(animation);
+            }
+            if (li_e.getVisibility() == View.VISIBLE) {
+                li_e.setVisibility(View.GONE);
+            }
+
+            if (img_p.getVisibility() == View.VISIBLE) {
+                img_p.setVisibility(View.GONE);
+                img_p.clearAnimation();
+            }
+            if (li_p.getVisibility() == View.GONE) {
+                li_p.setVisibility(View.VISIBLE);
+            }
+
+            if (img_s.getVisibility() == View.VISIBLE) {
+                img_s.setVisibility(View.GONE);
+                img_s.clearAnimation();
+            }
+            if (li_s.getVisibility() == View.GONE) {
+                li_s.setVisibility(View.VISIBLE);
+            }
+
+            if (img_a.getVisibility() == View.VISIBLE) {
+                img_a.setVisibility(View.GONE);
+                img_a.clearAnimation();
+            }
+            if (li_a.getVisibility() == View.GONE) {
+                li_a.setVisibility(View.VISIBLE);
+            }
+
+
+        } else if (clickItemNavigation == 2) {
             StreamingFragment fragment1 = new StreamingFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==3){
+        } else if (clickItemNavigation == 3) {
             AcademyFragment fragment1 = new AcademyFragment();
             moveToFragment(fragment1);
         }
@@ -73,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         li_a = findViewById(R.id.li_a);
 
         img_p = findViewById(R.id.img_p);
-        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
         img_e = findViewById(R.id.img_e);
         img_s = findViewById(R.id.img_s);
         img_a = findViewById(R.id.img_a);
@@ -84,151 +133,151 @@ public class MainActivity extends AppCompatActivity {
         li_mA = findViewById(R.id.li_mA);
 
         li_mP.setOnClickListener(v -> {
-           clickItemNavigation =0;
+            clickItemNavigation = 0;
             PavilionFragment fragment1 = new PavilionFragment();
             moveToFragment(fragment1);
 
-            if(img_e.getVisibility()== View.VISIBLE){
+            if (img_e.getVisibility() == View.VISIBLE) {
                 img_e.setVisibility(View.GONE);
                 img_e.clearAnimation();
             }
-            if(li_e.getVisibility() == View.GONE){
+            if (li_e.getVisibility() == View.GONE) {
                 li_e.setVisibility(View.VISIBLE);
             }
 
-            if(img_p.getVisibility()== View.GONE){
+            if (img_p.getVisibility() == View.GONE) {
                 img_p.setVisibility(View.VISIBLE);
                 img_p.startAnimation(animation);
             }
-            if(li_p.getVisibility() == View.VISIBLE){
+            if (li_p.getVisibility() == View.VISIBLE) {
                 li_p.setVisibility(View.GONE);
             }
 
-            if(img_s.getVisibility()== View.VISIBLE){
+            if (img_s.getVisibility() == View.VISIBLE) {
                 img_s.setVisibility(View.GONE);
                 img_s.clearAnimation();
             }
-            if(li_s.getVisibility() == View.GONE){
+            if (li_s.getVisibility() == View.GONE) {
                 li_s.setVisibility(View.VISIBLE);
             }
 
-            if(img_a.getVisibility()== View.VISIBLE){
+            if (img_a.getVisibility() == View.VISIBLE) {
                 img_a.setVisibility(View.GONE);
                 img_a.clearAnimation();
             }
-            if(li_a.getVisibility() == View.GONE){
+            if (li_a.getVisibility() == View.GONE) {
                 li_a.setVisibility(View.VISIBLE);
             }
 
         });
         li_mE.setOnClickListener(v -> {
-            clickItemNavigation=1;
+            clickItemNavigation = 1;
             CoachFragment fragment1 = new CoachFragment();
             moveToFragment(fragment1);
 
-            if(img_e.getVisibility()== View.GONE){
+            if (img_e.getVisibility() == View.GONE) {
                 img_e.setVisibility(View.VISIBLE);
                 img_e.startAnimation(animation);
             }
-            if(li_e.getVisibility() == View.VISIBLE){
+            if (li_e.getVisibility() == View.VISIBLE) {
                 li_e.setVisibility(View.GONE);
             }
 
-            if(img_p.getVisibility()== View.VISIBLE){
+            if (img_p.getVisibility() == View.VISIBLE) {
                 img_p.setVisibility(View.GONE);
                 img_p.clearAnimation();
             }
-            if(li_p.getVisibility() == View.GONE){
+            if (li_p.getVisibility() == View.GONE) {
                 li_p.setVisibility(View.VISIBLE);
             }
 
-            if(img_s.getVisibility()== View.VISIBLE){
+            if (img_s.getVisibility() == View.VISIBLE) {
                 img_s.setVisibility(View.GONE);
                 img_s.clearAnimation();
             }
-            if(li_s.getVisibility() == View.GONE){
+            if (li_s.getVisibility() == View.GONE) {
                 li_s.setVisibility(View.VISIBLE);
             }
 
-            if(img_a.getVisibility()== View.VISIBLE){
+            if (img_a.getVisibility() == View.VISIBLE) {
                 img_a.setVisibility(View.GONE);
                 img_a.clearAnimation();
             }
-            if(li_a.getVisibility() == View.GONE){
+            if (li_a.getVisibility() == View.GONE) {
                 li_a.setVisibility(View.VISIBLE);
             }
         });
         li_mS.setOnClickListener(v -> {
-            clickItemNavigation=2;
+            clickItemNavigation = 2;
             StreamingFragment fragment1 = new StreamingFragment();
             moveToFragment(fragment1);
 
-            if(img_e.getVisibility()== View.VISIBLE){
+            if (img_e.getVisibility() == View.VISIBLE) {
                 img_e.setVisibility(View.GONE);
                 img_e.clearAnimation();
             }
-            if(li_e.getVisibility() == View.GONE){
+            if (li_e.getVisibility() == View.GONE) {
                 li_e.setVisibility(View.VISIBLE);
             }
 
-            if(img_s.getVisibility()== View.GONE){
+            if (img_s.getVisibility() == View.GONE) {
                 img_s.setVisibility(View.VISIBLE);
                 img_s.startAnimation(animation);
             }
-            if(li_s.getVisibility() == View.VISIBLE){
+            if (li_s.getVisibility() == View.VISIBLE) {
                 li_s.setVisibility(View.GONE);
             }
 
-            if(img_p.getVisibility()== View.VISIBLE){
+            if (img_p.getVisibility() == View.VISIBLE) {
                 img_p.setVisibility(View.GONE);
                 img_p.clearAnimation();
             }
-            if(li_p.getVisibility() == View.GONE){
+            if (li_p.getVisibility() == View.GONE) {
                 li_p.setVisibility(View.VISIBLE);
             }
 
-            if(img_a.getVisibility()== View.VISIBLE){
+            if (img_a.getVisibility() == View.VISIBLE) {
                 img_a.setVisibility(View.GONE);
                 img_a.clearAnimation();
             }
-            if(li_a.getVisibility() == View.GONE){
+            if (li_a.getVisibility() == View.GONE) {
                 li_a.setVisibility(View.VISIBLE);
             }
         });
         li_mA.setOnClickListener(v -> {
-            clickItemNavigation=3;
+            clickItemNavigation = 3;
             AcademyFragment fragment1 = new AcademyFragment();
             moveToFragment(fragment1);
 
-            if(img_e.getVisibility()== View.VISIBLE){
+            if (img_e.getVisibility() == View.VISIBLE) {
                 img_e.setVisibility(View.GONE);
                 img_e.clearAnimation();
             }
-            if(li_e.getVisibility() == View.GONE){
+            if (li_e.getVisibility() == View.GONE) {
                 li_e.setVisibility(View.VISIBLE);
             }
 
-            if(img_s.getVisibility()== View.VISIBLE){
+            if (img_s.getVisibility() == View.VISIBLE) {
                 img_s.setVisibility(View.GONE);
                 img_s.clearAnimation();
             }
-            if(li_s.getVisibility() == View.GONE){
+            if (li_s.getVisibility() == View.GONE) {
                 li_s.setVisibility(View.VISIBLE);
             }
 
-            if(img_p.getVisibility()== View.VISIBLE){
+            if (img_p.getVisibility() == View.VISIBLE) {
                 img_p.setVisibility(View.GONE);
                 img_p.clearAnimation();
             }
-            if(li_p.getVisibility() == View.GONE){
+            if (li_p.getVisibility() == View.GONE) {
                 li_p.setVisibility(View.VISIBLE);
             }
 
-            if(img_a.getVisibility()== View.GONE){
+            if (img_a.getVisibility() == View.GONE) {
                 img_a.setVisibility(View.VISIBLE);
                 img_a.startAnimation(animation);
             }
-            if(li_a.getVisibility() == View.VISIBLE){
+            if (li_a.getVisibility() == View.VISIBLE) {
                 li_a.setVisibility(View.GONE);
             }
         });
@@ -245,16 +294,16 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        if(clickItemNavigation==0){
+        if (clickItemNavigation == 0) {
             PavilionFragment fragment1 = new PavilionFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==1){
+        } else if (clickItemNavigation == 1) {
             CoachFragment fragment1 = new CoachFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==2){
+        } else if (clickItemNavigation == 2) {
             StreamingFragment fragment1 = new StreamingFragment();
             moveToFragment(fragment1);
-        }else if(clickItemNavigation==3){
+        } else if (clickItemNavigation == 3) {
             AcademyFragment fragment1 = new AcademyFragment();
             moveToFragment(fragment1);
         }

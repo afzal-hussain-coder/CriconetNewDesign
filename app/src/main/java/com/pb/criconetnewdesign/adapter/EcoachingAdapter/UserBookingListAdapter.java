@@ -3,20 +3,29 @@ package com.pb.criconetnewdesign.adapter.EcoachingAdapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.databinding.UserBookingListItemBinding;
+import com.pb.criconetnewdesign.model.Coaching.BookingHistory;
+import com.pb.criconetnewdesign.util.Global;
 
-public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingListAdapter.MyViewHolder>{
+import java.util.List;
+
+public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingListAdapter.MyViewHolder> {
     private Context mContext;
     coachItemClickListener coachItemClickListener;
-    
+    private List<BookingHistory.Datum> data;
 
-    public UserBookingListAdapter(Context mContext, coachItemClickListener coachItemClickListener){
-        this.mContext=mContext;
+
+    public UserBookingListAdapter(Context mContext, List<BookingHistory.Datum> data, coachItemClickListener coachItemClickListener) {
+        this.mContext = mContext;
+        this.data = data;
         this.coachItemClickListener = coachItemClickListener;
     }
 
@@ -29,14 +38,49 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        Glide.with(mContext).load(data.get(position).getAvatar()).into(holder.UserBookingListItemBinding.ivProfile);
+
         holder.itemView.setOnClickListener(v -> {
-            coachItemClickListener.viewDetails(position);
+            coachItemClickListener.viewDetails(data.get(position).getId());
         });
 
         holder.UserBookingListItemBinding.flSendFeedback.setOnClickListener(v -> {
             coachItemClickListener.sendFeedback(position);
         });
-       // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
+
+        holder.UserBookingListItemBinding.tvBookingDate.setText(
+                Global.convertUTCDateToLocalDate(data.get(position).getOnlineSessionStartTime()) + " , " + data.get(position).getBookingSlotTxt());
+
+        holder.UserBookingListItemBinding.tvBookingDuration.setText(mContext.getResources().getString(R.string.slot_duration) + " " + data.get(position).getSlotDuration()
+                + mContext.getString(R.string.minute));
+        holder.UserBookingListItemBinding.tvName.setText(data.get(position).getName());
+
+        if (data.get(position).getBtn1().equalsIgnoreCase("Confirmed")) {
+            holder.UserBookingListItemBinding.tvBookingStatus.setVisibility(View.VISIBLE);
+        } else {
+            holder.UserBookingListItemBinding.tvBookingStatus.setVisibility(View.GONE);
+        }
+
+        if (data.get(position).getBtn2() != null && !data.get(position).getBtn2().equalsIgnoreCase("")) {
+
+            try {
+                if (data.get(position).getChanel_id().equalsIgnoreCase("")) {
+                    holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.GONE);
+                } else {
+                    holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.VISIBLE);
+                    holder.UserBookingListItemBinding.tvJoin.setText(data.get(position).getBtn2() + " " + mContext.getResources().getString(R.string.session));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+        } else {
+            holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.GONE);
+        }
+
+
+        // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
 //
 //        holder.UserBookingListItemBinding.getRoot().setOnClickListener(v -> coachItemClickListener.viewDetails(position));
 //
@@ -46,9 +90,8 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
 
     @Override
     public int getItemCount() {
-        return 10;
+        return data.size();
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,10 +105,13 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         }
     }
 
-    public interface coachItemClickListener{
-        void viewDetails(int id);
+    public interface coachItemClickListener {
+        void viewDetails(String bookingId);
+
         void bookCoach(int id);
+
         void shareCoach();
+
         void sendFeedback(int id);
     }
 }

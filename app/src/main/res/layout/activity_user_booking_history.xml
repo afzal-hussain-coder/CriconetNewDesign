@@ -90,7 +90,8 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true">
+                android:layout_centerVertical="true"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -136,9 +137,24 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_10sdp"
             android:fadingEdge="vertical"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            android:visibility="visible">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+
+        <TextView
+            android:id="@+id/notfound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:text="@string/no_booking_available"
+            android:textColor="@color/bckground"
+            android:textSize="@dimen/_16sdp"
+            android:fontFamily="@font/opensans_semibold"
+            android:visibility="gone" />
 
 
     </LinearLayout>

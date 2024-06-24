@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">criconet</string>
     <string name="watch_learn">Watch. Learn. Bond.</string>
     <string name="the_best_ha">The best hangout for cricket lovers, right on your phone.</string>
@@ -393,5 +393,40 @@
     <string name="add_photo">Add Photo!</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="up_image">uploading_image</string>
+    <string name="Select_Slot_Available_Date">Select Slot Available Date</string>
+    <string name="Select_Time_Slot">Select Time Slot</string>
+    <string name="resend">Resend code</string>
+    <string name="price">"Price: "</string>
+    <string name="texex">"Taxes : "</string>
+    <string name="total_payable_amount">"Total Payable Amount: "</string>
+    <string name="subtotal">"Subtotal : "</string>
+    <string name="OFF">OFF</string>
+    <string name="offer_price">Offer price: </string>
+    <string name="offer_pricee">"Offer Price"</string>
+    <string name="session">Session</string>
+    <string name="enter_coupon_code">Enter Coupon Code</string>
+    <string name="coupon_discount">"Coupon Discount : "</string>
+    <string name="error_in_payment">"Error in payment: "</string>
+    <string name="bookingId">"Booking ID: "</string>
+    <string name="bookingConfirmed">confirmed!</string>
+    <string name="Booking_in_processing">Booking in processing!</string>
+    <string name="alert_cancel_booking">Do you want to cancel the booking?</string>
+    <string name="tearms_use_policy">I accept all the</string>
+    <string name="tearms_use_policyy">terms of the</string>
+    <string name="tearms_use_policyyy"><b>Cancellation Policy</b></string>
+    <string name="Cancellation_Feedback" translatable="false">Cancellation Feedback</string>
+    <string name="Please_choose_option">Please choose option!</string>
+    <string name="Please_type_your_feedback" tools:ignore="MissingTranslation">Please type your feedback!</string>
+    <string name="Please_check_to_accept_the_Cancellation_Policy">Please check to accept the Cancellation Policy</string>
+    <string name="done">Done</string>
+    <string name="remove_coupon">Remove Coupon</string>
+    <string name="no_booking_available">No Booking Available</string>
+    <string name="slot_duration">Slot Duration-</string>
+    <string name="minute">-minute</string>
+
+    <string name="By">By </string>
+
+
 
 </resources>

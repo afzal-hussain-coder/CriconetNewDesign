@@ -114,7 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                             activityLoginBinding.editTextUsername.setText("");
                             activityLoginBinding.editTextPassword.setText("");
 
-                            Toaster.customToast(jsonObject.optString("session_id"));
 
                             SessionManager.save_user_id(prefs, jsonObject.optString("user_id"));
                             SessionManager.save_session_id(prefs, jsonObject.optString("session_id"));

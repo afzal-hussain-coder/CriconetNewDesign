@@ -44,6 +44,7 @@ import com.pb.criconetnewdesign.inteface.pavilionInterface.PostListeners;
 import com.pb.criconetnewdesign.model.pavilionModel.ImageModel;
 import com.pb.criconetnewdesign.model.pavilionModel.NewPostModel;
 import com.pb.criconetnewdesign.util.Global;
+import com.pb.criconetnewdesign.util.SessionManager;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -231,22 +232,25 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 }
 
 //                ((MyImageViewHolder) holder).share_count.setText((data.getCount_post_shares() + " " + context.getString(R.string.share)));
-                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
-                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).like_link.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
-                } else {
-                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.GONE);
-                    ((MyImageViewHolder) holder).like_link.setVisibility(View.GONE);
-                }
-                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
-                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
-                } else {
-                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
-                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.GONE);
-                }
+//                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
+//                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).like_link.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+//                } else {
+//                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.GONE);
+//                    ((MyImageViewHolder) holder).like_link.setVisibility(View.GONE);
+//                }
+//                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
+//                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
+//                } else {
+//                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
+//                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.GONE);
+//                }
+
+                ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+                ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
                 // new work here
 
                 if (data.getIs_liked_by_me()) {
@@ -381,14 +385,14 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyImageViewHolder) holder).post_options.setOnClickListener(v -> {
                     if (data.getPublisher_type().equalsIgnoreCase("page")) {
                         if (data.getPublisher().getPageModel().getIs_page_onwer()) {
-                            showFilterPopupDelete(v, arrayList_image.get(position));
+                            showFilterPopupDelete(v, arrayList_image.get(position),position);
                         } else {
                             showFilterPopup(v, arrayList_image.get(position));
                         }
                     } else {
                         //data.getPublisherId().equals(SessionManager.get_user_id(prefs)) should be chnaged
-                        if (data.getPublisherId().equals("1387")) {
-                            showFilterPopupDelete(v, arrayList_image.get(position));
+                        if (data.getPublisherId().equals(SessionManager.get_user_id(prefs))) {
+                            showFilterPopupDelete(v, arrayList_image.get(position),position);
                         } else {
                             showFilterPopup(v, arrayList_image.get(position));
                         }
@@ -403,56 +407,106 @@ public class HomeAdapter extends AAH_VideosAdapter {
                     listeners.onShareClickListener(data);
                 });
                 // MyWork
-                ((MyImageViewHolder) holder).like.setOnClickListener(v -> {
-                    int likes_c = Integer.parseInt(data.getCount_post_likes());
-                    if (data.getIs_liked_by_me()) {
-                        data.setIs_liked_by_me(false);
-                        likes_c--;
-                        data.setCount_post_likes(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).like_link.setText((likes_c + ""));
-                        ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
-                        Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
-                        ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
-                    } else {
-                        data.setIs_liked_by_me(true);
-                        likes_c++;
-                        data.setCount_post_likes(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).like_link.setText((likes_c + ""));
-                        ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
-                        ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
-                        Glide.with(context).load(R.drawable.like_active).into(((MyImageViewHolder) holder).like_icon);
+                // MyWork
+                /*LIKE*/
+                ((MyImageViewHolder) holder).like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int likes_c = Integer.parseInt(data.getCount_post_likes());
+                        int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
+
+                        if(data.getIs_wondered_by_me()){
+
+                            data.setIs_wondered_by_me(false);
+                            dislikes_c--;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
+                            ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
+                            data.setIs_liked_by_me(true);
+                            likes_c++;
+                            data.setCount_post_likes(String.valueOf(likes_c));
+                            ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                            ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
+                            //((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                            Glide.with(context).load(R.drawable.like_active).into(((MyImageViewHolder) holder).like_icon);
+                            ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                        }else{
+                            if (data.getIs_liked_by_me()) {
+                                data.setIs_liked_by_me(false);
+                                likes_c--;
+                                data.setCount_post_likes(String.valueOf(likes_c));
+                                ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                                ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                                Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
+                                ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                            } else {
+                                data.setIs_liked_by_me(true);
+                                likes_c++;
+                                data.setCount_post_likes(String.valueOf(likes_c));
+                                ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                                ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
+                                //((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                                Glide.with(context).load(R.drawable.like_active).into(((MyImageViewHolder) holder).like_icon);
+                                ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                            }
+                        }
+
+
+
+                        listeners.onLikeClickListener(data);
+                        //updatePost(data.getId(), position);
                     }
-                    listeners.onLikeClickListener(data);
-                    updatePost(data.getId(), position);
-//                        if (likes_c > 0)
-//                            ((MyImageViewHolder) holder).like_link.setVisibility(View.VISIBLE);
-//                        else
-//                            ((MyImageViewHolder) holder).like_link.setVisibility(View.GONE);
                 });
-                ((MyImageViewHolder) holder).dislike.setOnClickListener(v -> {
-                    int likes_c = Integer.parseInt(data.getCount_post_wonders());
-                    if (data.getIs_wondered_by_me()) {
-                        data.setIs_wondered_by_me(false);
-                        likes_c--;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).dislike_link.setText((likes_c + ""));
-                        Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
-                        ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
-                    } else {
-                        data.setIs_wondered_by_me(true);
-                        likes_c++;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).dislike_link.setText((likes_c + ""));
-                        ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
-                        Glide.with(context).load(R.drawable.dislike_active).into(((MyImageViewHolder) holder).dislike_icon);
+
+                /*DISLIKE*/
+                ((MyImageViewHolder) holder).dislike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
+                        int likesCount = Integer.parseInt(data.getCount_post_likes());
+
+                        if(data.getIs_liked_by_me()){
+                            data.setIs_liked_by_me(false);
+                            likesCount--;
+                            data.setCount_post_likes(String.valueOf(likesCount));
+                            ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                            ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likesCount)));
+                            Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
+                            ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
+                            data.setIs_wondered_by_me(true);
+                            dislikes_c++;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike_active).into(((MyImageViewHolder) holder).dislike_icon);
+                            ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+
+                        }else{
+                            if (data.getIs_wondered_by_me()) {
+                                data.setIs_wondered_by_me(false);
+                                dislikes_c--;
+                                data.setCount_post_wonders(String.valueOf(dislikes_c));
+                                ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                                Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
+                                ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                            } else {
+                                data.setIs_wondered_by_me(true);
+                                dislikes_c++;
+                                data.setCount_post_wonders(String.valueOf(dislikes_c));
+                                ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                                Glide.with(context).load(R.drawable.dislike_active).into(((MyImageViewHolder) holder).dislike_icon);
+                                ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+                            }
+                        }
+
+
+                        listeners.onDislikeClickListener(data);
+                        //updatePost(data.getId(), position);
                     }
-//                        if (likes_c > 0)
-//                            ((MyImageViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
-//                        else
-//                            ((MyImageViewHolder) holder).dislike_link.setVisibility(View.GONE);
-                    listeners.onDislikeClickListener(data);
-                    updatePost(data.getId(), position);
                 });
+
                 ((MyImageViewHolder) holder).user_name.setOnClickListener(v -> {
 //                        if (!data.getPublisherId().equalsIgnoreCase(SessionManager.get_user_id(prefs))) {
                     listeners.onProfileClickListener(data);
@@ -517,22 +571,25 @@ public class HomeAdapter extends AAH_VideosAdapter {
                     ((MyViewHolder) holder).comment_count.setText((data.getCount_post_comments() + " " + context.getString(R.string.commentss)));
                 }
 
-                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
-                    ((MyViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
-                    ((MyViewHolder) holder).like_link.setVisibility(View.VISIBLE);
-                    ((MyViewHolder) holder).like_link.setText((data.getCount_post_likes()));
-                } else {
-                    ((MyViewHolder) holder).img_link_like.setVisibility(View.GONE);
-                    ((MyViewHolder) holder).like_link.setVisibility(View.GONE);
-                }
-                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
-                    ((MyViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
-                    ((MyViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
-                    ((MyViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
-                } else {
-                    ((MyViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
-                    ((MyViewHolder) holder).dislike_link.setVisibility(View.GONE);
-                }
+//                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
+//                    ((MyViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
+//                    ((MyViewHolder) holder).like_link.setVisibility(View.VISIBLE);
+//                    ((MyViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+//                } else {
+//                    ((MyViewHolder) holder).img_link_like.setVisibility(View.GONE);
+//                    ((MyViewHolder) holder).like_link.setVisibility(View.GONE);
+//                }
+//                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
+//                    ((MyViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
+//                    ((MyViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
+//                    ((MyViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
+//                } else {
+//                    ((MyViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
+//                    ((MyViewHolder) holder).dislike_link.setVisibility(View.GONE);
+//                }
+
+                ((MyViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+                ((MyViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
 
                 // new work by me
                 if (data.getIs_liked_by_me()) {
@@ -695,14 +752,14 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyViewHolder) holder).post_options.setOnClickListener(v -> {
                     if (data.getPublisher_type().equalsIgnoreCase("page")) {
                         if (data.getPublisher().getPageModel().getIs_page_onwer()) {
-                            showFilterPopupDelete(v, arrayList_image.get(position));
+                            showFilterPopupDelete(v, arrayList_image.get(position),position);
                         } else {
                             showFilterPopup(v, arrayList_image.get(position));
                         }
                     } else {
                         //data.getPublisherId().equals(SessionManager.get_user_id(prefs)) should be chnaged
-                        if (data.getPublisherId().equals("1387")) {
-                            showFilterPopupDelete(v, arrayList_image.get(position));
+                        if (data.getPublisherId().equals(SessionManager.get_user_id(prefs))) {
+                            showFilterPopupDelete(v, arrayList_image.get(position),position);
                         } else {
                             showFilterPopup(v, arrayList_image.get(position));
                         }
@@ -715,51 +772,102 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyViewHolder) holder).share.setOnClickListener(v -> listeners.onShareClickListener(data));
 
 // MyWork
-                ((MyViewHolder) holder).like.setOnClickListener(v -> {
-                    int likes_c = Integer.parseInt(data.getCount_post_likes());
-                    if (data.getIs_liked_by_me()) {
-                        data.setIs_liked_by_me(false);
-                        likes_c--;
-                        data.setCount_post_likes(String.valueOf(likes_c));
-                        ((MyViewHolder) holder).like_link.setText((likes_c + ""));
-                        Glide.with(context).load(R.drawable.like).into(((MyViewHolder) holder).like_icon);
-                        ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
-                        ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                ((MyViewHolder) holder).like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int likes_c = Integer.parseInt(data.getCount_post_likes());
+                        int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
 
-                    } else {
-                        data.setIs_liked_by_me(true);
-                        likes_c++;
-                        data.setCount_post_likes(String.valueOf(likes_c));
-                        ((MyViewHolder) holder).like_link.setText((likes_c + ""));
-                        ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
-                        ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
-                        Glide.with(context).load(R.drawable.like_active).into(((MyViewHolder) holder).like_icon);
+                        if(data.getIs_wondered_by_me()){
+
+                            data.setIs_wondered_by_me(false);
+                            dislikes_c--;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike).into(((MyViewHolder) holder).dislike_icon);
+                            ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
+                            data.setIs_liked_by_me(true);
+                            likes_c++;
+                            data.setCount_post_likes(String.valueOf(likes_c));
+                            ((MyViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                            ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
+                            //((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                            Glide.with(context).load(R.drawable.like_active).into(((MyViewHolder) holder).like_icon);
+                            ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                        }else{
+                            if (data.getIs_liked_by_me()) {
+                                data.setIs_liked_by_me(false);
+                                likes_c--;
+                                data.setCount_post_likes(String.valueOf(likes_c));
+                                ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                                ((MyViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                                Glide.with(context).load(R.drawable.like).into(((MyViewHolder) holder).like_icon);
+                                ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                            } else {
+                                data.setIs_liked_by_me(true);
+                                likes_c++;
+                                data.setCount_post_likes(String.valueOf(likes_c));
+                                ((MyViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                                ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
+                                //((MyViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                                Glide.with(context).load(R.drawable.like_active).into(((MyViewHolder) holder).like_icon);
+                                ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                            }
+                        }
+
+
+
+                        listeners.onLikeClickListener(data);
+                        //updatePost(data.getId(), position);
                     }
-                    listeners.onLikeClickListener(data);
-                    updatePost(data.getId(), position);
-
                 });
 
-                ((MyViewHolder) holder).dislike.setOnClickListener(v -> {
-                    int likes_c = Integer.parseInt(data.getCount_post_wonders());
-                    if (data.getIs_wondered_by_me()) {
-                        data.setIs_wondered_by_me(false);
-                        likes_c--;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyViewHolder) holder).dislike_link.setText((likes_c + ""));
-                        Glide.with(context).load(R.drawable.dislike).into(((MyViewHolder) holder).dislike_icon);
-                        ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
-                    } else {
-                        data.setIs_wondered_by_me(true);
-                        likes_c++;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyViewHolder) holder).dislike_link.setText((likes_c + ""));
-                        ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
-                        Glide.with(context).load(R.drawable.dislike_active).into(((MyViewHolder) holder).dislike_icon);
-                    }
+                /*DISLIKE*/
+                ((MyViewHolder) holder).dislike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
+                        int likesCount = Integer.parseInt(data.getCount_post_likes());
 
-                    listeners.onDislikeClickListener(data);
-                    updatePost(data.getId(), position);
+                        if(data.getIs_liked_by_me()){
+                            data.setIs_liked_by_me(false);
+                            likesCount--;
+                            data.setCount_post_likes(String.valueOf(likesCount));
+                            ((MyViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                            ((MyViewHolder) holder).like_link.setText((String.valueOf(likesCount)));
+                            Glide.with(context).load(R.drawable.like).into(((MyViewHolder) holder).like_icon);
+                            ((MyViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
+                            data.setIs_wondered_by_me(true);
+                            dislikes_c++;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike_active).into(((MyViewHolder) holder).dislike_icon);
+                            ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+
+                        }else{
+                            if (data.getIs_wondered_by_me()) {
+                                data.setIs_wondered_by_me(false);
+                                dislikes_c--;
+                                data.setCount_post_wonders(String.valueOf(dislikes_c));
+                                ((MyViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                                Glide.with(context).load(R.drawable.dislike).into(((MyViewHolder) holder).dislike_icon);
+                                ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                            } else {
+                                data.setIs_wondered_by_me(true);
+                                dislikes_c++;
+                                data.setCount_post_wonders(String.valueOf(dislikes_c));
+                                ((MyViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                                Glide.with(context).load(R.drawable.dislike_active).into(((MyViewHolder) holder).dislike_icon);
+                                ((MyViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+                            }
+                        }
+
+
+                        listeners.onDislikeClickListener(data);
+                        //updatePost(data.getId(), position);
+                    }
                 });
 
                 ((MyViewHolder) holder).user_name.setOnClickListener(v -> listeners.onProfileClickListener(data));
@@ -967,22 +1075,25 @@ public class HomeAdapter extends AAH_VideosAdapter {
                     ((MyImageViewHolder) holder).comment_count.setText((data.getCount_post_comments() + " " + context.getString(R.string.commentss)));
                 }
 
-                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
-                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).like_link.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
-                } else {
-                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.GONE);
-                    ((MyImageViewHolder) holder).like_link.setVisibility(View.GONE);
-                }
-                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
-                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
-                } else {
-                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
-                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.GONE);
-                }
+//                if (Integer.parseInt(data.getCount_post_likes()) > 0) {
+//                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).like_link.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+//                } else {
+//                    ((MyImageViewHolder) holder).img_link_like.setVisibility(View.GONE);
+//                    ((MyImageViewHolder) holder).like_link.setVisibility(View.GONE);
+//                }
+//                if (Integer.parseInt(data.getCount_post_wonders()) > 0) {
+//                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.VISIBLE);
+//                    ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
+//                } else {
+//                    ((MyImageViewHolder) holder).img_link_dislike.setVisibility(View.GONE);
+//                    ((MyImageViewHolder) holder).dislike_link.setVisibility(View.GONE);
+//                }
+
+                ((MyImageViewHolder) holder).like_link.setText((data.getCount_post_likes()));
+                ((MyImageViewHolder) holder).dislike_link.setText((data.getCount_post_wonders()));
 
                 // new work by me
                 if (data.getIs_liked_by_me()) {
@@ -1005,14 +1116,14 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyImageViewHolder) holder).post_options.setOnClickListener(v -> {
                         if (data.getPublisher_type().equalsIgnoreCase("page")) {
                             if (data.getPublisher().getPageModel().getIs_page_onwer()) {
-                                showFilterPopupDelete(v, arrayList_image.get(position));
+                                showFilterPopupDelete(v, arrayList_image.get(position),position);
                             } else {
                                 showFilterPopup(v, arrayList_image.get(position));
                             }
                         } else {
                             //data.getPublisherId().equals(SessionManager.get_user_id(prefs)) should be chnaged
-                            if (data.getPublisherId().equals("1387")) {
-                                showFilterPopupDelete(v, arrayList_image.get(position));
+                            if (data.getPublisherId().equals(SessionManager.get_user_id(prefs))) {
+                                showFilterPopupDelete(v, arrayList_image.get(position),position);
                             } else {
                                 showFilterPopup(v, arrayList_image.get(position));
                             }
@@ -1023,50 +1134,100 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyImageViewHolder) holder).comment.setOnClickListener(v -> listeners.onCommentClickListener(data));
                 ((MyImageViewHolder) holder).tv_comment_count.setOnClickListener(v -> listeners.onCommentClickListener(data));
                 ((MyImageViewHolder) holder).share.setOnClickListener(v -> listeners.onShareClickListener(data));
+
+                /*LIKE*/
                 ((MyImageViewHolder) holder).like.setOnClickListener(v -> {
                     int likes_c = Integer.parseInt(data.getCount_post_likes());
-                    if (data.getIs_liked_by_me()) {
-                        data.setIs_liked_by_me(false);
-                        likes_c--;
-                        data.setCount_post_likes(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
-                        ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
-                        Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
-                        ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
-                    } else {
+                    int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
+
+                    if(data.getIs_wondered_by_me()){
+
+                        data.setIs_wondered_by_me(false);
+                        dislikes_c--;
+                        data.setCount_post_wonders(String.valueOf(dislikes_c));
+                        ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                        Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
+                        ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
                         data.setIs_liked_by_me(true);
                         likes_c++;
                         data.setCount_post_likes(String.valueOf(likes_c));
                         ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
                         ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
-                        ((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                        //((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
                         Glide.with(context).load(R.drawable.like_active).into(((MyImageViewHolder) holder).like_icon);
-                        // ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                        ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                    }else{
+                        if (data.getIs_liked_by_me()) {
+                            data.setIs_liked_by_me(false);
+                            likes_c--;
+                            data.setCount_post_likes(String.valueOf(likes_c));
+                            ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                            ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                            Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
+                            ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                        } else {
+                            data.setIs_liked_by_me(true);
+                            likes_c++;
+                            data.setCount_post_likes(String.valueOf(likes_c));
+                            ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likes_c)));
+                            ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Liked));
+                            //((MyImageViewHolder) holder).like_link.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                            Glide.with(context).load(R.drawable.like_active).into(((MyImageViewHolder) holder).like_icon);
+                            ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
+                        }
                     }
 
+
+
                     listeners.onLikeClickListener(data);
-                    updatePost(data.getId(), position);
+                    //updatePost(data.getId(), position);
                 });
+
+                /*DISLIKE*/
                 ((MyImageViewHolder) holder).dislike.setOnClickListener(v -> {
-                    int likes_c = Integer.parseInt(data.getCount_post_wonders());
-                    if (data.getIs_wondered_by_me()) {
-                        data.setIs_wondered_by_me(false);
-                        likes_c--;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(likes_c)));
-                        Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
-                        ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.liked_color)));
-                    } else {
+                    int dislikes_c = Integer.parseInt(data.getCount_post_wonders());
+                    int likesCount = Integer.parseInt(data.getCount_post_likes());
+
+                    if(data.getIs_liked_by_me()){
+                        data.setIs_liked_by_me(false);
+                        likesCount--;
+                        data.setCount_post_likes(String.valueOf(likesCount));
+                        ((MyImageViewHolder) holder).like_count.setText(context.getResources().getString(R.string.Like));
+                        ((MyImageViewHolder) holder).like_link.setText((String.valueOf(likesCount)));
+                        Glide.with(context).load(R.drawable.like).into(((MyImageViewHolder) holder).like_icon);
+                        ((MyImageViewHolder) holder).like_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+
                         data.setIs_wondered_by_me(true);
-                        likes_c++;
-                        data.setCount_post_wonders(String.valueOf(likes_c));
-                        ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(likes_c)));
+                        dislikes_c++;
+                        data.setCount_post_wonders(String.valueOf(dislikes_c));
+                        ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
                         Glide.with(context).load(R.drawable.dislike_active).into(((MyImageViewHolder) holder).dislike_icon);
                         ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+
+                    }else{
+                        if (data.getIs_wondered_by_me()) {
+                            data.setIs_wondered_by_me(false);
+                            dislikes_c--;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike).into(((MyImageViewHolder) holder).dislike_icon);
+                            ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.blue_intro_color)));
+                        } else {
+                            data.setIs_wondered_by_me(true);
+                            dislikes_c++;
+                            data.setCount_post_wonders(String.valueOf(dislikes_c));
+                            ((MyImageViewHolder) holder).dislike_link.setText((String.valueOf(dislikes_c)));
+                            Glide.with(context).load(R.drawable.dislike_active).into(((MyImageViewHolder) holder).dislike_icon);
+                            ((MyImageViewHolder) holder).dislike_count.setTextColor((context.getResources().getColor(R.color.disliked_color)));
+                        }
                     }
+
+
                     listeners.onDislikeClickListener(data);
-                    updatePost(data.getId(), position);
+                    //updatePost(data.getId(), position);
                 });
+
                 ((MyImageViewHolder) holder).user_name.setOnClickListener(v -> {
 //                        if (!data.getPublisherId().equalsIgnoreCase(SessionManager.get_user_id(prefs)))
                     listeners.onProfileClickListener(data);
@@ -1127,13 +1288,9 @@ public class HomeAdapter extends AAH_VideosAdapter {
     }
 
     // Display anchored popup menu based on view selected
-    private void showFilterPopupDelete(View v, final NewPostModel feed) {
-        PopupMenu popup = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-            popup = new PopupMenu(context, v, Gravity.END, 0, R.style.MyPopupMenu);
-        }else{
-            popup = new PopupMenu(context, v);
-        }
+
+    private void showFilterPopupDelete(View v, final NewPostModel feed,int pos) {
+        PopupMenu popup = new PopupMenu(context, v, Gravity.END);
         // Inflate the menu from xml
         popup.inflate(R.menu.popup_filter_del);
 
@@ -1142,7 +1299,8 @@ public class HomeAdapter extends AAH_VideosAdapter {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_delete:
-                        listeners.onDeleteFeedListener(feed.getId());
+                        // listeners.onDeleteFeedListener(feed.getId());
+                        listeners.onPostDeleteFeedListener(feed.getId(), pos);
                         return true;
                     /*case R.id.menu_edit:
                         listeners.onEditFeedListener(feed.getId(),feed.getPostText());
@@ -1156,6 +1314,7 @@ public class HomeAdapter extends AAH_VideosAdapter {
         // Show the menu
         popup.show();
     }
+
 
     private void showFilterPopup(View v, final NewPostModel feed) {
         PopupMenu popup = null;

@@ -30,6 +30,7 @@
     <color name="bckground">#4a4a4a</color>
     <color name="darkGray">#808080</color>
     <color name="dimGray">#696969</color>
+    <color name="light_text_color">#FFFFFF</color>
 
     <color name="blue">#2778C9</color>
 
@@ -48,6 +49,11 @@
     <color name="white_smoke">#f5f5f5</color>
     <color name="dim_grey">#696969</color>
     <color name="light_grey">#EFEFEF</color>
+
+    <color name="app_red">#b4604e</color>
+    <color name="app_redd">#430f02</color>
+
+    <color name="black50">#80000000</color>
 
 
 

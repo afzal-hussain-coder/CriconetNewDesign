@@ -16,16 +16,24 @@ import static com.pb.criconetnewdesign.util.Global.PRIVACY_PEOPLE_I_FOLLOW;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -41,8 +49,10 @@ import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,10 +117,13 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -125,15 +138,12 @@ public class PavilionFragment extends Fragment implements PostListeners {
     private static final int PICK_IMAGE_id = 100;
     private static final int CAPTURE_VIDEO = 3015;
     private static final int PICK_VIDEO = 300;
-    private View rootView;
     private SharedPreferences prefs;
     private AAH_CustomRecyclerView post_list;
-    private ProgressDialog progress;
     private RequestQueue queue;
     public ArrayList<NewPostModel> modelArrayList;
     private HomeAdapter adapter;
-    private ImageView user_image, up_image;
-    private RelativeLayout add_chat;
+    private ImageView up_image;
     LinearLayout add_photo, add_video;
     private TextView notfound;
     private EditText up_text;
@@ -146,32 +156,17 @@ public class PavilionFragment extends Fragment implements PostListeners {
     private String file_pathid = "", image_pathid = "";
     private String postFile = "";
     private String filemanagerstring = " ";
-    private byte[] byteArray;
     private String after_post_id = "0";
-    private Switch privacy_setting;
-    private TextView privacy;
     private int postPrivacy = 0;
-    private ImageView link_image;
-    private RelativeLayout link_layout;
-    private TextView link_title, link_content;
     private Spinner spn_privacy;
     private String url_link, url_title, url_content, url_image;
     CustomLoaderView loaderView;
-    int page = 1;
     private LinearLayoutManager mLayoutManager;
     private ArrayList<String> images;
     private boolean isLoading = false;
     // total no. of pages to load. Initial load is page 0, after which
     // If current page is the last page (Pagination will stop after this page load)
     private boolean isLastPage = false;
-    private long totalSize = 0;
-    private SlideUp slideUp;
-    private View dim, rootViewPost;
-    private View slideView;
-    private LinearLayout send_panel;
-    private TextView tv_post;
-    private ImageView img_addpost, img_close;
-    private String postId = "";
 
     /*search user view initialize here*/
     private RecyclerView rv_searchUser;
@@ -182,6 +177,73 @@ public class PavilionFragment extends Fragment implements PostListeners {
     String gameSettingsStataus = "";
 
     ImageView iv_logout;
+    FrameLayout fl_post;
+
+
+    ActivityResultLauncher<Intent> videolaunchercamera = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (null != result.getData()) {
+                        try {
+
+                            postFile = getRealPathFromURI(result.getData().getData(), requireContext());
+
+                            // Bitmap bitmap = getVideoThumbnail(requireContext(), result.getData().getData());
+                            //Toaster.customToast(bitmap + "");
+                            up_image.setVisibility(View.VISIBLE);
+                            // Glide.with(requireContext()).load(postFile).into(up_image);
+
+                            Uri videoUri = Uri.fromFile(new File(postFile));
+
+                            Bitmap thumbnail = getVideoThumbnail(getContext(), videoUri);
+
+                            if (thumbnail != null) {
+                                up_image.setImageBitmap(thumbnail);
+                            }
+
+                            //up_image.setImageBitmap(bitmap);
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+
+    ActivityResultLauncher<Intent> galleryActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        List<Uri> selectedImages = new ArrayList<>();
+                        if (result.getData() != null && result.getData().getData() != null) {
+                            // Single image selection
+                            selectedImages.add(result.getData().getData());
+                        } else if (result.getData() != null && result.getData().getClipData() != null) {
+                            // Multiple image selection
+                            ClipData clipData = result.getData().getClipData();
+                            for (int i = 0; i < clipData.getItemCount(); i++) {
+                                selectedImages.add(clipData.getItemAt(i).getUri());
+                            }
+                        }
+                        // Now you can handle the selectedImages list
+                        // For example, you can iterate through it and display the images in imageView
+
+                        try {
+                            Bitmap bitmap = BitmapFactory.decodeStream(requireContext().getContentResolver().openInputStream(selectedImages.get(0)));
+                            up_image.setImageBitmap(bitmap);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        Glide.with(getActivity()).load(selectedImages.get(0)).into(up_image);
+
+                    }
+                }
+            });
 
     public PavilionFragment() {
         // Required empty public constructor
@@ -192,13 +254,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pavallion, container, false);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        View view = inflater.inflate(R.layout.fragment_pavallion, container, false);
 
         RelativeLayout layout_nav = view.findViewById(R.id.layout_nav);
 
@@ -243,6 +300,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         ImageView img_add_post = view.findViewById(R.id.img_add_post);
         ImageView img_close_post = view.findViewById(R.id.img_close_post);
         RelativeLayout rl_add_post = view.findViewById(R.id.rl_add_post);
+        rl_add_post.setVisibility(View.GONE);
 
         img_add_post.setOnClickListener(v -> {
             rl_add_post.startAnimation(animation_down);
@@ -261,17 +319,38 @@ public class PavilionFragment extends Fragment implements PostListeners {
             rl_add_post.setVisibility(View.GONE);
         });
 
-
         loaderView = CustomLoaderView.initialize(getActivity());
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         queue = Volley.newRequestQueue(getActivity());
+
         initializeView(view);
-        post_list = view.findViewById(R.id.post_list);
+
+        drawerNavigation(layout_nav);
+
+        return view;
+    }
+
+
+    private void initializeView(View rootView) {
+        rv_searchUser = rootView.findViewById(R.id.rv_searchUser);
+        rv_searchUser.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv_searchUser.setHasFixedSize(true);
+
+        fl_post = rootView.findViewById(R.id.fl_post);
+        post_list = rootView.findViewById(R.id.post_list);
+        up_image = rootView.findViewById(R.id.up_image);
+        add_photo = rootView.findViewById(R.id.add_photo);
+        add_video = rootView.findViewById(R.id.add_video);
+        notfound = rootView.findViewById(R.id.notfound);
+        up_text = rootView.findViewById(R.id.up_text);
+        spn_privacy = rootView.findViewById(R.id.spn_privacy);
+
+        post_list = rootView.findViewById(R.id.post_list);
         DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
         post_list.addItemDecoration(itemDecorator);
         post_list.setHasFixedSize(true);
-        notfound = view.findViewById(R.id.notfound);
+        notfound = rootView.findViewById(R.id.notfound);
         modelArrayList = new ArrayList<>();
         adapter = new HomeAdapter(getActivity(), modelArrayList, this);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -304,88 +383,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
             Global.showDialog(getActivity());
         }
 
-        post_list.addOnScrollListener(new RecycleViewPaginationScrollListener(mLayoutManager) {
-            @Override
-            protected void loadMoreItems() {
-                isLoading = true;
-//                    page++;
-                after_post_id = modelArrayList.get(modelArrayList.size() - 1).getId();
-                getFeed();
-            }
 
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-
-        });
-
-        drawerNavigation(layout_nav);
-    }
-
-    private void initializeView(View rootView) {
-        rv_searchUser = rootView.findViewById(R.id.rv_searchUser);
-        rv_searchUser.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_searchUser.setHasFixedSize(true);
-
-
-//        rootViewPost = rootView.findViewById(R.id.root_view);
-//        slideView = rootView.findViewById(R.id.slideView);
-//        dim = rootView.findViewById(R.id.dim);
-//        send_panel = rootView.findViewById(R.id.send_panel);
-//        slideUp = new SlideUpBuilder(slideView)
-//                .withListeners(new SlideUp.Listener.Events() {
-//                    @Override
-//                    public void onSlide(float percent) {
-//                        dim.setAlpha(1 - (percent / 100));
-//                        if (percent < 100) {
-//                            // slideUp started showing
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onVisibilityChanged(int visibility) {
-//                        if (visibility == View.GONE) {
-//                        }
-//                    }
-//                })
-//                .withStartGravity(Gravity.BOTTOM)
-//                .withLoggingEnabled(true)
-//                .withStartState(SlideUp.State.HIDDEN)
-//                .withSlideFromOtherView(rootView)
-//                .build();
-//        tvCancel.setOnClickListener(v -> {
-//            slideUp.hide();
-//        });
-
-        post_list = rootView.findViewById(R.id.post_list);
-//        user_image = rootView.findViewById(R.id.user_image);
-//        up_image = rootView.findViewById(R.id.up_image);
-        add_photo = rootView.findViewById(R.id.add_photo);
-        add_video = rootView.findViewById(R.id.add_video);
-//        add_chat = rootView.findViewById(R.id.add_chat);
-        notfound = rootView.findViewById(R.id.notfound);
-        up_text = rootView.findViewById(R.id.up_text);
-//        privacy_setting = rootView.findViewById(R.id.privacy_setting);
-//        privacy = rootView.findViewById(R.id.privacy);
-//        link_image = rootView.findViewById(R.id.link_image);
-//        link_layout = rootView.findViewById(R.id.link_layout);
-//        link_title = rootView.findViewById(R.id.link_title);
-//        link_content = rootView.findViewById(R.id.link_content);
-        spn_privacy = rootView.findViewById(R.id.spn_privacy);
-
-
-//        if (!SessionManager.get_image(prefs).isEmpty()) {
-//            Glide.with(getActivity()).load(SessionManager.get_image(prefs)).into(user_image);
-//        } else {
-//            Glide.with(getActivity()).load(getResources().getDrawable(R.drawable.user_default)).into(user_image);
-//        }
         ResetFeed();
 
         up_text.addTextChangedListener(new TextWatcher() {
@@ -425,7 +423,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 //
                     String finalWord = lastWord.substring(lastWord.lastIndexOf(" ") + 1);
 
-                    Toaster.customToast(finalWord);
 
                     // Toaster.customToast(lastWordd);
 
@@ -455,7 +452,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
             public void afterTextChanged(Editable s) {
 
                 if (s.length() > 0) {
-//                    tv_post.setVisibility(View.VISIBLE);
 //                    img_close.setVisibility(View.GONE);
                     if (!postType.equalsIgnoreCase(POST_TYPE_IMAGE) &&
                             !postType.equalsIgnoreCase(POST_TYPE_MULTI_IMAGE) &&
@@ -475,7 +471,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
                     if (!postType.equalsIgnoreCase("Image") && !postType.equalsIgnoreCase("multi_image") && !postType.equalsIgnoreCase("Video")) {
                         postType = "";
-//                        tv_post.setVisibility(View.GONE);
 //                        img_close.setVisibility(View.VISIBLE);
                         //setHasOptionsMenu(false);
                     }
@@ -515,6 +510,10 @@ public class PavilionFragment extends Fragment implements PostListeners {
             @Override
             public void onClick(View v) {
                 postType = POST_TYPE_IMAGE;
+
+                //now = System.currentTimeMillis();
+                //System.out.println(now+"taken time");
+
                 openCameraAndGalleryDialog(postType);
                 //selectImage();
 
@@ -529,41 +528,20 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 // selectVideo();
             }
         });
-//
-//        privacy_setting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    privacy.setText("Public");
-//                    postPrivacy = POST_PRIVACY_PUBLIC;
-//                } else {
-//                    privacy.setText("Private");
-//                    postPrivacy = POST_PRIVACY_PRIVATE;
-//                }
-//            }
-//        });
-//
-//
-//        tv_post.setOnClickListener(v -> {
-//            searchUsername ="";
-//            feedText = up_text.getText().toString().trim();
-//            if (postType.equals(POST_TYPE_VIDEO)) {
-//                //uploadVideoToServer(feedText);
-//                PostFeedFinal(feedText);
-//                //new UploadFileToServer().execute();
-//            } else {
-//                PostFeedFinal(feedText);
-//            }
-//
-//        });
-//            add_chat.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    getFragmentManager().beginTransaction().replace(R.id.frame_container, new PrivateChatList())
-////                            .addToBackStack(null).commit();
-//                }
-//            });
-//            getProfileDetails();
+
+        fl_post.setOnClickListener(v -> {
+            searchUsername = "";
+            feedText = up_text.getText().toString().trim();
+            if (postType.equals(POST_TYPE_VIDEO)) {
+                //uploadVideoToServer(feedText);
+                PostFeedFinal(feedText);
+                //new UploadFileToServer().execute();
+            } else {
+                PostFeedFinal(feedText);
+            }
+
+        });
+
     }
 
     private void drawerNavigation(RelativeLayout layout_nav) {
@@ -707,7 +685,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
             public void onResponse(String response) {
                 Log.d("homeResponse", response);
                 loaderView.hideLoader();
-                //progress.dismiss();
                 try {
                     JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
@@ -716,23 +693,10 @@ public class PavilionFragment extends Fragment implements PostListeners {
                             isLastPage = true;
                         }
                         modelArrayList.addAll(NewPostModel.fromJson(array));
-//                                Timber.e(modelArrayList.toString());
 
                         isLoading = false;
-                        adapter.notifyDataSetChanged();
 
-//                        if(modelArrayList.size()>0){
-//                            String pID="30811";
-//
-//                            for(int i=0;i<modelArrayList.size();i++){
-//
-//                                if(pID.equalsIgnoreCase(modelArrayList.get(i).getId())){
-//                                    //Toaster.customToast(modelArrayList.get(i).getId()+"/"+i);
-//                                    post_list.getLayoutManager().scrollToPosition(i);
-//                                    break;
-//                                }
-//                            }
-//                        }
+                        adapter.notifyDataSetChanged();
 
                         if (after_post_id.equals("0")) {
 //                                if (page == 1) {
@@ -759,10 +723,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //progress.dismiss();
                 loaderView.hideLoader();
                 Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-//                Global.msgDialog(Login.this, "Internet connection is slow");
             }
         }) {
             @Override
@@ -771,7 +733,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("after_post_id", after_post_id);
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavallion", param.toString());
+
+                //Timber.e(param.toString());
                 return param;
             }
         };
@@ -913,40 +876,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         }
     }
 
-//    private void selectImage() {
-//        slideUp.show();
-//        tv_choose.setText(R.string.Choose_Post_Photo);
-//        tv_camera.setOnClickListener(v -> {
-//            slideUp.hide();
-//            openCamera();
-//        });
-//        tvGallery.setOnClickListener(v -> {
-//            slideUp.hide();
-//            //multiGallery();
-//        });
-//        tvCancel.setOnClickListener(v -> {
-//            postType = "";
-//            slideUp.hide();
-//        });
-//    }
-//
-//    private void selectVideo() {
-//        slideUp.show();
-//        tv_choose.setText(R.string.choose_post_video);
-//        tv_camera.setOnClickListener(v -> {
-//            slideUp.hide();
-//            openCameraVideo();
-//        });
-//        tvGallery.setOnClickListener(v -> {
-//            slideUp.hide();
-//            openGalleryVideo();
-//        });
-//        tvCancel.setOnClickListener(v -> {
-//            postType = "";
-//            slideUp.hide();
-//        });
-//    }
-
     private void openCamera() {
 
         try {
@@ -963,52 +892,93 @@ public class PavilionFragment extends Fragment implements PostListeners {
         }
     }
 
-//    private void multiGallery() {
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        BSImagePicker pickerDialog = new BSImagePicker.Builder("com.pb.criconet.provider")
-//                .setMaximumDisplayingImages(Integer.MAX_VALUE)
-//                .isMultiSelect()
-////                .setMinimumMultiSelectCount(1)
-//                .setMaximumMultiSelectCount(10)
-////                .hideCameraTile()
-//                .setPeekHeight(metrics.heightPixels)
-//                .build();
-////        pickerDialog.setCancelable(false);
-//        pickerDialog.show(getChildFragmentManager(), "Select Pictures");
-//    }
+    private void multiGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        galleryIntent.setType("image/*");
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Enable multiple selection
+        galleryActivityResultLauncher.launch(galleryIntent);
+    }
 
-//    @Override
-//    public void onMultiImageSelected(List<Uri> uriList) {
-//        Log.e("Pavalion",uriList.toString());
-//        images = new ArrayList<>();
-//        for (int i = 0; i < uriList.size(); i++) {
-//            images.add(uriList.get(i).getPath());
-//        }
-//
-//        postFile = images.get(0);
-//        up_image.setVisibility(View.VISIBLE);
-//        up_image.setImageURI(Uri.parse(postFile));
-//        postType = POST_TYPE_MULTI_IMAGE;
-//        if (images.size() == 1) {
-//            postType = POST_TYPE_IMAGE;
-//            postFile = images.get(0);
-//        }
-//        setHasOptionsMenu(true);
-////            Glide.with(this).load(uriList.get(i)).into(iv);
-//    }
 
-    private void openCameraVideo() {
-        File saveFolder = new File(Environment.getExternalStorageDirectory(), "Utopiaxxx");
+    private Bitmap getVideoThumbnail(Context context, Uri videoUri) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         try {
-            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+            retriever.setDataSource(context, videoUri);
 
-            if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivityForResult(takeVideoIntent, CAPTURE_VIDEO);
+            // Replace "timeInMicroseconds" with the desired time in microseconds
+            long timeInMicroseconds = 1000000; // 1 second
+            Bitmap bitmap = retriever.getFrameAtTime(timeInMicroseconds, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+
+            if (bitmap != null) {
+                // Resize the bitmap if needed
+                int desiredWidth = 200; // Adjust as needed
+                int desiredHeight = 200; // Adjust as needed
+                bitmap = Bitmap.createScaledBitmap(bitmap, desiredWidth, desiredHeight, false);
             }
+
+            return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                retriever.release();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return null;
+    }
+
+    private static String getRealPathFromURI(Uri uri, Context context) {
+        Uri returnUri = uri;
+        Cursor returnCursor = context.getContentResolver().query(returnUri, null, null, null, null);
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+        returnCursor.moveToFirst();
+        String name = (returnCursor.getString(nameIndex));
+
+        File file = new File(context.getFilesDir(), name);
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bytesAvailable = inputStream.available();
+
+
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
+            }
+
+            inputStream.close();
+            outputStream.close();
+            Log.e("File Path", "Path " + file.getAbsolutePath());
+
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+        return file.getAbsolutePath();
+    }
+
+    private void openCameraVideo() {
+//        File saveFolder = new File(Environment.getExternalStorageDirectory(), "Utopiaxxx");
+//        try {
+//            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+//            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+//
+//            if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+//                startActivityForResult(takeVideoIntent, CAPTURE_VIDEO);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        videolaunchercamera.launch(intent);
     }
 
     private void openGalleryVideo() {
@@ -1035,7 +1005,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     up_image.setVisibility(View.VISIBLE);
                     Glide.with(getActivity()).load(postFile).into(up_image);
                     setHasOptionsMenu(true);
-                    slideUp.hide();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1055,7 +1024,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
                     System.out.println("cccccccc   " + postFile);
                     setHasOptionsMenu(true);
-                    slideUp.hide();
 
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -1084,7 +1052,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                         Bitmap thumb = ThumbnailUtils.createVideoThumbnail(file_path, MediaStore.Images.Thumbnails.MINI_KIND);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         thumb.compress(Bitmap.CompressFormat.PNG, 40, stream);
-                        byteArray = stream.toByteArray();
 //                    uploadVideo_taskimage(Global.URL, filemanagerstring, byteArray);
                         try {
                             FileBody filebodyVideo = new FileBody(new File(filemanagerstring));
@@ -1114,7 +1081,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                             e.printStackTrace();
                         }
                     }
-                    slideUp.hide();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1146,7 +1112,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     video_thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
-                    byteArray = stream.toByteArray();
 //                    uploadVideo_taskimage(Global.URL, filemanagerstring, byteArray);
                     try {
                         FileBody filebodyVideo = new FileBody(new File(filemanagerstring));
@@ -1176,56 +1141,23 @@ public class PavilionFragment extends Fragment implements PostListeners {
                         e.printStackTrace();
                     }
                 }
-                slideUp.hide();
             }
 
         }
 //        super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.home_menu, menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_send:
-//                send_panel.setVisibility(View.GONE);
-//                setHasOptionsMenu(false);
-//                feedText = up_text.getText().toString().trim();
-//                if (postType.equals(POST_TYPE_VIDEO)) {
-//                    uploadVideoToServer(feedText);
-//                    //new UploadFileToServer().execute();
-//                } else {
-//                    PostFeedFinal(feedText);
-//                }
-//                break;
-//            case R.id.action_post:
-//                send_panel.setVisibility(View.VISIBLE);
-//                break;
-//            default:
-//                super.onOptionsItemSelected(item);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-    public void DeleteFeed(final String id) {
-        //progress.show();
-        loaderView.showLoader();
+    public void DeleteFeed(final String id, int pos) {
+        //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "delete_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(" %s", response);
-                //progress.dismiss();
-                loaderView.hideLoader();
+                // loaderView.hideLoader();
                 try {
                     JSONObject jsonObject = new JSONObject(response.toString());
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
-                        ResetFeed();
+
+                        //ResetFeed();
                     } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
                         Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
                     } else {
@@ -1239,23 +1171,16 @@ public class PavilionFragment extends Fragment implements PostListeners {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                //progress.dismiss();
-                loaderView.hideLoader();
+                // loaderView.hideLoader();
                 Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-//                Global.msgDialog(Login.this, "Internet connection is slow");
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<String, String>();
-//                "user_id:1735
-//                s:1
-//                post_id:8754"
                 param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("post_id", id);
-//                param.put("s", "1");
                 param.put("s", SessionManager.get_session_id(prefs));
-                Log.e("Pavilion", param.toString());
                 return param;
             }
         };
@@ -1269,12 +1194,12 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     private void likeFeed(final String id) {
         //progress.show();
-        loaderView.showLoader();
+        //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "like_on_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Pavilion", String.valueOf(response));
-                loaderView.hideLoader();
+                //loaderView.hideLoader();
                 //progress.dismiss();
                 try {
                     JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
@@ -1294,7 +1219,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 //progress.dismiss();
-                loaderView.hideLoader();
+                //loaderView.hideLoader();
                 Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
 //                Global.msgDialog(Login.this, "Internet connection is slow");
             }
@@ -1321,13 +1246,13 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     private void dislikeFeed(final String id) {
         // progress.show();
-        loaderView.showLoader();
+        //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "unlike_on_post", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("Pavilion", String.valueOf(response));
                 //progress.dismiss();
-                loaderView.hideLoader();
+                // loaderView.hideLoader();
                 try {
                     JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
@@ -1346,7 +1271,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 //progress.dismiss();
-                loaderView.hideLoader();
+                //loaderView.hideLoader();
                 Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
 //                Global.msgDialog(Login.this, "Internet connection is slow");
             }
@@ -1442,10 +1367,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     url_content = jsonObject.getString("content");
                     url_image = jsonObject.getJSONArray("images").getString(0);
 
-                    link_layout.setVisibility(View.VISIBLE);
-                    link_title.setText(url_title);
-                    link_content.setText(url_content);
-                    Glide.with(getActivity()).load(url_image).into(link_image);
 
 //                    } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
 //                        Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
@@ -1482,18 +1403,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         postRequest.setRetryPolicy(policy);
         queue.add(postRequest);
-    }
-
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
     }
 
     public void PostFeedFinal(final String postText) {
@@ -1578,13 +1487,11 @@ public class PavilionFragment extends Fragment implements PostListeners {
                                 loaderView.hideLoader();
                                 up_text.setText("");
                                 up_image.setImageURI(null);
-                                send_panel.setVisibility(View.GONE);
-                                tv_post.setVisibility(View.GONE);
-                                img_close.setVisibility(View.GONE);
-                                img_addpost.setVisibility(View.VISIBLE);
                                 Log.e("Pavilion", response);
                                 JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                                 if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
+
+                                    Log.d("PostResponse", jsonObject + "");
 //                            JSONArray array = jsonObject.getJSONArray("posts");
                                     ResetFeed();
 //                            Global.msgDialog(getActivity(), jsonObject.optString("msg"));
@@ -1625,16 +1532,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     }
 
-    private RequestBody bodyPart(String name) {
-        return RequestBody.create(MediaType.parse("multipart/form-data"), name);
-    }
-
 
     private void ResetFeed() {
-//        img_close.setVisibility(View.GONE);
-//        img_addpost.setVisibility(View.VISIBLE);
-//        send_panel.setVisibility(View.GONE);
-        //up_text.setText("");
         feedText = "";
         postType = "";
         postFile = "";
@@ -1642,8 +1541,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         isLoading = false;
         isLastPage = false;
-//        up_image.setVisibility(View.GONE);
-//        link_layout.setVisibility(View.GONE);
 
         modelArrayList = new ArrayList<>();
         adapter = new HomeAdapter(getActivity(), modelArrayList, this);
@@ -1671,7 +1568,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         if (Global.isOnline(requireActivity())) {
             getFeed();
-            //System.out.println("xxxxxxxxxx getFeed " + after_post_id + "xxxxxxxxxx");
         } else {
             Global.showDialog(getActivity());
         }
@@ -1693,7 +1589,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         Intent intent = new Intent(getActivity(), FeedDetailsActivity.class);
         intent.putExtra("feed_id", post.getId());
         startActivity(intent);
-        //getActivity().finish();
     }
 
     @Override
@@ -1714,7 +1609,15 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     @Override
     public void onDeleteFeedListener(String id) {
-        DeleteFeed(id);
+        // DeleteFeed(id);
+    }
+
+
+    @Override
+    public void onPostDeleteFeedListener(String id, int pos) {
+        modelArrayList.remove(pos);
+        adapter.notifyItemRemoved(pos);
+        DeleteFeed(id, pos);
     }
 
     @Override
@@ -1774,12 +1677,10 @@ public class PavilionFragment extends Fragment implements PostListeners {
     public void editPostFeed(String postid, String postText) {
         try {
             checkPrivacy();
-            //progress.show();
             loaderView.showLoader();
 
             MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
             Log.e("Pavalion", entity.isChunked() + "");
-//            entity.addPart("s", new StringBody("1"));
             entity.addPart("user_id", new StringBody(SessionManager.get_user_id(prefs)));
             entity.addPart("s", new StringBody(SessionManager.get_session_id(prefs)));
             entity.addPart("post_id", new StringBody(postid));
@@ -1800,10 +1701,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                         File file = new File(postFile);
                         FileBody fileBody = new FileBody(file);
                         entity.addPart("postVideo", fileBody);
-                        //                        iStream = getActivity().getContentResolver().openInputStream(Uri.parse(postFile));
-//                        InputStream iStream = getActivity().getContentResolver().openInputStream(file.toURI());
-//                        byte[] body = getBytes(iStream);
-//                        entity.addPart("postVideo", new ByteArrayBody(body, "postVideo"));
                     }
                     break;
                 case POST_TYPE_MULTI_IMAGE:
@@ -1823,11 +1720,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     entity.addPart("url_content", new StringBody(url_content));
                     entity.addPart("postText", new StringBody(postText));
                     entity.addPart("url_image", new StringBody(url_image));
-//                    if (!(url_image.equals(""))) {
-//                        File file = new File(url_image);
-//                        FileBody fileBody = new FileBody(file);
-//                        entity.addPart("url_image", fileBody);
-//                    }
                     break;
                 case POST_TYPE_TEXT:
                     // POST_TYPE_TEXT
@@ -1843,46 +1735,30 @@ public class PavilionFragment extends Fragment implements PostListeners {
             }
 
             MultipartRequest req = new MultipartRequest(Global.URL + "new_post",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                //progress.dismiss();
-                                loaderView.hideLoader();
-                                up_text.setText("");
-                                up_image.setImageURI(null);
-                                send_panel.setVisibility(View.GONE);
-                                tv_post.setVisibility(View.GONE);
-                                img_close.setVisibility(View.GONE);
-                                img_addpost.setVisibility(View.VISIBLE);
-                                Log.e("Pavilion", response);
-                                JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
-                                if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
-//                            JSONArray array = jsonObject.getJSONArray("posts");
-                                    ResetFeed();
-//                            Global.msgDialog(getActivity(), jsonObject.optString("msg"));
-                                } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
-                                    Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
-                                } else {
-                                    Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                    response -> {
+                        try {
+
+                            loaderView.hideLoader();
+                            up_text.setText("");
+                            up_image.setImageURI(null);
+                            Log.e("Pavilion", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
+                                ResetFeed();
+                            } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
+                                Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
+                            } else {
+                                Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            //progress.dismiss();
-                            loaderView.hideLoader();
-                            error.printStackTrace();
-                        }
+                    error -> {
+                        loaderView.hideLoader();
+                        error.printStackTrace();
                     },
                     entity);
-
-            //Log.d("PostEntity",entity.toString());
-
 
             int socketTimeout = 50000;
             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
@@ -2071,37 +1947,44 @@ public class PavilionFragment extends Fragment implements PostListeners {
         TextView tvCancel = dialog.findViewById(R.id.tvCancel);
 
 
-        if (selectedPostType.equalsIgnoreCase("image")) {
-            tv_camera.setOnClickListener(v -> {
-                dialog.dismiss();
-                openCamera();
-            });
-            tvGallery.setOnClickListener(v -> {
-                dialog.dismiss();
-                //multiGallery();
-            });
-            tvCancel.setOnClickListener(v -> {
-                postType = "";
-                dialog.dismiss();
-            });
-        } else {
-            tv_choose.setText(R.string.choose_post_video);
-            tv_camera.setOnClickListener(v -> {
-                slideUp.hide();
-                openCameraVideo();
-            });
-            tvGallery.setOnClickListener(v -> {
-                slideUp.hide();
-                openGalleryVideo();
-            });
-            tvCancel.setOnClickListener(v -> {
-                postType = "";
-                slideUp.hide();
-            });
+        switch (selectedPostType) {
+            case "image":
+                tv_camera.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    openCamera();
+                });
+                tvGallery.setOnClickListener(v -> {
+                    dialog.dismiss();
+
+                    multiGallery();
+                });
+                tvCancel.setOnClickListener(v -> {
+                    postType = "";
+                    dialog.dismiss();
+                });
+                break;
+            case "video":
+                tv_camera.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    openCameraVideo();
+                });
+                tvGallery.setOnClickListener(v -> {
+                    dialog.dismiss();
+                    openGalleryVideo();
+                });
+                tvCancel.setOnClickListener(v -> {
+                    postType = "";
+                    dialog.dismiss();
+                });
+                break;
+            default:
+                System.out.println("Default case");
         }
 
+        // System.out.println("MilesSeconds"+""+(System.currentTimeMillis()-now)+"");
 
         dialog.show();
 
     }
+
 }

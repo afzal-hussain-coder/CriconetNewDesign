@@ -51,6 +51,7 @@
                     android:orientation="horizontal">
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/ivRoundedProfile"
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
                         android:scaleType="fitXY"
@@ -60,7 +61,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:orientation="vertical">
 
                         <TextView
@@ -144,6 +145,7 @@
                             android:textSize="@dimen/_10sdp" />
 
                         <TextView
+                            android:id="@+id/tvSessiondate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/opensans_bold"
@@ -156,17 +158,49 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_sessionprice"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:fontFamily="@font/opensans_semibold"
-                        android:gravity="top"
-                        android:text="Price- 28,000 INR"
-                        android:textColor="@color/purple_700"
-                        android:textSize="@dimen/_10sdp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tv_sessionprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:gravity="top"
+                            android:text="Price- 28,000 INR"
+                            android:textColor="@color/purple_700"
+                            android:textSize="@dimen/_10sdp" />
+                        <LinearLayout
+                            android:id="@+id/tvOfferl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/offer_price"
+                                android:visibility="gone"
+                                android:textColor="@color/indicator_selector"
+                                android:textSize="@dimen/_8sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+
+                            <TextView
+                                android:id="@+id/tvOfferP"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:textColor="@color/blue_intro_color"
+                                android:textSize="@dimen/_9sdp"
+                                app:fontFamily="@font/opensans_semibold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 
@@ -188,6 +222,7 @@
                         android:textSize="@dimen/_10sdp" />
 
                     <TextView
+                        android:id="@+id/tvSessionTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/opensans_bold"
@@ -206,6 +241,19 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tvCouponDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="bsa"
+                        android:visibility="gone"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_10sdp" />
                     <TextView
                         android:id="@+id/tvSubTotal"
                         android:layout_width="wrap_content"
@@ -235,8 +283,10 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlApplycoupon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inputLayoutapply"
                         android:layout_width="match_parent"
@@ -265,7 +315,7 @@
                         android:layout_height="@dimen/_25sdp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerHorizontal="true"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_marginTop="@dimen/_15sdp">
 
                         <ImageView
@@ -299,7 +349,45 @@
 
                     </FrameLayout>
                 </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/fl_coupon_remove"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_15sdp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_13sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/remove_coupon"
+                        android:textAppearance="@style/register" />
+
+                </FrameLayout>
 
 
                 <TextView

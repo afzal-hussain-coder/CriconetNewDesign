@@ -1,6 +1,7 @@
 package com.pb.criconetnewdesign.Fragment.CoachFragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +25,12 @@ import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.pb.criconetnewdesign.Activity.BlogActivity;
 import com.pb.criconetnewdesign.Activity.Coach.CoachDetailsActivity;
 import com.pb.criconetnewdesign.Activity.Coach.RegisterAsACoachProfileActivity;
@@ -38,11 +43,18 @@ import com.pb.criconetnewdesign.CommonUI.AddTrainingTipsActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.EcoachingAdapter.EcoachingListAdapter;
+import com.pb.criconetnewdesign.model.Coaching.CoachList;
 import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
+import com.pb.criconetnewdesign.util.CustomLoaderView;
 import com.pb.criconetnewdesign.util.Global;
+import com.pb.criconetnewdesign.util.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,7 +65,10 @@ public class CoachFragment extends Fragment {
     Animation animationn;
     RecyclerView rvCoach;
     PageURL pageURL;
+    private SharedPreferences prefs;
     private RequestQueue queue;
+    CustomLoaderView loaderView;
+    private List<CoachList.Datum> mdata;
 
 
     public CoachFragment() {
@@ -74,6 +89,10 @@ public class CoachFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        loaderView = CustomLoaderView.initialize(getActivity());
+
         RelativeLayout layout_nav = view.findViewById(R.id.layout_nav);
         animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_left_to_right);
         animationn = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_right_to_left);
@@ -91,6 +110,12 @@ public class CoachFragment extends Fragment {
         });
 
         queue = Volley.newRequestQueue(getActivity());
+
+        if (Global.isOnline(getActivity())) {
+            getCoachList();
+        } else {
+            Global.showDialog(getActivity());
+        }
 
         if (Global.isOnline(requireActivity())) {
             getPageUrl();
@@ -110,7 +135,7 @@ public class CoachFragment extends Fragment {
         rvCoach = view.findViewById(R.id.rvCoach);
         rvCoach.setHasFixedSize(true);
         rvCoach.setLayoutManager(new LinearLayoutManager(requireContext()));
-        rvCoach.setAdapter(new EcoachingListAdapter(requireContext(), new EcoachingListAdapter.coachItemClickListener() {
+       /* rvCoach.setAdapter(new EcoachingListAdapter(requireContext(), new EcoachingListAdapter.coachItemClickListener() {
             @Override
             public void viewDetails(int id) {
                 getActivity().startActivity(new Intent(getActivity(), CoachDetailsActivity.class));
@@ -125,8 +150,9 @@ public class CoachFragment extends Fragment {
             public void shareCoach() {
 
             }
-        }));
+        }));*/
     }
+
     private void drawerNavigation(RelativeLayout layout_nav){
 
         CircleImageView profile_pic = layout_nav.findViewById(R.id.profile_pic);
@@ -279,6 +305,70 @@ public class CoachFragment extends Fragment {
             error.printStackTrace();
         }) {
 
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    private void getCoachList() {
+        loaderView.showLoader();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "get_coach_lists", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Response", response);
+                // Global.dismissDialog(progressDialog);
+                loaderView.hideLoader();
+                try{
+                    Gson gson = new Gson();
+                    CoachList modelArrayList = gson.fromJson(response, CoachList.class);
+
+                    if (modelArrayList.getApiStatus().equalsIgnoreCase("200")) {
+
+                        rvCoach.setAdapter(new EcoachingListAdapter(requireContext(),modelArrayList.getData(), new EcoachingListAdapter.coachItemClickListener() {
+                            @Override
+                            public void viewDetails(int id,String coachId) {
+                                getActivity().startActivity(new Intent(getActivity(), CoachDetailsActivity.class).putExtra("CoachId",coachId));
+                            }
+
+                            @Override
+                            public void bookCoach(int id,String coachId) {
+                                getActivity().startActivity(new Intent(getActivity(), CoachDetailsActivity.class).putExtra("CoachId",coachId));
+                            }
+
+                            @Override
+                            public void shareCoach() {
+
+                            }
+                        }));
+                    } else {
+                        Toast.makeText(getActivity(), modelArrayList.getErrors().getErrorText(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, error -> {
+            error.printStackTrace();
+            loaderView.hideLoader();
+            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> param = new HashMap<String, String>();
+                param.put("user_id", SessionManager.get_user_id(prefs));
+                param.put("s", SessionManager.get_session_id(prefs));
+//                param.put("order_by", experience);
+//                param.put("sort_by", price);
+//                param.put("filter_cat", filterType);
+
+                Log.d("Param",param.toString());
+                //Timber.e(param.toString());
+                return param;
+            }
         };
         int socketTimeout = 30000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);

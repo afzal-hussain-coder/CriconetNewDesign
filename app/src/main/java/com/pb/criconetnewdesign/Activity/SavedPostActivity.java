@@ -190,7 +190,7 @@ public class SavedPostActivity extends AppCompatActivity implements PostListener
         queue.add(postRequest);
     }
 
-    public void DeleteFeed(final String id) {
+    public void DeleteFeed(final String id,int pos) {
         loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "delete_post", response -> {
             Log.e(" %s", response);
@@ -198,7 +198,7 @@ public class SavedPostActivity extends AppCompatActivity implements PostListener
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
-                    ResetFeed();
+                  //  ResetFeed();
                 } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
                     Global.msgDialog(mActivity, Objects.requireNonNull(jsonObject.optJSONObject("errors")).optString("error_text"));
                 } else {
@@ -416,7 +416,14 @@ public class SavedPostActivity extends AppCompatActivity implements PostListener
 
     @Override
     public void onDeleteFeedListener(String id) {
-        DeleteFeed(id);
+       // DeleteFeed(id);
+    }
+
+    @Override
+    public void onPostDeleteFeedListener(String id, int pos) {
+        modelArrayList.remove(pos);
+        savedPostAdapter.notifyItemRemoved(pos);
+        DeleteFeed(id, pos);
     }
 
     @Override

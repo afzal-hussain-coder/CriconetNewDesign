@@ -26,6 +26,7 @@
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivRoundedProfile"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -50,7 +51,7 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
-                    android:id="@+id/tv_coachExp"
+                    android:id="@+id/tv_bookingId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
@@ -83,7 +84,8 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp">
+                    android:layout_height="@dimen/_30sdp"
+                    android:visibility="gone">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipCpp"
@@ -179,6 +181,7 @@
                         android:textColor="@color/blue_intro_color"
                         android:textSize="@dimen/_16sdp" />
                     <TextView
+                        android:id="@+id/tvBookingStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

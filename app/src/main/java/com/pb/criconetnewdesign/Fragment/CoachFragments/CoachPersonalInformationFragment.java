@@ -58,7 +58,7 @@ public class CoachPersonalInformationFragment extends Fragment {
             }
 
             @Override
-            public void onClickDone(String name) {
+            public void onClickDone(String name,String id) {
 
 
             }
@@ -81,7 +81,7 @@ public class CoachPersonalInformationFragment extends Fragment {
             }
 
             @Override
-            public void onClickDone(String name) {
+            public void onClickDone(String name,String id) {
 
 
             }
@@ -104,7 +104,7 @@ public class CoachPersonalInformationFragment extends Fragment {
             }
 
             @Override
-            public void onClickDone(String name) {
+            public void onClickDone(String name,String id) {
 
 
             }

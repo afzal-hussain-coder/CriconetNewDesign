@@ -31,46 +31,18 @@
                 android:text="Lorem Ipsum do Rit Lam Maginu Splee Rit Lam Ipsum"
                 android:textAppearance="@style/blog_details_title" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipTag"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rIV_myBlog"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
+                android:layout_marginEnd="@dimen/_10sdp">
 
-                <TextView
-                    android:id="@+id/indian_team"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/transparent_retangle_shape_with_corner"
-                    android:backgroundTint="@color/purple_700"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="Samantha Lisker"
-                    android:textColor="@color/purple_700" />
-
-                <TextView
-                    android:id="@+id/tvBlogTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30sdp"
-                    android:background="@drawable/transparent_retangle_shape_with_corner"
-                    android:backgroundTint="@color/purple_700"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="26 min read"
-                    android:textColor="@color/purple_700" />
-
-            </LinearLayout>
+            </com.google.android.material.chip.ChipGroup>
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivRoundedCover"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_160sdp"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -112,20 +84,24 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros 
                     android:layout_alignParentEnd="true">
 
                     <ImageView
+                        android:id="@+id/ivFacebook"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:src="@drawable/facebook_navigation_drawer"/>
                     <ImageView
+                        android:id="@+id/ivInstagram"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:src="@drawable/insta_navigation_drawer"/>
                     <ImageView
+                        android:id="@+id/ivYoutube"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:src="@drawable/youtube_navigation_drawer"/>
                     <ImageView
+                        android:id="@+id/ivLinkend"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginStart="@dimen/_5sdp"
@@ -201,6 +177,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros 
                 android:textColorHint="@color/gray"
                 app:boxStrokeColor="@color/blue_intro_color"
                 app:errorEnabled="false"
+                android:visibility="gone"
                 app:errorTextAppearance="@style/ErrorTextAppearance"
                 app:hintTextAppearance="@style/HintTextAppearance"
                 app:hintTextColor="@color/blue_intro_color">
@@ -234,6 +211,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros 
                 android:textColorHint="@color/gray"
                 app:boxStrokeColor="@color/blue_intro_color"
                 app:errorEnabled="false"
+                android:visibility="gone"
                 app:errorTextAppearance="@style/ErrorTextAppearance"
                 app:hintTextAppearance="@style/HintTextAppearance"
                 app:hintTextColor="@color/blue_intro_color">

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -8,137 +9,182 @@
         android:id="@+id/linear_above_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/comment_bg"
         android:backgroundTint="@color/indicator_selector"
-        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
         android:paddingTop="@dimen/_2sdp"
-        android:paddingBottom="@dimen/_2sdp"
-        android:orientation="vertical">
+        android:paddingBottom="@dimen/_2sdp">
 
-        <TextView
-            android:id="@+id/nimesh_shar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/nimesh_shar"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:fontFamily="@font/opensans_semibold"
-            android:textColor="@color/purple_700"
-            android:textSize="@dimen/_10sdp"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_coachName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:fontFamily="@font/opensans_bold"
+                android:text="@string/nimesh_shar"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_10sdp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_offer"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/session_label"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_4sdp">
+
+                    <TextView
+                        android:id="@+id/tvoffer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:gravity="clip_horizontal"
+                        android:text="20%"
+                        android:textColor="@color/light_text_color"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_bold" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/comment_bg"
-            android:backgroundTint="@color/blue_intro_color"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_margin="@dimen/_5sdp"
-                android:src="@drawable/coach_avtar">
-
-            </com.makeramen.roundedimageview.RoundedImageView>
+            android:backgroundTint="@color/blue_intro_color"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/years_exper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="22.0 years experience"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/indicator_selector"
-                    />
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Price - 580 INR/session"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:textSize="@dimen/_10sdp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/indicator_selector"
-                    />
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rounded_image_pic"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/coach_avtar"
+                    app:riv_corner_radius="@dimen/_5sdp">
+
+                </com.makeramen.roundedimageview.RoundedImageView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/years_exper"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cricket"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingBottom="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="22.0 years experience"
                         android:textColor="@color/indicator_selector"
-                        android:textSize="@dimen/_10sdp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:background="@drawable/chip_bg">
-
-                    </TextView>
+                        android:textSize="@dimen/_12sdp" />
 
                     <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:text="Price - 580 INR/session"
+                        android:textColor="@color/indicator_selector"
+                        android:textSize="@dimen/_10sdp" />
+                    <LinearLayout
+                        android:id="@+id/tvOfferl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Batting"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingBottom="@dimen/_2sdp"
-                        android:textColor="@color/indicator_selector"
-                        android:textSize="@dimen/_10sdp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:background="@drawable/chip_bg">
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/li_pri"
+                        android:orientation="horizontal">
 
-                    </TextView>
-                    <TextView
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/offer_price"
+                            android:visibility="gone"
+                            android:textColor="@color/indicator_selector"
+                            android:textSize="@dimen/_8sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+
+                        <TextView
+                            android:id="@+id/tvOfferP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/indicator_selector"
+                            android:textSize="@dimen/_9sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+                    </LinearLayout>
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tactical"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingBottom="@dimen/_2sdp"
-                        android:textColor="@color/indicator_selector"
-                        android:textSize="@dimen/_10sdp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:background="@drawable/chip_bg">
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:theme="@style/RatingBar"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                    </TextView>
+
                 </LinearLayout>
+
+
             </LinearLayout>
 
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipSpecializationGroupList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
 
 
+            </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_2sdp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,6 +192,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/_5sdp"
                 android:orientation="horizontal">
+
                 <FrameLayout
                     android:id="@+id/fl_viewDetails"
                     android:layout_width="@dimen/_90sdp"
@@ -192,20 +239,21 @@
                     android:id="@+id/ib_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:background="@null"
                     android:src="@drawable/share">
 
                 </ImageButton>
             </LinearLayout>
+
             <FrameLayout
                 android:id="@+id/fl_book"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -241,10 +289,7 @@
         </RelativeLayout>
 
 
-
-
     </LinearLayout>
-
 
 
 </RelativeLayout>

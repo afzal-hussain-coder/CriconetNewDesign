@@ -198,6 +198,11 @@ public class Global {
     public static final String SEARCH_USER_LIST_API="search_public_users";
 
 
+    //Blog Api
+
+    public static final String GET_BLOG ="get_blogs";
+
+
     public static final int TYPE_VIDEO = 0,
             TYPE_IMAGE = 1, TYPE_MULTI_IMAGE = 2,
             TYPE_TEXT = 3, TYPE_LINK = 4,
@@ -927,17 +932,17 @@ public class Global {
         return realdate;
     }
 
-//    public static Drawable getThreeDots(Context context) {
-//        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.sample_three_icons);
-//        //Add padding to too large icon
-//        return new InsetDrawable(drawable, 100, 0, 100, 0);
-//    }
-//
-//    public static Drawable getThreeDotss(Context context) {
-//        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.sample_three_iconss);
-//        //Add padding to too large icon
-//        return new InsetDrawable(drawable, 100, 0, 100, 0);
-//    }
+    public static Drawable getThreeDots(Context context) {
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.sample_three_icons);
+        //Add padding to too large icon
+        return new InsetDrawable(drawable, 100, 0, 100, 0);
+    }
+
+    public static Drawable getThreeDotss(Context context) {
+        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.sample_three_iconss);
+        //Add padding to too large icon
+        return new InsetDrawable(drawable, 100, 0, 100, 0);
+    }
 
     public static int getIndex(Spinner spinner, String myString) {
         int index = 0;

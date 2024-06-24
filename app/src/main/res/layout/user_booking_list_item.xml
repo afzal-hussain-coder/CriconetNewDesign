@@ -25,6 +25,7 @@
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivProfile"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_55sdp"
                 android:layout_margin="@dimen/_5sdp"
@@ -69,6 +70,7 @@
                         android:paddingEnd="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_2sdp"
                         android:text="Confirmed"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_8sdp" />
                 </RelativeLayout>
@@ -105,7 +107,7 @@
             android:layout_marginEnd="@dimen/_5sdp">
 
             <TextView
-                android:id="@+id/nimesh_shar"
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -155,6 +157,7 @@
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_28sdp"
                     android:layout_below="@id/li_tearms"
+                    android:visibility="gone"
                     android:layout_centerHorizontal="true">
 
                     <ImageView
@@ -201,6 +204,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:background="@null"
+                    android:visibility="gone"
                     android:src="@drawable/share">
 
                 </ImageButton>
@@ -236,6 +240,7 @@
 
 
                 <TextView
+                    android:id="@+id/tvJoin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

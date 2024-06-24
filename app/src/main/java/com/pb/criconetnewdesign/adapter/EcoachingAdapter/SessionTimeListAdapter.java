@@ -6,18 +6,27 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.databinding.SessionTimeChildviewBinding;
 import com.pb.criconetnewdesign.databinding.UserBookingListItemBinding;
+import com.pb.criconetnewdesign.model.Coaching.TimeSlot;
 
-public class SessionTimeListAdapter extends RecyclerView.Adapter<SessionTimeListAdapter.MyViewHolder>{
+import java.util.List;
+
+public class SessionTimeListAdapter extends RecyclerView.Adapter<SessionTimeListAdapter.MyViewHolder> {
     private Context mContext;
-    coachItemClickListener coachItemClickListener;
+    private List<TimeSlot.Datum> data;
+    getSlotIdInterface getSlotIdInterface;
+    private int selectedItem = -1;
 
 
-    public SessionTimeListAdapter(Context mContext){
-        this.mContext=mContext;
+    public SessionTimeListAdapter(Context mContext, List<TimeSlot.Datum> data, getSlotIdInterface getSlotIdInterface) {
+        this.mContext = mContext;
+        this.data = data;
+        this.getSlotIdInterface = getSlotIdInterface;
     }
 
     @NonNull
@@ -28,23 +37,32 @@ public class SessionTimeListAdapter extends RecyclerView.Adapter<SessionTimeList
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.UserBookingListItemBinding.tvSessionTime.setText(data.get(position).getSlotValue());
 
-//        holder.itemView.setOnClickListener(v -> {
-//            coachItemClickListener.viewDetails(position);
-//        });
-       // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
-//
-//        holder.UserBookingListItemBinding.getRoot().setOnClickListener(v -> coachItemClickListener.viewDetails(position));
-//
-//        holder.UserBookingListItemBinding.ibShare.setOnClickListener(v -> coachItemClickListener.shareCoach());
+        holder.UserBookingListItemBinding.tvSessionTime.setOnClickListener(v -> {
+            selectedItem = holder.getAdapterPosition();
+
+            getSlotIdInterface.getSlotId(data.get(position).getSlotId());
+            holder.UserBookingListItemBinding.tvSessionTime.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.selected_session_time_background));
+            holder.UserBookingListItemBinding.tvSessionTime.setTextColor(mContext.getResources().getColor(R.color.white));
+            notifyDataSetChanged();
+
+        });
+
+        if (position == selectedItem) {
+            holder.UserBookingListItemBinding.tvSessionTime.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.UserBookingListItemBinding.tvSessionTime.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.selected_session_time_background));
+        } else {
+            holder.UserBookingListItemBinding.tvSessionTime.setTextColor(mContext.getResources().getColor(R.color.indicator_selector));
+            holder.UserBookingListItemBinding.tvSessionTime.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.session_time_background));
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return data.size();
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -55,12 +73,12 @@ public class SessionTimeListAdapter extends RecyclerView.Adapter<SessionTimeList
             super(binding.getRoot());
             UserBookingListItemBinding = binding;
 
+
+
         }
     }
 
-    public interface coachItemClickListener{
-        void viewDetails(int id);
-        void bookCoach(int id);
-        void shareCoach();
+    public interface getSlotIdInterface {
+        void getSlotId(String slotId);
     }
 }

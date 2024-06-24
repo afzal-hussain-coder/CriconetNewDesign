@@ -70,7 +70,7 @@ public class BookingHistoryDropDown extends OSLTextView implements View.OnClickL
             DataModel model = optionList.get(position);
             this.setText(model.getName());
             if (onClickInterface != null)
-                onClickInterface.onClickDone(model.getName());
+                onClickInterface.onClickDone(model.getName(),model.getId());
             popupWindow.dismiss();
         });
 
@@ -122,7 +122,7 @@ public class BookingHistoryDropDown extends OSLTextView implements View.OnClickL
     public interface onClickInterface {
         void onClickAction();
 
-        void onClickDone(String name);
+        void onClickDone(String name,String id);
 
         void onDismiss();
     }

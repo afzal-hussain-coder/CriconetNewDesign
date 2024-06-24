@@ -395,6 +395,30 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
+    <style name="MyChipTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_9sdp</item>
+        <item name="android:textColor">@color/purple_700</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="MyChipTextAppearanceBlue" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_9sdp</item>
+        <item name="android:textColor">@color/blue_intro_color</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="MyChipTextAppearanceWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_9sdp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="MyChipTextAppearanceList" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/_9sdp</item>
+        <item name="android:textColor">@color/indicator_selector</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
 <!--    <style name="HelperTextAppearance" parent="TextAppearance.AppCompat">-->
 <!--        <item name="android:textColor">@android:color/holo_green_dark</item>-->
 <!--        <item name="android:textSize">16sp</item>-->
@@ -516,4 +540,6 @@
         <item name="android:textSize">@dimen/_12sdp</item>
         <item name="android:textColor">@color/indicator_selector</item>
     </style>
+
+
 </resources>
