@@ -42,7 +42,10 @@ public class MyBlogsAdapter extends RecyclerView.Adapter<MyBlogsAdapter.MyViewHo
 
         holder.myblogChildBinding.tvDate.setText(blogListDataArrayList.get(position).getPosted());
 
+        holder.myblogChildBinding.tvViewerCount.setText(blogListDataArrayList.get(position).getView());
+
         Glide.with(mContext).load(blogListDataArrayList.get(position).getAuthor().getCover()).into(holder.myblogChildBinding.rIVMyBlog);
+
 
 
         ArrayList<String> specializationArray = blogListDataArrayList.get(position).getTagList();

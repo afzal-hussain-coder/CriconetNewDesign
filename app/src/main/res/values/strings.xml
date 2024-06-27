@@ -424,8 +424,46 @@
     <string name="no_booking_available">No Booking Available</string>
     <string name="slot_duration">Slot Duration-</string>
     <string name="minute">-minute</string>
-
     <string name="By">By </string>
+    <string name="contact_academy">Contact Academy</string>
+    <string name="enjoy_the_best_of_local_cricket_with_advanced_live_streaming_technology">Enjoy the best of local cricket with advanced live streaming technology</string>
+    <string name="enjoy_the_best_of_live_streaming">Enjoy the best of live streaming</string>
+    <string name="View_Live_Matches">View Live Matches</string>
+    <string name="Book_Your_Live_Stream">Book Your Live Stream</string>
+    <string name="View_Archives"><u>View Archives</u></string>
+    <string name="How_does_it_work"><u>How does it work?</u></string>
+
+    <string name="bit_rate_value_with_unit" translatable="false">%d kbps</string>
+    <string name="frame_rate_value_with_unit" translatable="false">%d fps</string>
+    <string name="recorded_video">My Video Gallery</string>
+    <string name="channel_id" translatable="false">Criconet_Notifications</string>
+    <string name="ls_channel_id" translatable="false">Live_Streaming</string>
+    <string name="label_start_sharing_your_screen" tools:ignore="MissingTranslation">Start Sharing your screen</string>
+    <string name="label_stop_sharing_your_screen">Stop Sharing your screen</string>
+    <string name="msg_say_something" translatable="false">Say something…</string>
+    <string name="label_send" translatable="false">Send</string>
+    <string name="double_click">Double tap for full screen</string>
+    <string name="slide_down">Slide it down</string>
+    <string name="sorry_no_recorded_video_found">Sorry ! No Recorded Video Found</string>
+    <string name="Remaining_time">"Remaining time: "</string>
+    <string name="Screen_sharing_has_started">Screen sharing has started</string>
+    <string name="Screen_sharing_has_stopped" translatable="false">"Screen sharing has stopped "</string>
+    <string name="msg_connection_error" translatable="false">Connection error, please check the network settings or make sure channel name/access token are valid</string>
+    <string name="Failed_loading_app">Failed loading app!</string>
+    <string name="thanks">Thanks!</string>
+    <string name="session_end_mesage">Your e-Coaching session has been completed</string>
+    <string name="end_session_quets">Thank you for booking your session with Criconet.We would like to know how your session was. Please spare some movement to give us your valuable feedback so we can improve our service.</string>
+    <string name="please_rate_your_experience_on_the_following_parameters">Please rate your experience on the following parameters:-</string>
+    <string name="e_Coaching_Session_Feedback">e-Coaching Session Feedback</string>
+    <string name="Dear_Coach">Dear Coach,</string>
+    <string name="Dear_Students">Dear Students,</string>
+    <string name="Select_Box">Select Box</string>
+    <string name="Write_suggestions">Write suggestions</string>
+    <string name="go_home_page">GO TO HOMEPAGE</string>
+    <string name="e_coaching_session">e-Coaching Session</string>
+    <string name="ecoahing_compleated">Is your e-Coaching session complete?</string>
+    <string name="left_successfully">left successfully</string>
+    <string name="joined" translatable="false">joined</string>
 
 
 

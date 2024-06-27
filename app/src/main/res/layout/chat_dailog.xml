@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:background="@color/transparent"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:id="@+id/slideView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@color/black"
+        android:orientation="vertical"
+        tools:ignore="WebViewLayout">
+        <!--android:layout_marginBottom="@dimen/_150sdp"-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/slide_down"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/light_text_color"
+            android:textSize="@dimen/_10sdp"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:drawableTint="@color/light_text_color" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            />
+        <com.github.loadingview.LoadingView
+            android:id="@+id/loadingVieww"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:lv_duration="20"
+            app:lv_end_color="@color/grey"
+            app:lv_external_radius="@dimen/_12sdp"
+            app:lv_internal_radius="@dimen/_3sdp"
+            app:lv_start_color="@color/white" />
+        <WebView
+            android:id="@+id/web_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView"
+            android:background="@color/black"
+            android:visibility="visible"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

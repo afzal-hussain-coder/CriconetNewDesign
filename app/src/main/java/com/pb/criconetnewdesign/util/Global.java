@@ -1294,6 +1294,12 @@ public class Global {
         return ambassadorModels1;
     }
 
+    public static void callApp(String number,Context mContext){
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+number));
+        mContext.startActivity(callIntent);
+    }
+
 
 
 }

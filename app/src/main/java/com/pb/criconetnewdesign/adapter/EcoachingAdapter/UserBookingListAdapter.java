@@ -66,7 +66,9 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
             try {
                 if (data.get(position).getChanel_id().equalsIgnoreCase("")) {
                     holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.GONE);
+                    holder.UserBookingListItemBinding.viewLine.setVisibility(View.GONE);
                 } else {
+                    holder.UserBookingListItemBinding.viewLine.setVisibility(View.VISIBLE);
                     holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.VISIBLE);
                     holder.UserBookingListItemBinding.tvJoin.setText(data.get(position).getBtn2() + " " + mContext.getResources().getString(R.string.session));
                 }
@@ -78,6 +80,13 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         } else {
             holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.GONE);
         }
+
+
+
+        holder.UserBookingListItemBinding.flJoinSession.setOnClickListener(v -> {
+            coachItemClickListener.buttonJoin(data.get(position).getId(), data.get(position).getDuration_in_milisecond(), data.get(position).getBtn2(), data.get(position).getChanel_id(), data.get(position).getBookingId(),
+                    data.get(position).getUserId(), data.get(position).getCoachUserId(), data.get(position).getName());
+        });
 
 
         // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
@@ -113,5 +122,7 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         void shareCoach();
 
         void sendFeedback(int id);
+
+        void buttonJoin(String id, long timeDuration, String action, String channel_id, String booking_id, String userid, String coachid, String coachName);
     }
 }

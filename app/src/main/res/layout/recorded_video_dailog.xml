@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view_recorded_video"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:visibility="visible"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:id="@+id/slideView_recorded_video"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:layout_centerVertical="true"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:ignore="WebViewLayout">
+        <!--android:layout_marginBottom="@dimen/_150sdp"-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/opensans_regular"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/slide_down"
+            android:textColor="@color/light_text_color"
+            android:textSize="@dimen/_10sdp"
+            app:drawableEndCompat="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:drawableTint="@color/light_text_color" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/md_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/bckground"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="@dimen/_5sdp"
+            tools:ignore="NamespaceTypo">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recorded_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linegradient4"
+                android:fadeScrollbars="false"
+                android:overScrollMode="always"
+                android:scrollbarThumbHorizontal="@color/logWarn"
+                android:scrollbars="horizontal" />
+
+            <TextView
+                android:id="@+id/notfound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/sorry_no_recorded_video_found"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rl_zoom"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/transparent"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        tools:context=".activity.PlayRecordedVideoActivity">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_close"-->
+<!--            android:layout_width="@dimen/_25sdp"-->
+<!--            android:layout_height="@dimen/_25sdp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:contentDescription="@string/app_name"-->
+<!--            android:src="@drawable/ic_close_black_24dp"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            app:tint="@color/app_light_red" />-->
+
+
+<!--        <com.potyvideo.library.AndExoPlayerView-->
+<!--            android:id="@+id/VideoVieww"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/black"-->
+<!--            android:layout_below="@+id/iv_close"-->
+<!--            app:andexo_full_screen="true"-->
+<!--            app:andexo_play_when_ready="true"-->
+<!--            app:andexo_show_controller="true"-->
+<!--            app:andexo_resize_mode="Fit"-->
+<!--            app:andexo_aspect_ratio="aspect_match"/>-->
+
+<!--    </RelativeLayout>-->
+</RelativeLayout>
+
+

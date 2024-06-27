@@ -12,6 +12,9 @@
 
     <!--new design color-->
     <color name="blue_intro_color">#0E2245</color>
+    <color name="blue_intro_color_light">#1b4185</color>
+    <color name="logWarn">#fedd56</color>
+
     <color name="indicator_selector">#E2D188</color>
     <color name="criconet_green">#018A27</color>
 
@@ -54,6 +57,11 @@
     <color name="app_redd">#430f02</color>
 
     <color name="black50">#80000000</color>
+    <color name="text_grey3">#433E54</color>
+    <color name="grey">#cccccc</color>
+    <color name="color_error_password">#ffa500</color>
+    <color name="logError">#800000</color>
+    <color name="transparent_75_white">#ACFFFFFF</color>
 
 
 

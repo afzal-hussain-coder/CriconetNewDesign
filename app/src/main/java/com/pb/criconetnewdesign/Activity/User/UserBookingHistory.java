@@ -19,12 +19,15 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.pb.criconetnewdesign.Activity.Coach.CallActivity;
 import com.pb.criconetnewdesign.Activity.Coach.CoachFeedBackReviewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.EcoachingAdapter.UserBookingListAdapter;
 import com.pb.criconetnewdesign.databinding.ActivityUserBookingHistoryBinding;
 import com.pb.criconetnewdesign.databinding.ToolbarInnerpageBinding;
 import com.pb.criconetnewdesign.model.Coaching.BookingHistory;
+import com.pb.criconetnewdesign.model.Coaching.CoachAccept;
+import com.pb.criconetnewdesign.model.ConstantApp;
 import com.pb.criconetnewdesign.util.BookingHistoryDropDown;
 import com.pb.criconetnewdesign.util.CustomLoaderView;
 import com.pb.criconetnewdesign.util.DataModel;
@@ -36,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import timber.log.Timber;
 
 public class UserBookingHistory extends AppCompatActivity {
     ActivityUserBookingHistoryBinding activityUserBookingHistoryBinding;
@@ -211,6 +216,23 @@ public class UserBookingHistory extends AppCompatActivity {
                             startActivity(new Intent(mContext, CoachFeedBackReviewActivity.class));
 
                         }
+
+                        @Override
+                        public void buttonJoin(String id, long timeDuration, String action, String channel_id, String booking_id, String userid, String coachid, String coachName) {
+                            if (action.equalsIgnoreCase("join")) {
+                                Intent intent = new Intent(mContext, CallActivity.class);
+                                intent.putExtra(ConstantApp.ACTION_KEY_CHANNEL_NAME, channel_id);
+                                intent.putExtra("UserId", userid);
+                                intent.putExtra("CoachId", coachid);
+                                intent.putExtra("booking_id", booking_id);
+                                intent.putExtra("id", id);
+                                intent.putExtra("timeDuration", timeDuration);
+                                intent.putExtra("Name", coachName);
+                                startActivity(intent);
+                            } else {
+                                validateAction(booking_id, action);
+                            }
+                        }
                     }));
 
                 }
@@ -241,8 +263,38 @@ public class UserBookingHistory extends AppCompatActivity {
         queue.add(postRequest);
     }
 
+    private void validateAction(String booking_id, String action) {
+        loaderView.showLoader();
+//        progressDialog = Global.getProgressDialog(this, CCResource.getString(this, R.string.loading_dot), false);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "booking_action", response -> {
+            loaderView.hideLoader();
+            //Global.dismissDialog(progressDialog);
+            Gson gson = new Gson();
+            CoachAccept modelArrayList = gson.fromJson(response, CoachAccept.class);
+            Toaster.customToast(modelArrayList.getData().getMessage());
 
-
+        }, error -> {
+            error.printStackTrace();
+            loaderView.hideLoader();
+            //Global.dismissDialog(progressDialog);
+            Global.msgDialog((Activity) mContext, getResources().getString(R.string.error_server));
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> param = new HashMap<>();
+                param.put("user_id", SessionManager.get_user_id(prefs));
+                param.put("action", action);
+                param.put("booking_id", booking_id);
+                param.put("s", SessionManager.get_session_id(prefs));
+                Timber.e(param.toString());
+                return param;
+            }
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
 
     @Override
     public void onBackPressed() {

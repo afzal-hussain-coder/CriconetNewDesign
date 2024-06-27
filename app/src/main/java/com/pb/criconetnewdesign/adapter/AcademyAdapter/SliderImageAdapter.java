@@ -19,14 +19,15 @@ import java.util.List;
 
 public class SliderImageAdapter extends SliderViewAdapter<SliderImageAdapter.SliderAdapterViewHolder> {
 
-    // list for storing urls of images.
-    private final List<Integer> mSliderItems;
+    private final List<String> mSliderItems;
+    private final List<Integer> mSliderItemsInteger;
+    private Context mContext;
 
-    // Constructor
-    public SliderImageAdapter(Context context, ArrayList<Integer> sliderDataArrayList) {
+    public SliderImageAdapter(Context context, ArrayList<String> sliderDataArrayList, List<Integer> mSliderItemsInteger) {
+        this.mContext = context;
         this.mSliderItems = sliderDataArrayList;
+        this.mSliderItemsInteger = mSliderItemsInteger;
     }
-
 
 
     @Override
@@ -35,32 +36,31 @@ public class SliderImageAdapter extends SliderViewAdapter<SliderImageAdapter.Sli
         return new SliderAdapterViewHolder(inflate);
     }
 
-    // Inside on bind view holder we will
-    // set data to item of Slider View.
     @Override
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, final int position) {
 
-        final Integer sliderItem = mSliderItems.get(position);
+        if(mSliderItems.size()==0){
+            final Integer sliderItemm = mSliderItemsInteger.get(position);
+            viewHolder.imageViewBackground.setImageResource(sliderItemm);
+        }else{
+            final String sliderItem = mSliderItems.get(position);
+            Glide.with(viewHolder.itemView)
+                    .load(sliderItem)
+                    .fitCenter()
+                    .into(viewHolder.imageViewBackground);
+        }
 
-        // Glide is use to load image
-        // from url in your imageview.
-        viewHolder.imageViewBackground.setImageResource(sliderItem);
-//        Glide.with(viewHolder.itemView)
-//                .load(sliderItem.getImgUrl())
-//                .fitCenter()
-//                .into(viewHolder.imageViewBackground);
+
     }
 
 
     @Override
     public int getCount() {
-        return mSliderItems.size();
+        return mSliderItems.size() == 0 ? mSliderItemsInteger.size() : mSliderItems.size();
     }
 
 
     static class SliderAdapterViewHolder extends SliderViewAdapter.ViewHolder {
-        // Adapter class for initializing 
-        // the views of our slider view.
         View itemView;
         ImageView imageViewBackground;
 

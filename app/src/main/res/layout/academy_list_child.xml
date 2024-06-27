@@ -27,7 +27,7 @@
             </com.makeramen.roundedimageview.RoundedImageView>
 
             <TextView
-                android:id="@+id/indian_team"
+                android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rIV_myBlog"
@@ -35,16 +35,15 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
-                android:background="@drawable/transparent_retangle_shape_with_corner"
                 android:gravity="center"
                 android:text="New Delhi"
                 android:textAppearance="@style/indian_team" />
 
             <TextView
-                android:id="@+id/rajat_patid"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/indian_team"
+                android:layout_below="@+id/tvAddress"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/opensans_bold"
@@ -53,10 +52,10 @@
                 android:textAppearance="@style/rajat_patid" />
 
             <TextView
-                android:id="@+id/another_pro"
+                android:id="@+id/tvSpecializatio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rajat_patid"
+                android:layout_below="@+id/tvName"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/opensans_semibold"
@@ -66,7 +65,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_below="@+id/another_pro"
+                android:layout_below="@+id/tvSpecializatio"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -84,8 +83,8 @@
                     android:textAppearance="@style/by_kannan_n" />
 
                 <FrameLayout
-                    android:id="@+id/fl_register"
-                    android:layout_width="@dimen/_80sdp"
+                    android:id="@+id/fl_contact"
+                    android:layout_width="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_height="@dimen/_28sdp"
                     android:layout_centerHorizontal="true">
@@ -118,12 +117,16 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:fontFamily="@font/opensans_semibold"
                         android:lineHeight="@dimen/_27sdp"
-                        android:text="@string/book_now"
-                        android:textAppearance="@style/register" />
+                        android:textColor="@color/white"
+                        android:text="@string/contact_academy" />
 
                 </FrameLayout>
+
+
 
             </RelativeLayout>
 

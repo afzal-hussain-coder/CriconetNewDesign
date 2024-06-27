@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:visibility="visible"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rl_zoom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:layout_centerVertical="true"
+        android:background="@color/black"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_draw"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_draw_black_24dp"
+            app:tint="@color/app_light_red" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_close_black_24dp"
+            app:tint="@color/app_light_red" />
+
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/VideoVieww"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_210sdp"
+            android:layout_below="@+id/iv_close"
+            android:background="@color/black"
+            app:andexo_aspect_ratio="aspect_match"
+            app:andexo_full_screen="false"
+            app:andexo_play_when_ready="true"
+            app:andexo_resize_mode="Fit"
+            app:andexo_show_controller="true" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_drawing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_260sdp"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:background="@color/transparent">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:weightSum="8"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_undo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    android:background="@color/black"
+                    android:src="@drawable/delete_forever"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/app_name" />
+
+                <ImageButton
+                    android:id="@+id/btn_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    android:background="@color/black"
+                    android:layout_weight="1"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_color_lens_black_24dp"
+                    android:contentDescription="@string/app_name" />
+
+                <ImageButton
+                    android:id="@+id/btn_stroke"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:src="@drawable/ic_colorize_black_24dp"
+                    android:contentDescription="@string/app_name" />
+
+                <ImageButton
+                    android:id="@+id/btn_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:src="@drawable/ic_horizontal_rule_black_24dp"
+                    android:contentDescription="@string/app_name"/>
+
+                <ImageButton
+                    android:id="@+id/btn_rectangle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:src="@drawable/rectangle_black_24dp"
+                    android:contentDescription="@string/app_name" />
+                <ImageButton
+                    android:id="@+id/btn_square"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:visibility="visible"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/square_black_24dp" />
+                <ImageButton
+                    android:id="@+id/btn_triangle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:visibility="visible"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/change_history_black_24dp" />
+                <ImageButton
+                    android:id="@+id/btn_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:tint="@color/white"
+                    android:background="@color/black"
+                    android:visibility="visible"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/circle_black_24dp" />
+
+
+                <ImageButton
+                    android:id="@+id/btn_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_1sdp"
+                    android:background="@color/black"
+                    android:src="@drawable/ic_close_black_24dp"
+                    android:contentDescription="@string/app_name"
+                    app:tint="@color/app_light_red" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:orientation="vertical">
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/rangebar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.pb.criconetnewdesign.event.drawingPaint.DrawingView
+            android:id="@+id/draw_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_185sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_below="@id/linear"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

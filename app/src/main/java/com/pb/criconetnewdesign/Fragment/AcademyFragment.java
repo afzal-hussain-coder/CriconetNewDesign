@@ -1,6 +1,8 @@
 package com.pb.criconetnewdesign.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +21,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pb.criconetnewdesign.Activity.Academy.ManageAcademyCoachActivity;
@@ -35,19 +41,31 @@ import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
 import com.pb.criconetnewdesign.adapter.AcademyAdapter.AcademyListAdapter;
+import com.pb.criconetnewdesign.model.AcademyModel.AcademyListModel;
 import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
+import com.pb.criconetnewdesign.util.CustomLoaderView;
 import com.pb.criconetnewdesign.util.Global;
+import com.pb.criconetnewdesign.util.SessionManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AcademyFragment extends Fragment {
     RecyclerView rvAcademy;
     private RequestQueue queue;
+    CustomLoaderView loaderView;
+    private SharedPreferences prefs;
     Animation animation;
     Animation animationn;
     PageURL pageURL;
+    private ArrayList<AcademyListModel> academyListModels = new ArrayList<>();
+
     public AcademyFragment() {
         // Required empty public constructor
     }
@@ -81,6 +99,8 @@ public class AcademyFragment extends Fragment {
         });
 
         queue = Volley.newRequestQueue(getActivity());
+        loaderView = CustomLoaderView.initialize(getActivity());
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         if (Global.isOnline(requireActivity())) {
             getPageUrl();
@@ -91,25 +111,26 @@ public class AcademyFragment extends Fragment {
         initView(view);
         drawerNavigation(layout_nav);
 
+        if (Global.isOnline(getActivity())) {
+            getAcademyList();
+        } else {
+            Global.showDialog(getActivity());
+        }
+
     }
 
     private void initView(View view) {
         rvAcademy = view.findViewById(R.id.rvAcademy);
         rvAcademy.setHasFixedSize(true);
         rvAcademy.setLayoutManager(new LinearLayoutManager(requireContext()));
-        rvAcademy.setAdapter(new AcademyListAdapter(requireContext(), new AcademyListAdapter.academyItemClickListener() {
-            @Override
-            public void academyItemClickEvent() {
-                startActivity(new Intent(requireContext(), AcademyDetailsActivity.class));
-            }
-        }));
+
     }
 
-    private void drawerNavigation(RelativeLayout layout_nav){
+    private void drawerNavigation(RelativeLayout layout_nav) {
 
         TextView schedule_on = layout_nav.findViewById(R.id.schedule_on);
         schedule_on.setOnClickListener(v -> {
-          startActivity(new Intent(getActivity(), ScheduleOnlineAcativity.class));
+            startActivity(new Intent(getActivity(), ScheduleOnlineAcativity.class));
         });
 
         TextView manage_stud = layout_nav.findViewById(R.id.manage_stud);
@@ -128,13 +149,12 @@ public class AcademyFragment extends Fragment {
         });
 
 
-
-        TextView about_us= layout_nav.findViewById(R.id.about_us);
+        TextView about_us = layout_nav.findViewById(R.id.about_us);
         about_us.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getAboutUs().getString("url"))
-                        .putExtra("title",pageURL.getAboutUs().getString("title")));
+                        .putExtra("URL", pageURL.getAboutUs().getString("url"))
+                        .putExtra("title", pageURL.getAboutUs().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -143,8 +163,8 @@ public class AcademyFragment extends Fragment {
         partner_wit.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getPartner().getString("url"))
-                        .putExtra("title",pageURL.getPartner().getString("title")));
+                        .putExtra("URL", pageURL.getPartner().getString("url"))
+                        .putExtra("title", pageURL.getPartner().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -154,8 +174,8 @@ public class AcademyFragment extends Fragment {
         campus_amba.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getCampus_ambassador().getString("url"))
-                        .putExtra("title",pageURL.getCampus_ambassador().getString("title")));
+                        .putExtra("URL", pageURL.getCampus_ambassador().getString("url"))
+                        .putExtra("title", pageURL.getCampus_ambassador().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -171,8 +191,8 @@ public class AcademyFragment extends Fragment {
         careers.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getCarrer().getString("url"))
-                        .putExtra("title",pageURL.getCarrer().getString("title")));
+                        .putExtra("URL", pageURL.getCarrer().getString("url"))
+                        .putExtra("title", pageURL.getCarrer().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -182,8 +202,8 @@ public class AcademyFragment extends Fragment {
         faqs.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getFaq().getString("url"))
-                        .putExtra("title",pageURL.getFaq().getString("title")));
+                        .putExtra("URL", pageURL.getFaq().getString("url"))
+                        .putExtra("title", pageURL.getFaq().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -193,8 +213,8 @@ public class AcademyFragment extends Fragment {
         media_relea.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getMediaReleases().getString("url"))
-                        .putExtra("title",pageURL.getMediaReleases().getString("title")));
+                        .putExtra("URL", pageURL.getMediaReleases().getString("url"))
+                        .putExtra("title", pageURL.getMediaReleases().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -209,8 +229,8 @@ public class AcademyFragment extends Fragment {
         user_agreem.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getUserAggreement().getString("url"))
-                        .putExtra("title",pageURL.getUserAggreement().getString("title")));
+                        .putExtra("URL", pageURL.getUserAggreement().getString("url"))
+                        .putExtra("title", pageURL.getUserAggreement().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -220,8 +240,8 @@ public class AcademyFragment extends Fragment {
         terms_of_us.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getTearms().getString("url"))
-                        .putExtra("title",pageURL.getTearms().getString("title")));
+                        .putExtra("URL", pageURL.getTearms().getString("url"))
+                        .putExtra("title", pageURL.getTearms().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -231,8 +251,8 @@ public class AcademyFragment extends Fragment {
         privacy_pol.setOnClickListener(v -> {
             try {
                 startActivity(new Intent(getActivity(), WebViewActivity.class)
-                        .putExtra("URL",pageURL.getTearms().getString("url"))
-                        .putExtra("title",pageURL.getTearms().getString("title")));
+                        .putExtra("URL", pageURL.getTearms().getString("url"))
+                        .putExtra("title", pageURL.getTearms().getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -256,6 +276,66 @@ public class AcademyFragment extends Fragment {
             error.printStackTrace();
         }) {
 
+        };
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
+        queue.add(postRequest);
+    }
+
+    private void getAcademyList() {
+        loaderView.showLoader();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + Global.ACADEMY_LIST, response -> {
+            Log.d("AcademyResponse", response);
+
+            try {
+                loaderView.hideLoader();
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    AcademyListModel academyListModel;
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        academyListModel = new AcademyListModel(jsonArray.getJSONObject(i));
+                        academyListModels.add(academyListModel);
+                    }
+
+                    rvAcademy.setAdapter(new AcademyListAdapter(requireContext(), academyListModels, new AcademyListAdapter.academyItemClickListener() {
+                        @Override
+                        public void academyItemClickEvent(AcademyListModel academyListModel1) {
+                            startActivity(new Intent(requireContext(), AcademyDetailsActivity.class).putExtra("AcademyDetails", academyListModel1));
+                        }
+
+                        @Override
+                        public void academyContactClick(String number) {
+                            Global.callApp(number, getContext());
+                        }
+                    }));
+
+                } else {
+                    loaderView.hideLoader();
+                    Toast.makeText(getActivity(), jsonObject.getString("api_text"), Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }, error -> {
+            error.printStackTrace();
+            loaderView.hideLoader();
+            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> param = new HashMap<String, String>();
+                param.put("user_id", SessionManager.get_user_id(prefs));
+                param.put("s", SessionManager.get_session_id(prefs));
+//                param.put("order_by", experience);
+//                param.put("sort_by", price);
+//                param.put("filter_cat", filterType);
+                Log.e("Param", param.toString());
+                return param;
+            }
         };
         int socketTimeout = 30000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);

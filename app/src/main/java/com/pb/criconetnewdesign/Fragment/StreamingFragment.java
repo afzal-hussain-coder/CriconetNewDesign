@@ -28,8 +28,10 @@ import com.pb.criconetnewdesign.Activity.NoticeBoardActivity;
 import com.pb.criconetnewdesign.Activity.Streaming.BookLiveStreamingActivity;
 import com.pb.criconetnewdesign.CommonUI.WebViewActivity;
 import com.pb.criconetnewdesign.R;
+import com.pb.criconetnewdesign.databinding.FragmentStreamingBinding;
 import com.pb.criconetnewdesign.model.pavilionModel.PageURL;
 import com.pb.criconetnewdesign.util.Global;
+import com.potyvideo.library.AndExoPlayerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +42,7 @@ public class StreamingFragment extends Fragment {
     Animation animation_right;
     Animation animation_left;
     PageURL pageURL;
+    FragmentStreamingBinding  fragmentStreamingBinding;
 
 
     public StreamingFragment() {
@@ -51,8 +54,8 @@ public class StreamingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_streaming, container, false);
+        fragmentStreamingBinding = FragmentStreamingBinding.inflate(inflater, container, false);
+        return fragmentStreamingBinding.getRoot();
     }
 
     @Override
@@ -85,7 +88,20 @@ public class StreamingFragment extends Fragment {
         }
         drawerNavigation(layout_nav);
 
+        fragmentStreamingBinding.VideoView.setSource("https://www.criconet.com/assets/criconet-video.mp4");
 
+        fragmentStreamingBinding.flBookLiveStream.setOnClickListener(v -> {});
+        fragmentStreamingBinding.flViewLiveMatches.setOnClickListener(v -> {});
+        fragmentStreamingBinding.tvHowDoesItWork.setOnClickListener(v -> {});
+        fragmentStreamingBinding.tvViewArchive.setOnClickListener(v -> {});
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fragmentStreamingBinding.VideoView.pausePlayer();
     }
 
     private void drawerNavigation(RelativeLayout layout_nav){

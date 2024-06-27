@@ -9,12 +9,15 @@ import android.os.Build;
 
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.google.firebase.FirebaseApp;
+import com.pb.criconetnewdesign.model.CurrentUserSettings;
+
+import timber.log.Timber;
 
 public class AGApplication extends Application {
     //...15-07-22 for Notification channel creation..
     public static final String CHANNEL_ID = "exampleServiceChannel";
 
-    //private CurrentUserSettings mVideoSettings = new CurrentUserSettings();
+    private CurrentUserSettings mVideoSettings = new CurrentUserSettings();
 
    // private static GoogleAnalytics sAnalytics;
    // private static Tracker sTracker;
@@ -38,9 +41,9 @@ public class AGApplication extends Application {
         return _Context;
     }
 
-//    public CurrentUserSettings userSettings() {
-//        return mVideoSettings;
-//    }
+    public CurrentUserSettings userSettings() {
+        return mVideoSettings;
+    }
 
 //    public void addEventHandler(AGEventHandler handler) {
 //        mEventHandler.addEventHandler(handler);
@@ -61,8 +64,8 @@ public class AGApplication extends Application {
         super.onCreate();
         _Context=this;
         //createRtcEngine();
-        //Timber.plant(new Timber.DebugTree());
-        //proxy = new HttpProxyCacheServer(_Context);
+        Timber.plant(new Timber.DebugTree());
+        proxy = new HttpProxyCacheServer(_Context);
         //mChatManager = new ChatManager(this);
         //mChatManager.init();
         //mChatManager.enableOfflineMessage(true);
