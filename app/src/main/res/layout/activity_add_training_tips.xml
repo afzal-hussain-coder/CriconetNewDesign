@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.pb.criconetnewdesign.util.BookingHistoryDropDown
+                <com.pb.criconet.util.BookingHistoryDropDown
                     android:id="@+id/drop_tips_category"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"
@@ -307,7 +307,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.pb.criconetnewdesign.util.BookingHistoryDropDown
+                <com.pb.criconet.util.BookingHistoryDropDown
                     android:id="@+id/drop_privacy"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"

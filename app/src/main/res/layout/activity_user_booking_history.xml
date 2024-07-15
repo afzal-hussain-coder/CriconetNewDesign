@@ -55,7 +55,7 @@
 
         </TextView>
 
-        <com.pb.criconetnewdesign.util.BookingHistoryDropDown
+        <com.pb.criconet.util.BookingHistoryDropDown
             android:id="@+id/drop_booking"
             style="@style/formDropDown"
             android:layout_width="match_parent"

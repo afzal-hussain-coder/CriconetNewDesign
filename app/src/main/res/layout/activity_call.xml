@@ -13,7 +13,7 @@
 
 
         <!--rl_share_screen-->
-        <com.pb.criconetnewdesign.layout.GridVideoViewContainer
+        <com.pb.criconet.layout.GridVideoViewContainer
             android:id="@+id/grid_video_view_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:visibility="visible">
 
-            <com.pb.criconetnewdesign.propeller.ui.AGLinearLayout
+            <com.pb.criconet.propeller.ui.AGLinearLayout
                 android:id="@+id/extra_ops_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                             android:text="@string/recorded_video"/>
                     </RelativeLayout>
                 </RelativeLayout>
-            </com.pb.criconetnewdesign.propeller.ui.AGLinearLayout>
+            </com.pb.criconet.propeller.ui.AGLinearLayout>
             <RelativeLayout
                 android:id="@+id/rl_share_screen"
                 android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                     android:text="@string/label_start_sharing_your_screen"/>
             </RelativeLayout>
 
-            <com.pb.criconetnewdesign.propeller.ui.AGLinearLayout
+            <com.pb.criconet.propeller.ui.AGLinearLayout
                 android:id="@+id/bottom_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -277,7 +277,7 @@
 
                 </LinearLayout>
 
-            </com.pb.criconetnewdesign.propeller.ui.AGLinearLayout>
+            </com.pb.criconet.propeller.ui.AGLinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="272dp"
@@ -373,7 +373,7 @@
                     android:text="@string/double_click"
                     app:drawableStartCompat="@drawable/ic_touch_app_black_24dp" />
             </LinearLayout>
-            <com.pb.criconetnewdesign.logger.LoggerRecyclerView
+            <com.pb.criconet.logger.LoggerRecyclerView
                 android:layout_width="272dp"
                 android:layout_height="144dp"
                 android:layout_above="@id/bottom_container"

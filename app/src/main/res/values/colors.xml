@@ -62,6 +62,11 @@
     <color name="color_error_password">#ffa500</color>
     <color name="logError">#800000</color>
     <color name="transparent_75_white">#ACFFFFFF</color>
+    <color name="transparnt_light">#c9000000</color>
+    <color name="dark_grey">#A9A9A9</color>
+    <color name="black_light">#757575</color>
+    <color name="light_black">#323232</color>
+    <color name="bckground_light">#8C8979</color>
 
 
 

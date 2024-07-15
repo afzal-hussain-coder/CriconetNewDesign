@@ -104,7 +104,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.pb.criconetnewdesign.util.BookStreamDropDown
+                <com.pb.criconet.util.BookStreamDropDownDate
                     android:id="@+id/drop_selectType"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.pb.criconetnewdesign.util.BookStreamDropDown
+                <com.pb.criconet.util.BookStreamDropDown
                     android:id="@+id/drop_select_stat"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"
@@ -230,7 +230,7 @@
                     android:visibility="gone"
                     android:textColor="#ff3333"/>
 
-                <com.pb.criconetnewdesign.util.BookStreamDropDown
+                <com.pb.criconet.util.BookStreamDropDown
                     android:id="@+id/drop_select_city"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"
@@ -290,6 +290,24 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:id="@+id/tvSelectdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:padding="@dimen/_13sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/editboxx"
+                    android:hint="@string/pic_multiple_date"
+                    android:imeOptions="actionNext"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/light_text_color"
+                    android:textSize="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_semibold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/messageTextInputLayout"

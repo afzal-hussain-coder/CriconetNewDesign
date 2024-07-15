@@ -22,7 +22,7 @@
             android:textColor="@color/indicator_selector"
             android:textSize="@dimen/_12sdp" />
 
-        <com.pb.criconetnewdesign.util.DropDownBlue
+        <com.pb.criconet.util.DropDownBlue
             android:id="@+id/drop_attendanceStatus"
             style="@style/formDropDown"
             android:layout_width="wrap_content"

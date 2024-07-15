@@ -425,7 +425,6 @@
     <string name="slot_duration">Slot Duration-</string>
     <string name="minute">-minute</string>
     <string name="By">By </string>
-    <string name="contact_academy">Contact Academy</string>
     <string name="enjoy_the_best_of_local_cricket_with_advanced_live_streaming_technology">Enjoy the best of local cricket with advanced live streaming technology</string>
     <string name="enjoy_the_best_of_live_streaming">Enjoy the best of live streaming</string>
     <string name="View_Live_Matches">View Live Matches</string>
@@ -464,7 +463,28 @@
     <string name="ecoahing_compleated">Is your e-Coaching session complete?</string>
     <string name="left_successfully">left successfully</string>
     <string name="joined" translatable="false">joined</string>
-
+    <string name="sorry_no_live_streams_found">Sorry \n No Live Streams Found</string>
+    <string name="live_streaming">Live Streaming</string>
+    <string name="search_by_name_location">Search by Team, Location and Ground</string>
+    <string name="match_not_found">Match Not Found</string>
+    <string name="live_chat">Live Chat</string>
+    <string name="_10_watching">10+ watching</string>
+    <string name="chat_publicly_during_live_match">Chat publicly during live match...</string>
+    <string name="chat_publicly_during_watch_party">Chat publicly during watch party...</string>
+    <string name="contact_academy">Contact Academy</string>
+    <string name="watch_party">Watch Party</string>
+    <string name="lets_get_the_party_started">Let\'s get the party started</string>
+    <string name="chat_name">Chat name:</string>
+    <string name="create_watch_party">Create Watch Party</string>
+    <string name="Join_watch_party">Join Watch Party</string>
+    <string name="myAttendance">My Attendance</string>
+    <string name="player_control">Player Controls</string>
+    <string name="enjoy_party">Enjoy Party</string>
+    <string name="post_details">Post Details</string>
+    <string name="camera_1">Camera 1</string>
+    <string name="camera_2">Camera 2</string>
+    <string name="both1">Both</string>
+    <string name="pic_multiple_date">Select multiple dates.</string>
 
 
 </resources>

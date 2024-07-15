@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:background="@android:color/transparent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bckground"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:abbreviationsBarColor="@color/purple_700"
+            app:abbreviationsLabelsColor="@android:color/white"
+            app:daysLabelsColor="@color/white"
+            app:headerColor="@color/purple_700"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pagesColor="@color/bckground"
+            app:eventsEnabled="false"
+            app:disabledDaysLabelsColor="@color/dark_grey"
+            app:selectionColor="@color/yellow"
+            app:selectionLabelColor="@color/white"
+            app:anotherMonthsDaysLabelsColor="@color/gray"
+            app:todayLabelColor="@color/purple_700"
+            app:type="many_days_picker" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/fl_cancell"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@color/purple_700"
+                android:layout_marginEnd="@dimen/_1sdp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="@color/black50"/>
+                <View
+                    android:layout_width="0.7dp"
+                    android:visibility="gone"
+                    android:layout_height="match_parent"
+                    android:background="@color/black50"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/app_redd"/>
+                <View
+                    android:layout_width="0.9dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:background="@color/app_redd"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/cancel"
+                    android:textAllCaps="true"
+                    app:fontFamily="@font/opensans_semibold"
+                    android:textColor="@color/light_text_color"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_ok"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@color/purple_700"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="@color/black50"/>
+                <View
+                    android:layout_width="0.7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/bckground"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/app_redd"/>
+                <View
+                    android:layout_width="0.9dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:visibility="gone"
+                    android:background="@color/app_redd"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/ok"
+                    android:textAllCaps="true"
+                    app:fontFamily="@font/opensans_semibold"
+                    android:textColor="@color/light_text_color"
+                    android:textSize="@dimen/_10sdp"/>
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

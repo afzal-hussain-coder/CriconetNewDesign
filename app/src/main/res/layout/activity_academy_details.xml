@@ -211,7 +211,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet oy lacus a ipsum. Lorem ipsum dolor sit amet, consecte ascing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in irdiet odio lacus a ipsum. "
                 android:textAppearance="@style/details_text" />
 
-            <com.pb.criconetnewdesign.util.ExoPlayerRecyclerView
+            <com.pb.criconet.util.ExoPlayerRecyclerView
                 android:id="@+id/exoPlayerRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

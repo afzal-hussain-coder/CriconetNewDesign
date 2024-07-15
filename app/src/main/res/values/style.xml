@@ -557,5 +557,8 @@
         <item name="android:shadowColor">@color/transparent_75_white</item>
     </style>
 
+    <style name="RoundedSquare">
+        <item name="cornerSize">@dimen/_5sdp</item>
+    </style>
 
 </resources>

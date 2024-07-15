@@ -1,0 +1,1408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/topPanel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_live_matches" />
+
+    <LinearLayout
+        android:id="@+id/li_cam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/VideoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:keepScreenOn="true"
+            app:andexo_aspect_ratio="aspect_16_9"
+            app:andexo_full_screen="true"
+            app:andexo_play_when_ready="true"
+            app:resize_mode="fill"
+            app:use_controller="true" />
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/VideoView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:keepScreenOn="true"
+            android:visibility="gone"
+            app:andexo_aspect_ratio="aspect_16_9"
+            app:andexo_full_screen="true"
+            app:andexo_play_when_ready="false"
+            app:resize_mode="fill"
+            app:use_controller="true" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/li_cam">
+
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottomPanel"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:fadeScrollbars="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="visible" />
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:id="@+id/extFab_watchParty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="@string/watch_party"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        app:backgroundTint="@color/purple_700" />
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:id="@+id/extFab_book_live_streaming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="@string/book_live_s"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        app:backgroundTint="@color/purple_700"
+                        app:icon="@drawable/live_streaming"
+                        app:iconTint="@color/white" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+            <RelativeLayout
+                android:id="@+id/rlwatchPartyChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_above="@id/bottomPanel"
+                android:background="@color/black"
+                android:visibility="gone">
+
+                <!-- android:layout_marginBottom="@dimen/_35sdp"-->
+
+                <RelativeLayout
+                    android:id="@+id/topWatchParty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_alignParentTop="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:text="@string/enjoy_party"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp"></TextView>
+
+                        <TextView
+                            android:id="@+id/tv_watchPartyOwnerName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:textColor="@color/dark_grey"
+                            android:textSize="@dimen/_10sdp"></TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="horizontal">
+
+                            <!--   <androidx.appcompat.widget.SwitchCompat
+                                   android:id="@+id/switchControllerPlayer"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginStart="@dimen/_10sdp"
+                                   android:thumbTint="@color/red"
+                                   app:trackTint="@color/dim_grey"
+                                   android:textAppearance="?android:attr/textAppearanceLarge">
+
+                               </androidx.appcompat.widget.SwitchCompat>-->
+
+                        </LinearLayout>
+
+
+                        <!--  <TextView
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Allow everyone to play,and seek .Turing this off will limit controls to the host"
+                              android:textSize="@dimen/_10sdp"
+                              android:textColor="@color/dim_grey"
+                              android:fontFamily="@font/opensans_regular">
+
+                          </TextView>-->
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ib_share_watchPartyLink"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="visible"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:src="@drawable/ic_whatsapp"
+                            app:tint="@color/white" />
+
+                        <ImageView
+                            android:id="@+id/iv_close_watchPartyChat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_close_black_24dp"
+                            app:tint="@color/red"></ImageView>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/v_watchparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_below="@+id/topWatchParty"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/line_gradient" />
+
+                <RelativeLayout
+                    android:id="@+id/middlewatchparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/v_watchparty"
+                    android:paddingBottom="@dimen/_40sdp"
+                    android:visibility="visible">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_comment_watchparty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
+                <!--.....emoji-->
+
+                <RelativeLayout
+                    android:id="@+id/li_emo_watchparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/bottom_watchparty"
+                    android:visibility="gone">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_emoji_watchparty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/bottom_sheet_bg"
+                        android:visibility="visible" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_emoji_zoom_watchparty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/black"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_zoom_header_watchparty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:padding="@dimen/_5sdp">
+
+                            <ImageView
+                                android:id="@+id/iv_emoji_zoom_close_watchparty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/ic_close_black_24dp"
+                                android:visibility="visible"
+                                app:tint="@color/red"></ImageView>
+
+                            <ImageView
+                                android:id="@+id/iv_send_emoji_watchparty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/send_black_24dp"
+                                android:visibility="visible"
+                                app:tint="@color/green"></ImageView>
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_emoji_zoom_watchparty"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!--...Tagging userlist UI-->
+                <RelativeLayout
+                    android:id="@+id/li_searchuser_watchparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <!-- android:layout_above="@+id/bottom_watchparty"-->
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_searchUser_watchparty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@color/white"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bottom_watchparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"
+                    android:padding="@dimen/_10sdp">
+                    <!-- android:layout_below="@+id/middle"-->
+
+                    <ImageView
+                        android:id="@+id/iv_emoji_watchparty"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/sentiment_satisfied_alt_black_24dp"
+                        app:tint="@color/yellow"></ImageView>
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageViewAttached_watchparty"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:layout_toRightOf="@+id/iv_emoji_watchparty"
+                        android:background="@drawable/bg_backedit_feed"
+                        android:backgroundTint="@color/purple_700"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+
+                    <EditText
+                        android:id="@+id/edit_chat_watchparty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/iv_send_watchparty"
+                        android:layout_toEndOf="@+id/imageViewAttached_watchparty"
+                        android:autofillHints=""
+                        android:background="@null"
+                        android:focusable="true"
+                        android:hint="@string/chat_publicly_during_watch_party"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:padding="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dim_grey"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/iv_send_watchparty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/send_black_24dp"
+                        android:contentDescription="@string/app_name"
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="gone"
+                        app:tint="@color/purple_700"></ImageView>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/bottomPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:background="@color/light_grey"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/cam_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_red"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/camera_1"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cam_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_border_red"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/camera_2"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cam_both"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_border_red"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/both1"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:id="@+id/nested"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:visibility="gone">-->
+
+
+        <!--Live Chat Portrait-->
+        <RelativeLayout
+            android:id="@+id/slideView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/black"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/live_chat"
+                        android:textColor="@color/light_text_color"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_watching"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:text="@string/_10_watching"
+                        android:textColor="@color/light_grey"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_regular" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_close_black_24dp"
+                    app:tint="@color/red"></ImageView>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/v"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/top"
+                android:background="@drawable/line_gradient" />
+
+
+            <RelativeLayout
+                android:id="@+id/middle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v"
+                android:paddingBottom="@dimen/_40sdp"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <!--.....emoji-->
+
+            <RelativeLayout
+                android:id="@+id/li_emo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottom"
+                android:visibility="visible">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_emoji"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@drawable/bottom_sheet_bg"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_emoji_zoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_zoom_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:padding="@dimen/_5sdp">
+
+                        <ImageView
+                            android:id="@+id/iv_emoji_zoom_close"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/ic_close_black_24dp"
+                            android:visibility="visible"
+                            app:tint="@color/red"></ImageView>
+
+                        <ImageView
+                            android:id="@+id/iv_send_emoji"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/send_black_24dp"
+                            android:visibility="visible"
+                            app:tint="@color/green"></ImageView>
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_emoji_zoom"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <!--...Tagging userlist UI-->
+            <RelativeLayout
+                android:id="@+id/li_searchuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottom"
+                android:visibility="visible">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_searchUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:padding="@dimen/_10sdp">
+                <!-- android:layout_below="@+id/middle"-->
+
+                <ImageView
+                    android:id="@+id/iv_emoji"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/sentiment_satisfied_alt_black_24dp"
+                    app:tint="@color/yellow"></ImageView>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageViewAttached"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_toRightOf="@+id/iv_emoji"
+                    android:background="@drawable/bg_backedit_feed"
+                    android:backgroundTint="@color/purple_700"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+
+                <EditText
+                    android:id="@+id/edit_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_send"
+                    android:layout_toEndOf="@+id/imageViewAttached"
+                    android:autofillHints=""
+                    android:background="@null"
+                    android:focusable="true"
+                    android:hint="@string/chat_publicly_during_live_match"
+                    android:imeOptions="actionNext"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dim_grey"
+                    android:textSize="@dimen/_10sdp" />
+
+                <ImageView
+                    android:id="@+id/iv_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/send_black_24dp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/_10sdp"
+                    android:visibility="gone"
+                    app:tint="@color/purple_700"></ImageView>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+        <!-- </androidx.core.widget.NestedScrollView>-->
+
+
+      <!--..put here after ciode..-->
+
+
+        <!--Create Watch Party..Layout-->
+        <LinearLayout
+            android:id="@+id/liCreateWatchParty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/bottom_sheet_bg"
+            android:backgroundTint="@color/black"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_close_watchParty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_close_black_24dp"
+                app:tint="@color/red"></ImageView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/lets_get_the_party_started"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_20sdp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/chat_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"></TextView>
+
+                <TextView
+                    android:id="@+id/username_watchparty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="Afzal Hussain"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"></TextView>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtbCreateWatchParty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/create_watch_party">
+
+            </com.google.android.material.button.MaterialButton>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:text="By viewing, you agree to our Watch Party Community Guidelines."
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp">
+
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <!--Join Watch Party Layout-->
+        <LinearLayout
+            android:id="@+id/liJoinWatchParty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/bottom_sheet_bg"
+            android:backgroundTint="@color/black"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_close_JoinParty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_close_black_24dp"
+                app:tint="@color/red"></ImageView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/lets_get_the_party_started"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_20sdp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="@string/chat_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"></TextView>
+
+                <TextView
+                    android:id="@+id/usernameJoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="Afzal Hussain"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"></TextView>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mtbJoinWatchParty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/Join_watch_party">
+
+            </com.google.android.material.button.MaterialButton>
+
+            <TextView
+                android:id="@+id/textViewJoinTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:text="By viewing, you agree to our Terms of Use and our Watch Party Community Guidelines."
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp">
+
+
+            </TextView>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <!--Live Chat Landscape-->
+
+    <!--......split layout-->
+    <!--<LinearLayout
+        android:id="@+id/li_split"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:visibility="gone"
+        android:orientation="horizontal">
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/videoView4_split"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:keepScreenOn="true"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            app:andexo_aspect_ratio="aspect_16_9"
+            app:andexo_full_screen="true"
+            app:resize_mode="fill"
+            app:use_controller="true" />
+        <RelativeLayout
+            android:id="@+id/rl_landscap"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:visibility="visible">
+
+           &lt;!&ndash; android:layout_width="@dimen/_220sdp"&ndash;&gt;
+
+            <RelativeLayout
+                android:id="@+id/slideView_landscap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:orientation="vertical">
+
+                &lt;!&ndash;Header of Chat Dialog&ndash;&gt;
+                <RelativeLayout
+                    android:id="@+id/top_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Live Chat"
+                            android:textColor="@color/light_text_color"
+                            android:textSize="@dimen/_10sdp"
+                            app:fontFamily="@font/opensans_semibold" />
+
+                        <TextView
+                            android:id="@+id/tv_watching_landscap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_4sdp"
+                            android:text="10+ watching"
+                            android:textColor="@color/dim_grey"
+                            android:textSize="@dimen/_10sdp"
+                            app:fontFamily="@font/opensans_regular" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_close_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:src="@drawable/ic_close_black_24dp"
+                        app:tint="@color/red"></ImageView>
+
+                </RelativeLayout>
+                &lt;!&ndash;End of Header&ndash;&gt;
+                <View
+                    android:id="@+id/v_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_below="@+id/top_landscap"
+                    android:background="@drawable/line_gradient" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_landscape_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/v_landscap">
+                    &lt;!&ndash;RecyclerView of Chat Text and Image&ndash;&gt;
+                    <RelativeLayout
+                        android:id="@+id/middle_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_comment_landscap"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_25sdp"
+                            android:visibility="visible" />
+
+                    </RelativeLayout>
+                    &lt;!&ndash;End of RecyclerView of Chat Text and Image&ndash;&gt;
+
+                    <RelativeLayout
+                        android:id="@+id/rl_landscape_emoji_reclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+                        &lt;!&ndash;Emoji RecyclerView xml here&ndash;&gt;
+                        <RelativeLayout
+                            android:id="@+id/rl_emoji_landscap"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="visible">
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_emoji_landscap"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_15sdp"
+                                android:background="@color/black"
+                                android:visibility="visible" />
+
+                        </RelativeLayout>
+                        &lt;!&ndash;End Emoji RecyclerView xml here&ndash;&gt;
+
+
+                    </RelativeLayout>
+
+
+                    &lt;!&ndash;....Send message and EditText here&ndash;&gt;
+                    <RelativeLayout
+                        android:id="@+id/bottom_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#171717"
+                        android:paddingLeft="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_5sdp">
+
+                        <ImageView
+                            android:id="@+id/iv_emoji_landscap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/sentiment_satisfied_alt_black_24dp"></ImageView>
+
+                        <com.pb.criconet.fontsview.OSLEditText
+                            android:id="@+id/edit_chat_landscap"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/iv_send_landscap"
+                            android:layout_toRightOf="@+id/iv_emoji_landscap"
+                            android:autofillHints=""
+                            android:background="@null"
+                            android:focusable="true"
+                            android:hint="Chat publicaly during live match..."
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:padding="@dimen/_5sdp"
+                            android:textColor="@color/white_smoke"
+                            android:textColorHint="@color/black_light"
+                            android:textSize="@dimen/_9sdp" />
+
+                        <ImageView
+                            android:id="@+id/iv_send_landscap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/send_black_24dp"
+                            android:visibility="gone"></ImageView>
+                    </RelativeLayout>
+                    &lt;!&ndash;..End..Send message and EditText here&ndash;&gt;
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_emoji_zoom_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/v_landscap"
+                    android:visibility="gone">
+
+                    &lt;!&ndash;...Header of ZOOM image with close and send button&ndash;&gt;
+                    <RelativeLayout
+                        android:id="@+id/rl_zoom_header_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:padding="@dimen/_5sdp">
+
+                        <ImageView
+                            android:id="@+id/iv_emoji_zoom_close_landscap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:src="@drawable/ic_close_black_24dp"
+                            android:visibility="visible"
+                            app:tint="@color/red"></ImageView>
+
+                        <ImageView
+                            android:id="@+id/iv_send_emoji_landscap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/send_black_24dp"
+                            android:visibility="visible"
+                            app:tint="@color/green"></ImageView>
+                    </RelativeLayout>
+
+                    &lt;!&ndash;...Header of ZOOM image with close and send button&ndash;&gt;
+
+                    &lt;!&ndash;Zoom ImageView&ndash;&gt;
+                    <ImageView
+                        android:id="@+id/iv_emoji_zoom_landscap"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>-->
+
+    <RelativeLayout
+        android:id="@+id/rl_landscap"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:id="@+id/slideView_landscap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_semi_transparent"
+            android:orientation="vertical">
+
+            <!--Header of Chat Dialog-->
+            <RelativeLayout
+                android:id="@+id/top_landscap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/live_chat"
+                        android:textColor="@color/light_text_color"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tv_watching_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:text="@string/_10_watching"
+                        android:textColor="@color/light_grey"
+                        android:textSize="@dimen/_10sdp"
+                        app:fontFamily="@font/opensans_regular" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_close_landscap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/circle_black"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_close_black_24dp"
+                    app:tint="@color/red"></ImageView>
+
+            </RelativeLayout>
+            <!--End of Header-->
+            <View
+                android:id="@+id/v_landscap"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/top_landscap"
+                android:background="@drawable/line_gradient" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_landscape_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/v_landscap">
+                <!--RecyclerView of Chat Text and Image-->
+                <RelativeLayout
+                    android:id="@+id/middle_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_comment_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_25sdp"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+                <!--End of RecyclerView of Chat Text and Image-->
+
+                <RelativeLayout
+                    android:id="@+id/rl_landscape_emoji_reclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+                    <!--Emoji RecyclerView xml here-->
+                    <RelativeLayout
+                        android:id="@+id/rl_emoji_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_emoji_landscap"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_15sdp"
+                            android:background="@color/black"
+                            android:visibility="visible" />
+
+                    </RelativeLayout>
+                    <!--End Emoji RecyclerView xml here-->
+
+
+                </RelativeLayout>
+
+                <!--...Tagging userlist UI-->
+                <RelativeLayout
+                    android:id="@+id/li_searchuser_landscape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_searchUser_landscape"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@color/white"
+                        android:visibility="gone" />
+
+
+                </RelativeLayout>
+
+                <!--....Send message and EditText here-->
+                <RelativeLayout
+                    android:id="@+id/bottom_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="#171717"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/iv_emoji_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/sentiment_satisfied_alt_black_24dp"></ImageView>
+
+                    <EditText
+                        android:id="@+id/edit_chat_landscap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/iv_send_landscap"
+                        android:layout_toEndOf="@+id/iv_emoji_landscap"
+                        android:autofillHints=""
+                        android:background="@null"
+                        android:focusable="true"
+                        android:hint="@string/chat_publicly_during_live_match"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:padding="@dimen/_5sdp"
+                        android:textColor="@color/white_smoke"
+                        android:textColorHint="@color/black_light"
+                        android:textSize="@dimen/_9sdp" />
+
+                    <ImageView
+                        android:id="@+id/iv_send_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/send_black_24dp"
+                        android:visibility="gone"></ImageView>
+                </RelativeLayout>
+                <!--..End..Send message and EditText here-->
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_emoji_zoom_landscap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/v_landscap"
+                android:visibility="gone">
+
+                <!--...Header of ZOOM image with close and send button-->
+                <RelativeLayout
+                    android:id="@+id/rl_zoom_header_landscap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/iv_emoji_zoom_close_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_close_black_24dp"
+                        android:visibility="visible"
+                        app:tint="@color/red"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/iv_send_emoji_landscap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/send_black_24dp"
+                        android:visibility="visible"
+                        app:tint="@color/green"></ImageView>
+                </RelativeLayout>
+
+                <!--...Header of ZOOM image with close and send button-->
+
+                <!--Zoom ImageView-->
+                <ImageView
+                    android:id="@+id/iv_emoji_zoom_landscap"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content" />
 
 
-    <com.pb.criconetnewdesign.IntroSlider.IndicatorLayout
+    <com.pb.criconet.IntroSlider.IndicatorLayout
         android:id="@+id/indicatorLayout"
         android:layout_width="@dimen/_97sdp"
         android:layout_height="wrap_content"

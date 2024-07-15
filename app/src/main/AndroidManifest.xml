@@ -45,8 +45,43 @@
         android:theme="@style/Theme.CriconetNewDesign"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".Activity.Streaming.ArchievMatchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
-        <activity android:name=".Activity.Coach.EndSessionFeedbackFormActivity"
+        <activity
+            android:name=".Activity.Streaming.YoutubePlayerActivity"
+            android:exported="false"
+            android:label="View Recording"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.CriconetNewDesign.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+
+        <activity
+            android:name=".Activity.Streaming.LiveMatchesActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".Activity.Streaming.Play_Live_Stream_Single"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:exported="true"
+            android:theme="@style/Theme.CriconetNewDesign.NoActionBar" />
+
+        <activity
+            android:name=".Activity.Coach.EndSessionFeedbackFormActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -63,7 +98,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-
         <activity
             android:name=".Activity.Coach.CancellationFeedbackFormActivity"
             android:exported="false">
@@ -465,6 +499,12 @@
                 android:value="" />
         </activity>
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/app_logo2" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purple_700" />
     </application>
 
 </manifest>
