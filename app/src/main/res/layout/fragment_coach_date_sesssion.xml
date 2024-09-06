@@ -28,16 +28,34 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:orientation="vertical">
 
-               <CalendarView
-                   android:id="@+id/calendorView"
+               <LinearLayout
+                   android:id="@+id/liCalandor"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:background="@drawable/calendor_bg"
-                   android:theme="@style/CalenderViewCustom"
-                   android:dateTextAppearance="@style/CalenderViewDateCustomText"
-                   android:weekDayTextAppearance="@style/CalenderViewWeekCustomText">
+                   android:orientation="vertical">
 
-               </CalendarView>
+                  <com.applandeo.materialcalendarview.CalendarView
+                      android:id="@+id/calendarView"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_10sdp"
+                      app:abbreviationsBarColor="@color/purple_700"
+                      app:abbreviationsLabelsColor="@color/white"
+                      app:daysLabelsColor="@color/white"
+                      app:disabledDaysLabelsColor="@color/app_green"
+                      app:eventsEnabled="true"
+                      app:forwardButtonSrc="@drawable/ic_arrow_right"
+                      app:headerColor="@color/purple_700"
+                      app:headerLabelColor="@color/white"
+                      app:pagesColor="@color/purple_700"
+                      app:previousButtonSrc="@drawable/ic_arrow_left"
+                      app:selectionColor="@color/indicator_selector"
+                      app:todayLabelColor="@color/purple_700"
+                      app:type="one_day_picker"
+                      app:typeface="@font/opensans_regular" />
+
+               </LinearLayout>
 
                <LinearLayout
                    android:id="@+id/li_session_layout"

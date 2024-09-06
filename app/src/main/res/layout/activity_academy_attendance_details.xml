@@ -39,7 +39,22 @@
             android:id="@+id/rcvTakeAttendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             android:layout_marginTop="@dimen/_20sdp"/>
+
+        <TextView
+            android:id="@+id/tvnotfound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_bold"
+            android:textColor="@color/indicator_selector"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:textSize="@dimen/_12sdp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/notfound"/>
 
     </LinearLayout>
 

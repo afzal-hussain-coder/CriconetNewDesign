@@ -310,6 +310,7 @@
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_gravity="center_horizontal"
+                                android:visibility="gone"
                                 android:layout_marginTop="@dimen/_5sdp">
 
                                 <ImageView

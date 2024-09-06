@@ -23,6 +23,7 @@ public class SessionTimeListAdapter extends RecyclerView.Adapter<SessionTimeList
     private int selectedItem = -1;
 
 
+
     public SessionTimeListAdapter(Context mContext, List<TimeSlot.Datum> data, getSlotIdInterface getSlotIdInterface) {
         this.mContext = mContext;
         this.data = data;

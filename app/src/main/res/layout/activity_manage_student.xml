@@ -81,7 +81,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nimesh_shar"
+                    android:id="@+id/tvAcademyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_semibold"
@@ -92,7 +92,7 @@
                     android:textSize="@dimen/_12sdp" />
 
                 <TextView
-                    android:id="@+id/xyz_academy"
+                    android:id="@+id/tvAcademyAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -146,6 +146,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/tvTotalCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -203,9 +204,25 @@
                     android:id="@+id/rvAcademyStudents"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/_10sdp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/tvnotfound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/indicator_selector"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_margin="@dimen/_20sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/notfound"/>
 
             </LinearLayout>
 

@@ -70,7 +70,7 @@ public class DropDownBlue extends OSLTextView implements View.OnClickListener, P
             DataModel model = optionList.get(position);
             this.setText(model.getName());
             if (onClickInterface != null)
-                onClickInterface.onClickDone(model.getName());
+                onClickInterface.onClickDone(model.getName(),model.getId());
             popupWindow.dismiss();
         });
 
@@ -122,7 +122,7 @@ public class DropDownBlue extends OSLTextView implements View.OnClickListener, P
     public interface onClickInterface {
         void onClickAction();
 
-        void onClickDone(String name);
+        void onClickDone(String name,String id);
 
         void onDismiss();
     }

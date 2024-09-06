@@ -190,6 +190,10 @@ public class Global {
 
     //.... search user by tag @
     public static final String SEARCH_USER_LIST_API="search_public_users";
+    public static final String REPLAY_ON_COMMENT ="reply_on_commnet";
+    public static final String DELETE_REPLY ="delete_reply";
+    public static final String COMMENT_LIKE ="comment_like";
+    public static final String COMMENT_REPLY_LIKE ="commnet_reply_like";
 
 
     //Blog Api
@@ -828,6 +832,19 @@ public class Global {
         }
     }
 
+    public static String getDateGotGMT(String dateTime) {
+        Date date = null;
+        String realdate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy");
+        try {
+            date = formatter.parse(dateTime);
+            realdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return realdate;
+    }
+
     public static String getDateGot(String dateTime) {
         Date date = null;
         String realdate = null;
@@ -841,6 +858,7 @@ public class Global {
         }
         return realdate;
     }
+
 
     public static String getDateGotCoach(String dateTime) {
         Date date = null;
@@ -863,6 +881,20 @@ public class Global {
         try {
             date = formatter.parse(dateTime);
             realdate = new SimpleDateFormat("dd-MMM-yyyy").format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return realdate;
+    }
+
+    public static String getDateGotConvert(String dateTime) {
+        Date date = null;
+        String realdate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = formatter.parse(dateTime);
+            realdate = new SimpleDateFormat("dd-MM-yyyy").format(date);
 
         } catch (ParseException e) {
             e.printStackTrace();

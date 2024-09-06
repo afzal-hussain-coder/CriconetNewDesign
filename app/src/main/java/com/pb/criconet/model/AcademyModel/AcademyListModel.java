@@ -1180,6 +1180,16 @@ public class AcademyListModel implements Serializable {
         private String is_offer = "";
         private String exps = "";
 
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        private String phone="";
+
         public String getVerified() {
             return verified;
         }
@@ -1235,6 +1245,13 @@ public class AcademyListModel implements Serializable {
             if (jsonObject.has("exps")) {
                 try {
                     this.exps = jsonObject.getString("exps");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (jsonObject.has("phone")) {
+                try {
+                    this.phone = jsonObject.getString("phone");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

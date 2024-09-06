@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/blue_intro_color"
     tools:context=".CommonUI.AddTrainingTipsActivity">
 
     <include
@@ -37,7 +37,21 @@
                     android:drawableEnd="@drawable/down_arrow"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/select_tips"
-                    android:textColor="#757575"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.pb.criconet.util.BookingHistoryDropDown
+                    android:id="@+id/drop_tips_source"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/chip_bg"
+                    android:backgroundTint="@color/grayLight"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/select_media_type"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -49,8 +63,11 @@
                     android:hint="@string/enter_title"
                     android:textAppearance="@style/full_name_"
                     android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/white"
                     app:errorEnabled="false"
-                    app:hintTextColor="@color/dimGray">
+                    app:errorTextAppearance="@style/ErrorTextAppearance"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/white">
 
                     <!--this is the actual edit text which takes the input-->
                     <com.google.android.material.textfield.TextInputEditText
@@ -63,8 +80,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textColor="@color/blue_intro_color"
-                        android:textColorHint="@color/dimGray"
+                        android:textColor="@color/white"
                         tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -225,17 +241,12 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:lineSpacingExtra="2sp"
                         android:text="@string/select_vide"
+                        android:visibility="gone"
+                        android:drawablePadding="@dimen/_2sdp"
                         android:textAppearance="@style/select_vide"
                         app:drawableEndCompat="@drawable/video_icon" />
 
-                    <View
-                        android:layout_width="@dimen/_2sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@color/purple_700"/>
+
 
                     <TextView
                         android:id="@+id/tv_pic_image"
@@ -247,17 +258,11 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:gravity="bottom"
                         android:lineSpacingExtra="2sp"
+                        android:visibility="gone"
                         android:text="@string/add_image_a"
                         android:textAppearance="@style/select_vide"
                         app:drawableEndCompat="@drawable/image_icon" />
-                    <View
-                        android:layout_width="@dimen/_2sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@color/purple_700"/>
+
 
                     <TextView
                         android:id="@+id/tv_audio"
@@ -268,10 +273,12 @@
                         android:layout_marginStart="@dimen/_5sdp"
                         android:fontFamily="@font/poppins_semibold"
                         android:gravity="bottom"
+                        android:visibility="gone"
                         android:lineSpacingExtra="2sp"
                         android:text="@string/audio"
                         android:textAppearance="@style/select_vide"
-                        app:drawableEndCompat="@drawable/image_icon" />
+                        android:drawableTint="@color/indicator_selector"
+                        app:drawableEndCompat="@drawable/audio_icon" />
                 </LinearLayout>
 
 
@@ -284,11 +291,11 @@
                     android:hint="@string/enter_descr"
                     android:textAppearance="@style/type_your_m"
                     android:textColorHint="@color/gray"
-                    app:boxStrokeColor="@color/blue_intro_color"
+                    app:boxStrokeColor="@color/white"
                     app:errorEnabled="false"
                     app:errorTextAppearance="@style/ErrorTextAppearance"
                     app:hintTextAppearance="@style/HintTextAppearance"
-                    app:hintTextColor="@color/blue_intro_color">
+                    app:hintTextColor="@color/white">
 
                     <!--this is the actual edit text which takes the input-->
                     <com.google.android.material.textfield.TextInputEditText
@@ -301,11 +308,11 @@
                         android:gravity="top"
                         android:imeOptions="actionNext"
                         android:inputType="textMultiLine"
-                        android:textColor="@color/blue_intro_color"
-                        android:textColorHint="@color/dimGray"
+                        android:textColor="@color/white"
                         tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.pb.criconet.util.BookingHistoryDropDown
                     android:id="@+id/drop_privacy"
@@ -318,9 +325,8 @@
                     android:drawableEnd="@drawable/down_arrow"
                     android:padding="@dimen/_10sdp"
                     android:text="@string/select_priv"
-                    android:textColor="#757575"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp" />
-
 
                 <FrameLayout
                     android:id="@+id/fl_save"

@@ -395,7 +395,7 @@
                     android:drawableEnd="@drawable/down_arrow"
                     android:drawableTint="@color/white"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/select_age_group"
+                    android:hint="@string/select_ball_type"
                     android:padding="@dimen/_10sdp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/gray"

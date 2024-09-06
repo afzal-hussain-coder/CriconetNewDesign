@@ -59,7 +59,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nimesh_shar"
+                android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
@@ -99,6 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:scaleType="centerCrop"
                 android:src="@drawable/header_call" />
 
@@ -171,6 +172,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:text="@string/albums"
+                    android:visibility="gone"
                     android:textAppearance="@style/albums"
                     android:lineSpacingExtra="-7sp"
                     android:gravity="center_horizontal|top"
@@ -195,6 +197,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:text="@string/pages"
+                    android:visibility="gone"
                     android:textAppearance="@style/pages"
                     android:lineSpacingExtra="-7sp"
                     android:gravity="center_horizontal|top"

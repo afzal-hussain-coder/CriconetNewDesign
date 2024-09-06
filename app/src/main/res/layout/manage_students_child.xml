@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,12 +12,13 @@
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/rIvAmbassador"
+            android:id="@+id/ivAvtar"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/_5sdp"
-            android:src="@drawable/students_image">
+            android:src="@drawable/students_image"
+            app:riv_corner_radius="@dimen/_5sdp">
 
         </com.makeramen.roundedimageview.RoundedImageView>
 
@@ -42,13 +44,59 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/liPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_9sdp"
+                    android:layout_height="@dimen/_9sdp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/header_call" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/opensans_regular"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:gravity="center_horizontal"
+                    android:text="Skills &amp; Speciality"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_9sdp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_regular"
+                android:gravity="center_horizontal"
+                android:text="Skills &amp; Speciality"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp" />
+
+        </LinearLayout>
+
         <FrameLayout
             android:id="@+id/fl_know_more"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -80,7 +128,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/opensans_semibold"
                 android:lineHeight="@dimen/_27sdp"
-                android:text="@string/know_more"
+                android:text="@string/update"
                 android:textAppearance="@style/know_more" />
 
         </FrameLayout>

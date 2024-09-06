@@ -42,7 +42,13 @@ public class EcoachingListAdapter extends RecyclerView.Adapter<EcoachingListAdap
 
         holder.ecoachingListItemBinding.tvCoachName.setText(datum.getName());
         holder.ecoachingListItemBinding.yearsExper.setText(datum.getExps());
-        Glide.with(mContext).load(datum.getAvatar()).into(holder.ecoachingListItemBinding.roundedImagePic);
+
+        if(datum.getAvatar().isEmpty()){
+            Glide.with(mContext).load(mContext.getDrawable(R.drawable.placeholder_user)).into(holder.ecoachingListItemBinding.roundedImagePic);
+        }else{
+            Glide.with(mContext).load(datum.getAvatar()).error(mContext.getDrawable(R.drawable.placeholder_user)).into(holder.ecoachingListItemBinding.roundedImagePic);
+        }
+
 
 
         holder.ecoachingListItemBinding.chipSpecializationGroupList.removeAllViews();
@@ -59,7 +65,6 @@ public class EcoachingListAdapter extends RecyclerView.Adapter<EcoachingListAdap
             chip.setTextAppearance(R.style.MyChipTextAppearanceList);
             holder.ecoachingListItemBinding.chipSpecializationGroupList.addView(chip);
         }
-
 
         holder.ecoachingListItemBinding.tvPrice.setText("Price - " + datum.getPrice().getCoachPrice() + " \u20B9");
 

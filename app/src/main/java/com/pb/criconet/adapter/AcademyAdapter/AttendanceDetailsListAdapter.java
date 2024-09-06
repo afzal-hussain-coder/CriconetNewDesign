@@ -7,18 +7,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pb.criconet.R;
 import com.pb.criconet.databinding.AttendanceDetailsChildBinding;
+import com.pb.criconet.model.AcademyModel.AttendanceReport;
 
 import java.util.ArrayList;
 
 public class AttendanceDetailsListAdapter extends RecyclerView.Adapter<AttendanceDetailsListAdapter.MyViewHolder>{
     private Context mContext;
-    private ArrayList<String>ambassadorModels;
+    private ArrayList<AttendanceReport> academyTipsPreviewModels;
 
 
-    public AttendanceDetailsListAdapter(Context mContext, ArrayList<String>ambassadorModels){
+    public AttendanceDetailsListAdapter(Context mContext, ArrayList<AttendanceReport> academyTipsPreviewModels){
         this.mContext=mContext;
-        this.ambassadorModels = ambassadorModels;
+        this.academyTipsPreviewModels = academyTipsPreviewModels;
 
 
     }
@@ -32,13 +34,20 @@ public class AttendanceDetailsListAdapter extends RecyclerView.Adapter<Attendanc
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-     holder.attendanceDetailsChildBinding.tvStudentName.setText(ambassadorModels.get(position));
+     holder.attendanceDetailsChildBinding.tvStudentName.setText(academyTipsPreviewModels.get(position).getName());
+
+     if(academyTipsPreviewModels.get(position).getAttendance_status().equalsIgnoreCase("A")){
+         holder.attendanceDetailsChildBinding.tvStudentStatus.setText(mContext.getResources().getString(R.string.absent));
+     }else{
+         holder.attendanceDetailsChildBinding.tvStudentStatus.setText(mContext.getResources().getString(R.string.present));
+     }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return ambassadorModels.size();
+        return academyTipsPreviewModels.size();
     }
 
 

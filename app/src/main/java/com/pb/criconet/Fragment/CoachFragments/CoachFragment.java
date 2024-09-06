@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,18 +29,23 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.pb.criconet.Activity.BlogActivity;
 import com.pb.criconet.Activity.Coach.CoachDetailsActivity;
 import com.pb.criconet.Activity.Coach.RegisterAsACoachProfileActivity;
 import com.pb.criconet.Activity.Coach.RegisterAsAnECoachActivity;
+import com.pb.criconet.Activity.LoginActivity;
 import com.pb.criconet.Activity.MyBlogsActivity;
 import com.pb.criconet.Activity.NoticeBoardActivity;
 import com.pb.criconet.Activity.SavedPostActivity;
 import com.pb.criconet.Activity.User.UserBookingHistory;
+import com.pb.criconet.Activity.User.UserProfileActivity;
 import com.pb.criconet.CommonUI.AddTrainingTipsActivity;
+import com.pb.criconet.CommonUI.SettingsActivity;
 import com.pb.criconet.CommonUI.WebViewActivity;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.EcoachingAdapter.EcoachingListAdapter;
@@ -48,6 +54,7 @@ import com.pb.criconet.model.pavilionModel.PageURL;
 import com.pb.criconet.util.CustomLoaderView;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
+import com.pb.criconet.util.Toaster;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -155,9 +162,52 @@ public class CoachFragment extends Fragment {
 
     private void drawerNavigation(RelativeLayout layout_nav){
 
+
+        TextView xyz_academy = layout_nav.findViewById(R.id.xyz_academy);
+        xyz_academy.setOnClickListener(v -> {
+            if (SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")) {
+                startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class).putExtra("FROM","1"));
+                layout_nav.startAnimation(animation);
+                layout_nav.setVisibility(View.GONE);
+                //finish();
+            }else{
+                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("FROM","2"));
+                // finish();
+            }
+
+        });
+
+
         CircleImageView profile_pic = layout_nav.findViewById(R.id.profile_pic);
-        profile_pic.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), RegisterAsACoachProfileActivity.class));
+
+        if (SessionManager.get_image(prefs).isEmpty()) {
+            Glide.with(getActivity()).load(SessionManager.get_image(prefs)).placeholder(getActivity().getResources().getDrawable(R.drawable.user_default)).error(getActivity().getResources().getDrawable(R.drawable.user_default)).into(profile_pic);
+        } else {
+            Glide.with(getActivity()).load(SessionManager.get_image(prefs)).placeholder(getActivity().getResources().getDrawable(R.drawable.user_default)).error(getActivity().getResources().getDrawable(R.drawable.user_default)).into(profile_pic);
+        }
+
+        TextView tvProfileName = layout_nav.findViewById(R.id.tvProfileName);
+        tvProfileName.setText(SessionManager.get_name(prefs));
+
+        ImageView iv_settings = layout_nav.findViewById(R.id.iv_settings);
+        iv_settings.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
+        });
+
+
+        TextView tvRegisterAsACoach = layout_nav.findViewById(R.id.tvRegisterAsACoach);
+
+        if (SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")) {
+            tvRegisterAsACoach.setVisibility(View.GONE);
+            //finish();
+        }else{
+            tvRegisterAsACoach.setVisibility(View.VISIBLE);
+            // finish();
+        }
+
+
+        tvRegisterAsACoach.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class).putExtra("FROM","2"));
         });
 
         TextView book_a_coac = layout_nav.findViewById(R.id.book_a_coac);
@@ -286,6 +336,27 @@ public class CoachFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+
+        ImageView iv_logout = layout_nav.findViewById(R.id.iv_logout);
+        iv_logout.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+            alertDialog.setTitle("");
+            alertDialog.setMessage(getResources().getString(R.string.Do_you_really_want_to_logout));
+            alertDialog.setPositiveButton(getResources().getString(R.string.Yes),
+                    (dialog, which) -> {
+                        if (Global.isOnline(getActivity())) {
+                            logout();
+                        } else {
+                            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                        }
+                    });
+            alertDialog.setNegativeButton(getResources().getString(R.string.No),
+                    (dialog, which) -> {
+                    });
+            alertDialog.show();
+        });
+
+
     }
 
     private void getPageUrl() {
@@ -374,5 +445,49 @@ public class CoachFragment extends Fragment {
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         postRequest.setRetryPolicy(policy);
         queue.add(postRequest);
+    }
+
+    public void logout() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        final JSONObject json = new JSONObject();
+        try {
+            json.put("user_id", SessionManager.get_user_id(prefs));
+            json.put("s", SessionManager.get_session_id(prefs));
+            //Log.e(" data  : ", "" + json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //loaderView.showLoader();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, Global.URL + "logout", json,
+                response -> {
+                    Log.v("logout reponse", "" + response);
+//                        {"status":"Success"}
+                    // loaderView.hideLoader();
+                    try {
+                        JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
+                        if (jsonObject.getString("api_status").equals("200")) {
+                            SessionManager.dataclear(prefs);
+                            SessionManager.save_check_agreement(prefs, true);
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else if (jsonObject.getString("api_status").equals("400")) {
+                            Toaster.customToast(jsonObject.optJSONObject("errors").optString("error_text"));
+                        } else {
+                            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            error.printStackTrace();
+            // loaderView.hideLoader();
+            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
+        });
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
+        queue.add(jsonObjectRequest);
     }
 }

@@ -248,6 +248,7 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
     public static ArrayList<EmojiModel> emojiModelsList;
 
     ImageView img_back;
+    //RelativeLayout rlVideo2;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -418,9 +419,10 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
         tv_des.startAnimation(anim);
         tv_des.setText("CAMERA ONE ACTIVE");
-        tv_des.setTextColor(getResources().getColor(R.color.logWarn));
+        tv_des.setTextColor(getResources().getColor(R.color.blue_intro_color));
         //TextView desc = (TextView) toolbar.findViewById(R.id.desc);
 
+       // rlVideo2 = findViewById(R.id.rlVideo2);
         videoview = (AndExoPlayerView) findViewById(R.id.VideoView);
         videoview2 = (AndExoPlayerView) findViewById(R.id.VideoView2);
 
@@ -957,7 +959,7 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
         cam_both.setOnClickListener(v -> {
                     //selected = 3;
                     //SwitchSelected(3);
-                    //startActivity(new Intent(mContext, Play_Live_Stream_Both.class).putExtra("data", liveStreamingNewModel));
+                    startActivity(new Intent(mContext, Play_Live_Stream_Both.class).putExtra("data", liveStreamingNewModel));
                 }
         );
 
@@ -968,6 +970,7 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
         iv_close.setOnClickListener(v -> {
 
             if (selected == 3) {
+                //rlVideo2.setVisibility(View.VISIBLE);
                 videoview2.setVisibility(View.VISIBLE);
             }
             main.setVisibility(View.VISIBLE);
@@ -1098,6 +1101,7 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
             if (selected == 3) {
                 if (videoview2.getVisibility() == View.VISIBLE) {
                     videoview2.setVisibility(View.GONE);
+                   // rlVideo2.setVisibility(View.GONE);
                 }
             }
 
@@ -1617,21 +1621,22 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
                 videoview2.pausePlayer();
                 videoview2.setVisibility(View.GONE);
+               // rlVideo2.setVisibility(View.GONE);
 
                 videoview2.setShowFullScreen(false);
                 videoview.setShowFullScreen(true);
 
-                cam_1.setBackground(getResources().getDrawable(R.drawable.round_corner_red));
+                cam_1.setBackground(getResources().getDrawable(R.drawable.round_corner_red_camera));
                 cam_1.setTextColor(getResources().getColor(R.color.light_text_color));
 
-                cam_2.setTextColor(getResources().getColor(R.color.bckground));
-                cam_2.setBackground(getResources().getDrawable(R.drawable.round_border_red));
+                cam_2.setTextColor(getResources().getColor(R.color.light_text_color));
+                cam_2.setBackground(getResources().getDrawable(R.drawable.round_corner_blue_camera));
 
-                cam_both.setTextColor(getResources().getColor(R.color.bckground));
-                cam_both.setBackground(getResources().getDrawable(R.drawable.round_border_red));
+                cam_both.setTextColor(getResources().getColor(R.color.light_text_color));
+                cam_both.setBackground(getResources().getDrawable(R.drawable.round_corner_blue_camera));
                 tv_des.startAnimation(anim);
                 tv_des.setText("CAMERA ONE ACTIVE");
-                tv_des.setTextColor(getResources().getColor(R.color.logWarn));
+                tv_des.setTextColor(getResources().getColor(R.color.blue_intro_color));
                 selected = 1;
                 break;
             case 2:
@@ -1640,22 +1645,23 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
                 videoview2.pausePlayer();
                 videoview2.setVisibility(View.GONE);
+               // rlVideo2.setVisibility(View.GONE);
 
                 videoview2.setShowFullScreen(false);
                 videoview.setShowFullScreen(true);
 
                 cam_2.setTextColor(getResources().getColor(R.color.light_text_color));
-                cam_2.setBackground(getResources().getDrawable(R.drawable.round_corner_red));
+                cam_2.setBackground(getResources().getDrawable(R.drawable.round_corner_red_camera));
 
-                cam_1.setTextColor(getResources().getColor(R.color.bckground));
-                cam_1.setBackground(getResources().getDrawable(R.drawable.round_border_red));
+                cam_1.setTextColor(getResources().getColor(R.color.light_text_color));
+                cam_1.setBackground(getResources().getDrawable(R.drawable.round_corner_blue_camera));
 
-                cam_both.setTextColor(getResources().getColor(R.color.bckground));
-                cam_both.setBackground(getResources().getDrawable(R.drawable.round_border_red));
+                cam_both.setTextColor(getResources().getColor(R.color.light_text_color));
+                cam_both.setBackground(getResources().getDrawable(R.drawable.round_corner_blue_camera));
 
                 tv_des.startAnimation(anim);
                 tv_des.setText("CAMERA TWO ACTIVE");
-                tv_des.setTextColor(getResources().getColor(R.color.logWarn));
+                tv_des.setTextColor(getResources().getColor(R.color.blue_intro_color));
                 selected = 2;
                 break;
 
@@ -1687,12 +1693,13 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
                 videoview2.pausePlayer();
                 videoview2.setVisibility(View.GONE);
+              //  rlVideo2.setVisibility(View.GONE);
 
-                cam_1.setBackground(getResources().getDrawable(R.drawable.round_corner_red));
+                cam_1.setBackground(getResources().getDrawable(R.drawable.round_corner_blue_camera));
                 cam_1.setTextColor(getResources().getColor(R.color.light_text_color));
                 tv_des.startAnimation(anim);
                 tv_des.setText("CAMERA ONE ACTIVE");
-                tv_des.setTextColor(getResources().getColor(R.color.logWarn));
+                tv_des.setTextColor(getResources().getColor(R.color.blue_intro_color));
                 selected = 1;
                 break;
         }
@@ -1713,14 +1720,15 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
             videoview2.pausePlayer();
             videoview2.setVisibility(View.GONE);
-            getSupportActionBar().hide();
+          //  rlVideo2.setVisibility(View.GONE);
+            toolbar.setVisibility(View.GONE);
             bottomPanel.setVisibility(View.GONE);
             desc.setVisibility(View.GONE);
             extFab_book_live_streaming.setVisibility(View.GONE);
         } else {
             main.setVisibility(View.VISIBLE);
             slideView.setVisibility(View.GONE);
-            getSupportActionBar().show();
+            toolbar.setVisibility(View.VISIBLE);
             bottomPanel.setVisibility(View.VISIBLE);
             desc.setVisibility(View.VISIBLE);
             extFab_book_live_streaming.setVisibility(View.VISIBLE);
@@ -2266,6 +2274,8 @@ public class Play_Live_Stream_Single extends AppCompatActivity {
 
 
     public void generateSharingLink() {
+
+        //"https://www.criconet.com/upload/notification/live-streaming-notification.jpg"
 
         Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse("https://www.criconet.com/livematch/" + liveStreamingNewModel.getId() + "?type=live_streaming" + "/" + matchId))

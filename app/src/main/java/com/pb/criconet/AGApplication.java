@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 
+import androidx.multidex.MultiDex;
+
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.google.firebase.FirebaseApp;
 import com.pb.criconet.model.CurrentUserSettings;
@@ -66,6 +68,8 @@ public class AGApplication extends Application {
         //createRtcEngine();
         Timber.plant(new Timber.DebugTree());
         proxy = new HttpProxyCacheServer(_Context);
+
+        //MultiDex.install(this);
         //mChatManager = new ChatManager(this);
         //mChatManager.init();
         //mChatManager.enableOfflineMessage(true);

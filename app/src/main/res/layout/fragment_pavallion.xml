@@ -66,6 +66,7 @@
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/up_image"
                 android:scaleType="fitXY" />
+
         </RelativeLayout>
 
         <LinearLayout

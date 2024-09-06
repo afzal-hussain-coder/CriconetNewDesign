@@ -18,8 +18,15 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.pb.criconet.Activity.Streaming.Play_Live_Stream_Single;
+import com.pb.criconet.CommonUI.TrainingTipsActivity;
 import com.pb.criconet.IntroSlider.IntroScreen;
 import com.pb.criconet.R;
+import com.pb.criconet.model.Coaching.BookingHistory;
 import com.pb.criconet.util.SessionManager;
 
 import java.util.ArrayList;
@@ -88,63 +95,63 @@ public class SplashScreen extends AppCompatActivity {
         }
 
         /*Deep linking*/
-//        FirebaseDynamicLinks.getInstance()
-//                .getDynamicLink(getIntent())
-//                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
-//                    @Override
-//                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-//                        // Get deep link from result (may be null if no link is found)
-//                        Uri deepLink = null;
-//                        if (pendingDynamicLinkData != null) {
-//                            deepLink = pendingDynamicLinkData.getLink();
-//
-//                            type = deepLink.toString().substring(deepLink.toString().lastIndexOf("=") + 1);
-//
-//
-//                            // Split the input string based on '/'
-//                            String[] parts = type.split("/");
-//
-//                            // Store the parts in separate variables
-//                            create = parts[0];
-//
-//
-//                            Log.d("Type", type + "//" + create + "/" + party_grpup_txt + "/" + party_grpup_id);
-//
-//                            if (type.contains("/")) {
-//                                String id = type.substring(type.lastIndexOf("/") + 1);
-//
-//                                type = type.replaceAll("[0-9]", "");
-//                                type = type.replace("/", "");
-//
-//                                Log.d(TAG, type + "academy_id=" + academy_id);
-//
-//                                if (type.equalsIgnoreCase("post")) {
-//                                    post_id = id;
-//                                } else if (type.equalsIgnoreCase("training_tips")) {
-//                                    academy_id = id;
-//                                } else if (type.equalsIgnoreCase("live_streaming")) {
-//                                    matchId = id;
-//                                } else if (create.equalsIgnoreCase("create")) {
-//                                    matchId = parts[1];
-//                                    party_grpup_txt = parts[2];
-//                                    party_grpup_id = parts[3];
-//                                }
-//
-//                            }
-//
-//                            Log.d("Type..", party_grpup_id + "/" + party_grpup_txt + "/" + matchId);
-//                            //Log.d(TAG,type+"/"+deepLink+"academy_id="+academy_id+"post_id="+post_id+"/matchId="+matchId);
-//
-//                        }
-//
-//                    }
-//                })
-//                .addOnFailureListener(this, new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "getDynamicLink:onFailure", e);
-//                    }
-//                });
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+
+                            type = deepLink.toString().substring(deepLink.toString().lastIndexOf("=") + 1);
+
+
+                            // Split the input string based on '/'
+                            String[] parts = type.split("/");
+
+                            // Store the parts in separate variables
+                            create = parts[0];
+
+
+                            Log.d("Type", type + "//" + create + "/" + party_grpup_txt + "/" + party_grpup_id);
+
+                            if (type.contains("/")) {
+                                String id = type.substring(type.lastIndexOf("/") + 1);
+
+                                type = type.replaceAll("[0-9]", "");
+                                type = type.replace("/", "");
+
+                                Log.d(TAG, type + "academy_id=" + academy_id);
+
+                                if (type.equalsIgnoreCase("post")) {
+                                    post_id = id;
+                                } else if (type.equalsIgnoreCase("training_tips")) {
+                                    academy_id = id;
+                                } else if (type.equalsIgnoreCase("live_streaming")) {
+                                    matchId = id;
+                                } else if (create.equalsIgnoreCase("create")) {
+                                    matchId = parts[1];
+                                    party_grpup_txt = parts[2];
+                                    party_grpup_id = parts[3];
+                                }
+
+                            }
+
+                            Log.d("Type..", party_grpup_id + "/" + party_grpup_txt + "/" + matchId);
+                            //Log.d(TAG,type+"/"+deepLink+"academy_id="+academy_id+"post_id="+post_id+"/matchId="+matchId);
+
+                        }
+
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "getDynamicLink:onFailure", e);
+                    }
+                });
 
 
     }
@@ -232,106 +239,88 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 // TODO Auto-generated method stub
                 // Log.d("Status",SessionManager.get_check_login(prefs)+"");
-//                if (SessionManager.get_check_login(prefs)) {
-////                    if (SessionManager.get_check_agreement(prefs)) {
-////                        Intent intent = new Intent(Splash.this, Verification.class);
-////                        startActivity(intent);
-////                        finish();
-////                    } else {
-//                    if (type.equalsIgnoreCase("Coach_List")) {
-//                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-//                        intent.putExtra("type", "Coach_List");
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (type.equalsIgnoreCase("live_streaming")) {
-//                        Intent intent = new Intent(SplashScreen.this, Play_Live_Stream_Single.class);
-//                        intent.putExtra("FROM", "4");
-//                        intent.putExtra("matchId", matchId);
-//                        intent.putExtra("type", type);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (create.equalsIgnoreCase("create")) {
-//                        Intent intent = new Intent(SplashScreen.this, Play_Live_Stream_Single.class);
-//                        intent.putExtra("FROM", "4");
-//                        intent.putExtra("matchId", matchId);
-//                        intent.putExtra("partyGroupId", party_grpup_id);
-//                        intent.putExtra("partyGroupTxt", party_grpup_txt);
-//                        intent.putExtra("type", create);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (type.equalsIgnoreCase("Booking")) {
-//                        Intent intent = new Intent(SplashScreen.this, BookingActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (type.equalsIgnoreCase("post")) {
-//                        Intent intent = new Intent(SplashScreen.this, FeedDetails.class);
-//                        intent.putExtra("feed_id", post_id);
-//                        //intent.putExtra("type", type);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                        /*if(type.equalsIgnoreCase("Booking")){
-//                            Intent intent = new Intent(Splash.this, BookingActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                            if (booking_id.isEmpty()) {
-////                                Intent intent = new Intent(Splash.this, BookingActivity.class);
-////                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                            } else {
-////                                Intent intent = new Intent(Splash.this, BookingDetailsActivity.class);
-////                                intent.putExtra("FROM", "2");
-////                                intent.putExtra("BookingID", booking_id);
-////                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////                            }
-//                        }*/
-//
-//                    } else if (type.equalsIgnoreCase("training_tips")) {
-//                        Intent intent = new Intent(SplashScreen.this, AcademyTipsPreviewActivity.class);
-//
-//                        if (academy_id.isEmpty()) {
-//                            intent.putExtra("ACADEMY_ID", "");
-//                        } else {
-//                            intent.putExtra("ACADEMY_ID", academy_id);
-//                        }
-//                        intent.putExtra("FROM", "2");
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (type.equalsIgnoreCase("tips")) {
-//                        Intent intent = new Intent(SplashScreen.this, AcademyTipsPreviewActivity.class);
-//                        intent.putExtra("ACADEMY_ID", academy_id);
-//                        intent.putExtra("FROM", "3");
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                } else {
-//
-//                    if (!SessionManager.get_check_login(prefs)) {
-//                        Intent intent = new Intent(SplashScreen.this, IntroScreen.class);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//
-////                    Intent intent = new Intent(Splash.this, Welcome.class);
-//                }
-
                 if (SessionManager.get_check_login(prefs)) {
-                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    if (SessionManager.get_check_agreement(prefs)) {
+//                        Intent intent = new Intent(Splash.this, Verification.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+                    if (type.equalsIgnoreCase("Coach_List")) {
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                        intent.putExtra("type", "Coach_List");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (type.equalsIgnoreCase("live_streaming")) {
+                        Intent intent = new Intent(SplashScreen.this, Play_Live_Stream_Single.class);
+                        intent.putExtra("FROM", "4");
+                        intent.putExtra("matchId", matchId);
+                        intent.putExtra("type", type);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (create.equalsIgnoreCase("create")) {
+                        Intent intent = new Intent(SplashScreen.this, Play_Live_Stream_Single.class);
+                        intent.putExtra("FROM", "4");
+                        intent.putExtra("matchId", matchId);
+                        intent.putExtra("partyGroupId", party_grpup_id);
+                        intent.putExtra("partyGroupTxt", party_grpup_txt);
+                        intent.putExtra("type", create);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (type.equalsIgnoreCase("Booking")) {
+                        Intent intent = new Intent(SplashScreen.this, BookingHistory.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (type.equalsIgnoreCase("post")) {
+                        Intent intent = new Intent(SplashScreen.this, FeedDetailsActivity.class);
+                        intent.putExtra("feed_id", post_id);
+                        intent.putExtra("type", type);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        /*if(type.equalsIgnoreCase("Booking")){
+                            Intent intent = new Intent(Splash.this, BookingActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            if (booking_id.isEmpty()) {
+//                                Intent intent = new Intent(Splash.this, BookingActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            } else {
+//                                Intent intent = new Intent(Splash.this, BookingDetailsActivity.class);
+//                                intent.putExtra("FROM", "2");
+//                                intent.putExtra("BookingID", booking_id);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            }
+                        }*/
+
+                    } else if (type.equalsIgnoreCase("training_tips")) {
+                        Intent intent = new Intent(SplashScreen.this, TrainingTipsActivity.class);
+
+                        if (academy_id.isEmpty()) {
+                            intent.putExtra("ACADEMY_ID", "");
+                        } else {
+                            intent.putExtra("ACADEMY_ID", academy_id);
+                        }
+                        intent.putExtra("FROM", "2");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (type.equalsIgnoreCase("tips")) {
+                        Intent intent = new Intent(SplashScreen.this, TrainingTipsActivity.class);
+                        intent.putExtra("ACADEMY_ID", academy_id);
+                        intent.putExtra("FROM", "3");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
+
                     if (!SessionManager.get_check_login(prefs)) {
                         Intent intent = new Intent(SplashScreen.this, IntroScreen.class);
                         startActivity(intent);
@@ -341,7 +330,25 @@ public class SplashScreen extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+
+//                    Intent intent = new Intent(Splash.this, Welcome.class);
                 }
+
+//                if (SessionManager.get_check_login(prefs)) {
+//                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
+//                    if (!SessionManager.get_check_login(prefs)) {
+//                        Intent intent = new Intent(SplashScreen.this, IntroScreen.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+//                }
 
 
             }

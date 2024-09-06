@@ -288,6 +288,7 @@ public class BookLiveStreamingActivity extends AppCompatActivity {
                         if (statemodelArrayList.getApiStatus().equalsIgnoreCase("200")) {
                             ArrayList<String> state = new ArrayList<>();
                             state.add("Select State/UT");
+
                             for (States.Datum data : statemodelArrayList.getData()) {
                                 state.add(data.getName());
 

@@ -82,11 +82,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
                         android:hint="@string/select_date"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
-                        android:textSize="@dimen/_12sdp"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:textSize="@dimen/_12sdp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -98,6 +98,7 @@
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl_start_time"
                     android:layout_width="match_parent"
@@ -115,11 +116,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
                         android:hint="@string/select_time"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
-                        android:textSize="@dimen/_12sdp"
-                        android:fontFamily="@font/poppins_regular" />
+                        android:textSize="@dimen/_12sdp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -145,34 +146,40 @@
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/typeTextInputLayoutSelect_hours"
-                    style="@style/OutlinedRoundBoxFilledSinner"
+                <RelativeLayout
+                    android:id="@+id/rl_setDuration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
-                    android:hint="@string/select_hour"
-                    android:textAppearance="@style/type_of_boo"
-                    android:textColorHint="@color/gray"
-                    app:boxStrokeColor="@color/white"
-                    app:endIconTint="@color/white"
-                    app:errorEnabled="false"
-                    app:errorTextAppearance="@style/ErrorTextAppearance"
-                    app:hintTextAppearance="@style/HintTextAppearance"
-                    app:hintTextColor="@color/white">
+                    android:background="@drawable/editboxx"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_12sdp">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextViewSelect_hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                    <TextView
+                        android:id="@+id/tvSetDuratiomn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/poppins_regular"
-                        android:inputType="none"
+                        android:hint="@string/set_sche"
                         android:textColor="@color/white"
-                        android:theme="@style/ThemeOverlay.AppCompat"
-                        tools:text="" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/clock_icon"
+                        app:tint="@color/white" />
+
+
+                </RelativeLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/typeTextInputLayoutSelectMinute"
@@ -188,6 +195,7 @@
                     app:boxStrokeColor="@color/white"
                     app:endIconTint="@color/white"
                     app:errorEnabled="false"
+                    android:visibility="gone"
                     app:errorTextAppearance="@style/ErrorTextAppearance"
                     app:hintTextAppearance="@style/HintTextAppearance"
                     app:hintTextColor="@color/white">
@@ -205,6 +213,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/tvSelectCoachStudentText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
@@ -216,65 +225,145 @@
                     android:textSize="@dimen/_12sdp"
                     android:visibility="visible" />
 
-                <com.google.android.material.textfield.TextInputLayout
+
+                <TextView
                     android:id="@+id/typeTextInputLayoutSelectCoach"
-                    style="@style/OutlinedRoundBoxFilledSinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_30sdp"
-                    android:hint="@string/select_coach"
-                    android:textAppearance="@style/type_of_boo"
-                    android:textColorHint="@color/gray"
-                    app:boxStrokeColor="@color/white"
-                    app:endIconTint="@color/white"
-                    app:errorEnabled="false"
-                    app:errorTextAppearance="@style/ErrorTextAppearance"
-                    app:hintTextAppearance="@style/HintTextAppearance"
-                    app:hintTextColor="@color/white">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextViewSelectCoach"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_regular"
-                        android:inputType="none"
-                        android:textColor="@color/white"
-                        android:theme="@style/ThemeOverlay.AppCompat"
-                        tools:text="" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/typeTextInputLayoutSelectStudent"
-                    style="@style/OutlinedRoundBoxFilledSinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
-                    android:hint="@string/select_stud"
-                    android:textAppearance="@style/type_of_boo"
-                    android:textColorHint="@color/gray"
-                    app:boxStrokeColor="@color/white"
-                    app:endIconTint="@color/white"
-                    app:errorEnabled="false"
-                    app:errorTextAppearance="@style/ErrorTextAppearance"
-                    app:hintTextAppearance="@style/HintTextAppearance"
-                    app:hintTextColor="@color/white">
+                    android:background="@drawable/chip_bg"
+                    android:backgroundTint="@color/white"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:drawableTint="@color/white"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_vertical"
+                    android:hint="@string/select_coach"
+                    android:padding="@dimen/_15sdp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="visible" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextViewSelectStudent"
+                <TextView
+                    android:id="@+id/typeTextInputLayoutSelectStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:background="@drawable/chip_bg"
+                    android:backgroundTint="@color/white"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:drawableTint="@color/white"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_vertical"
+                    android:hint="@string/select_stud"
+                    android:padding="@dimen/_15sdp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="visible" />
+
+                <FrameLayout
+                    android:id="@+id/fl_addCoach"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_below="@id/tv_forgot"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone">
+
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_regular"
-                        android:inputType="none"
-                        android:textColor="@color/white"
-                        android:theme="@style/ThemeOverlay.AppCompat"
-                        tools:text="" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:background="@drawable/button_bg_top" />
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/add_coaches"
+                        android:textAppearance="@style/login" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_addStudents"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_below="@id/tv_forgot"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_17sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/add_students"
+                        android:textAppearance="@style/login" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_buttom"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:text="@string/add_coach_students"
+                    android:textColor="@color/indicator_selector"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone">
+
+                </TextView>
 
                 <FrameLayout
                     android:id="@+id/fl_submit"

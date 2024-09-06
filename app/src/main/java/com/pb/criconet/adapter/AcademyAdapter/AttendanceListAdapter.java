@@ -10,17 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pb.criconet.Activity.Academy.AcademyAttendanceDetailsActivity;
 import com.pb.criconet.databinding.AttendanceChildBinding;
+import com.pb.criconet.model.AcademyModel.AttendanceReportViewChild;
 import com.pb.criconet.model.AmbassadorModel;
+import com.pb.criconet.util.Global;
+
 import java.util.ArrayList;
 
 public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAdapter.MyViewHolder>{
     private Context mContext;
-    private ArrayList<AmbassadorModel>ambassadorModels;
+    private ArrayList<AttendanceReportViewChild> academyAttendanceReportList;
 
 
-    public AttendanceListAdapter(Context mContext){
+    public AttendanceListAdapter(Context mContext, ArrayList<AttendanceReportViewChild> academyAttendanceReportList){
         this.mContext=mContext;
-        this.ambassadorModels = ambassadorModels;
+        this.academyAttendanceReportList = academyAttendanceReportList;
     }
 
     @NonNull
@@ -31,17 +34,24 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceListAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//     holder.attendanceChildBinding.rIvAmbassador.setBackgroundResource(ambassadorModels.get(position).getImage());
-//     holder.attendanceChildBinding.tvName.setText(ambassadorModels.get(position).getText());
+
+        AttendanceReportViewChild  attendanceReportViewChild = academyAttendanceReportList.get(position);
+
+        holder.attendanceChildBinding.tvAbsent.setText(attendanceReportViewChild.getAbsent());
+        holder.attendanceChildBinding.tvPresent.setText(attendanceReportViewChild.getPresent());
+        holder.attendanceChildBinding.date.setText(Global.convertUTCDateToLocall(attendanceReportViewChild.getAttendance_date()));
 
         holder.attendanceChildBinding.tvViewDetails.setOnClickListener(v -> {
-            mContext.startActivity(new Intent(mContext, AcademyAttendanceDetailsActivity.class));
+
+            mContext.startActivity(new Intent(mContext, AcademyAttendanceDetailsActivity.class).putExtra("Date",attendanceReportViewChild.getAttendance_date())
+                    .putExtra("type","all"));
+
         });
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return academyAttendanceReportList.size();
     }
 
 

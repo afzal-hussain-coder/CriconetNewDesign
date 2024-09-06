@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -59,6 +60,7 @@
             android:padding="@dimen/_7sdp">
 
             <TextView
+                android:id="@+id/tvPresent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -113,6 +115,7 @@
             android:padding="@dimen/_7sdp">
 
             <TextView
+                android:id="@+id/tvAbsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

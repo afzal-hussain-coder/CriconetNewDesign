@@ -103,7 +103,7 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
 
     private void initView() {
 
-        Glide.with(this).load(modelArrayList.getData().getAvatar()).into(activityCheckoutDetailsBinding.ivRoundedProfile);
+        Glide.with(this).load(modelArrayList.getData().getAvatar()).placeholder(mContext.getResources().getDrawable(R.drawable.user_default)).into(activityCheckoutDetailsBinding.ivRoundedProfile);
         activityCheckoutDetailsBinding.tvCoachName.setText(modelArrayList.getData().getName());
         activityCheckoutDetailsBinding.tvCoachExp.setText(modelArrayList.getData().getExps());
         activityCheckoutDetailsBinding.tvCoachPrice.setText(modelArrayList.getData().getPrice().getCoachPrice());

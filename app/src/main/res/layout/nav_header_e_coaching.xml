@@ -60,7 +60,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nimesh_shar"
+                android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
@@ -101,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
+                android:visibility="gone"
                 android:src="@drawable/header_call" />
 
             <ImageView
@@ -141,6 +142,18 @@
                 android:layout_below="@+id/rl_header"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tvRegisterAsACoach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/join_as_coach"
+                    android:textAppearance="@style/book_a_coac"
+                    android:lineSpacingExtra="-7sp"
+                    android:gravity="center_horizontal|top"
+                    />
+                <TextView
                     android:id="@+id/book_a_coac"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,6 +161,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:text="@string/book_a_coac"
+                    android:visibility="gone"
                     android:textAppearance="@style/book_a_coac"
                     android:lineSpacingExtra="-7sp"
                     android:gravity="center_horizontal|top"
@@ -170,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:visibility="gone"
                     android:fontFamily="@font/opensans_semibold"
                     android:text="@string/record_vide"
                     android:textAppearance="@style/record_vide"
@@ -184,6 +199,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:text="@string/my_video_ga"
+                    android:visibility="gone"
                     android:textAppearance="@style/my_video_ga"
                     android:lineSpacingExtra="-7sp"
                     android:gravity="center_horizontal|top"

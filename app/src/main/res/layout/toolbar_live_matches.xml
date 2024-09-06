@@ -54,7 +54,7 @@
                 android:text="Camera one Active"
                 android:visibility="visible"
                 android:fontFamily="@font/opensans_bold"
-                android:textColor="@color/green"/>
+                android:textColor="@color/blue_intro_color"/>
         </LinearLayout>
 
         <LinearLayout

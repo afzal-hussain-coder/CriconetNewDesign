@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -81,17 +82,24 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.mancj.slideup.SlideUp;
 import com.pb.criconet.Activity.BlogActivity;
 import com.pb.criconet.Activity.Coach.RegisterAsACoachProfileActivity;
+import com.pb.criconet.Activity.Coach.RegisterAsAnECoachActivity;
 import com.pb.criconet.Activity.FeedDetailsActivity;
 import com.pb.criconet.Activity.LoginActivity;
 import com.pb.criconet.Activity.MyBlogsActivity;
 import com.pb.criconet.Activity.NoticeBoardActivity;
 import com.pb.criconet.Activity.SavedPostActivity;
 import com.pb.criconet.Activity.User.UserProfileActivity;
+import com.pb.criconet.Activity.UserDetails;
 import com.pb.criconet.CommonUI.AmbassadorProgramActivity;
+import com.pb.criconet.CommonUI.SettingsActivity;
 import com.pb.criconet.CommonUI.WebViewActivity;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.PavilionAdapter.HomeAdapter;
@@ -178,6 +186,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     ImageView iv_logout;
     FrameLayout fl_post;
+    private Uri photoUri;
 
 
     ActivityResultLauncher<Intent> videolaunchercamera = registerForActivityResult(
@@ -189,11 +198,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
                             postFile = getRealPathFromURI(result.getData().getData(), requireContext());
 
-                            // Bitmap bitmap = getVideoThumbnail(requireContext(), result.getData().getData());
-                            //Toaster.customToast(bitmap + "");
-                            up_image.setVisibility(View.VISIBLE);
-                            // Glide.with(requireContext()).load(postFile).into(up_image);
-
                             Uri videoUri = Uri.fromFile(new File(postFile));
 
                             Bitmap thumbnail = getVideoThumbnail(getContext(), videoUri);
@@ -202,12 +206,37 @@ public class PavilionFragment extends Fragment implements PostListeners {
                                 up_image.setImageBitmap(thumbnail);
                             }
 
-                            //up_image.setImageBitmap(bitmap);
-
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                    }
+                }
+            });
+
+    //TODO select video from gallery of device
+    ActivityResultLauncher<Intent> startActivityIntentVideoFromGallery = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Intent intent = result.getData();
+                    assert intent != null;
+                    try {
+
+                        postFile = getRealPathFromURI(result.getData().getData(), requireContext());
+
+                        Uri videoUri = Uri.fromFile(new File(postFile));
+
+                        Bitmap thumbnail = getVideoThumbnail(getContext(), videoUri);
+
+                        if (thumbnail != null) {
+                            up_image.setImageBitmap(thumbnail);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -219,31 +248,67 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         List<Uri> selectedImages = new ArrayList<>();
+                        images = new ArrayList<>();
                         if (result.getData() != null && result.getData().getData() != null) {
                             // Single image selection
                             selectedImages.add(result.getData().getData());
+                            ContentResolver contentResolver = getActivity().getContentResolver();
+                            String mimeType = "";
+
+                            postType = POST_TYPE_IMAGE;
+                            postFile = getRealPathFromURI(result.getData().getData(), getContext());
+                            Glide.with(getActivity()).load(postFile).into(up_image);
+
+                            mimeType = contentResolver.getType(result.getData().getData());
+
+                            // Toaster.customToast("Single" + "Type" + mimeType);
+
                         } else if (result.getData() != null && result.getData().getClipData() != null) {
                             // Multiple image selection
+
+                            postType = POST_TYPE_MULTI_IMAGE;
+                            String mimeType = "";
+                            ContentResolver contentResolver = getActivity().getContentResolver();
                             ClipData clipData = result.getData().getClipData();
                             for (int i = 0; i < clipData.getItemCount(); i++) {
                                 selectedImages.add(clipData.getItemAt(i).getUri());
+                                images.add(getRealPathFromURI(clipData.getItemAt(i).getUri(), getContext()));
+                                mimeType = contentResolver.getType(clipData.getItemAt(i).getUri());
                             }
-                        }
-                        // Now you can handle the selectedImages list
-                        // For example, you can iterate through it and display the images in imageView
+                            Glide.with(getActivity()).load(selectedImages.get(0)).into(up_image);
+                            //Toaster.customToast("Multiple" + "Type" + mimeType);
 
-                        try {
-                            Bitmap bitmap = BitmapFactory.decodeStream(requireContext().getContentResolver().openInputStream(selectedImages.get(0)));
-                            up_image.setImageBitmap(bitmap);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
                         }
 
-                        Glide.with(getActivity()).load(selectedImages.get(0)).into(up_image);
 
                     }
                 }
             });
+
+    //TODO capture the image using camera and display it on ProfilePic
+    ActivityResultLauncher<Intent> cameraProfileImageActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        //profileImagePath = photoUri.toString();
+
+                        String[] projection = {MediaStore.Images.Media.DATA};
+                        @SuppressWarnings("deprecation")
+                        Cursor cursor = getActivity().managedQuery(photoUri, projection, null, null, null);
+                        int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        String capturedImageFilePath = cursor.getString(column_index_data);
+                        postFile = capturedImageFilePath;
+
+                        Glide.with(getActivity()).load(postFile).into(up_image);
+
+
+                    }
+                }
+            });
+
 
     public PavilionFragment() {
         // Required empty public constructor
@@ -378,7 +443,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         if (Global.isOnline(requireActivity())) {
             getFeed();
             getPageUrl();
-            //System.out.println("xxxxxxxxxx getFeed " + after_post_id + "xxxxxxxxxx");
         } else {
             Global.showDialog(getActivity());
         }
@@ -399,7 +463,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     rv_searchUser.setVisibility(View.GONE);
                     searchUsername = "";
                 } else {
-
+                    rv_searchUser.setVisibility(View.VISIBLE);
 
                     String search = s.toString();
                     String[] parts = null;
@@ -485,48 +549,18 @@ public class PavilionFragment extends Fragment implements PostListeners {
         });
 
 
-        post_list.addOnScrollListener(new RecycleViewPaginationScrollListener(mLayoutManager) {
-            @Override
-            protected void loadMoreItems() {
-                isLoading = true;
-//                    page++;
-                after_post_id = modelArrayList.get(modelArrayList.size() - 1).getId();
-                getFeed();
-            }
+        add_photo.setOnClickListener(v -> {
+            postType = POST_TYPE_IMAGE;
 
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
+            openCameraAndGalleryDialog(postType);
+            //selectImage();
 
         });
 
-        add_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postType = POST_TYPE_IMAGE;
-
-                //now = System.currentTimeMillis();
-                //System.out.println(now+"taken time");
-
-                openCameraAndGalleryDialog(postType);
-                //selectImage();
-
-            }
-        });
-
-        add_video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postType = POST_TYPE_VIDEO;
-                openCameraAndGalleryDialog(postType);
-                // selectVideo();
-            }
+        add_video.setOnClickListener(v -> {
+            postType = POST_TYPE_VIDEO;
+            openCameraAndGalleryDialog(postType);
+            // selectVideo();
         });
 
         fl_post.setOnClickListener(v -> {
@@ -546,9 +580,35 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     private void drawerNavigation(RelativeLayout layout_nav) {
 
+        CircleImageView profile_pic = layout_nav.findViewById(R.id.profile_pic);
+
+        if (SessionManager.get_image(prefs).isEmpty()) {
+            Glide.with(getActivity()).load(SessionManager.get_image(prefs)).placeholder(getActivity().getResources().getDrawable(R.drawable.user_default)).error(getActivity().getResources().getDrawable(R.drawable.user_default)).into(profile_pic);
+        } else {
+            Glide.with(getActivity()).load(SessionManager.get_image(prefs)).placeholder(getActivity().getResources().getDrawable(R.drawable.user_default)).error(getActivity().getResources().getDrawable(R.drawable.user_default)).into(profile_pic);
+        }
+
+       TextView tvProfileName = layout_nav.findViewById(R.id.tvProfileName);
+        tvProfileName.setText(SessionManager.get_name(prefs));
+
+        ImageView iv_settings = layout_nav.findViewById(R.id.iv_settings);
+        iv_settings.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
+        });
+
         TextView xyz_academy = layout_nav.findViewById(R.id.xyz_academy);
         xyz_academy.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), UserProfileActivity.class));
+
+            if (SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")) {
+                startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class).putExtra("FROM","1"));
+                //finish();
+            }else{
+                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("FROM","2"));
+               // finish();
+            }
+
+
+
         });
 
         TextView super_6 = layout_nav.findViewById(R.id.super_6);
@@ -876,20 +936,16 @@ public class PavilionFragment extends Fragment implements PostListeners {
         }
     }
 
-    private void openCamera() {
 
-        try {
-            String fileName = "profile.jpg";
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, fileName);
-            mCapturedImageURIid = getActivity().getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURIid);
-            startActivityForResult(intent, CAMERA_REQUEST_id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    //TODO takes profile image from camera
+    private void openCameraProfileImage() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+        photoUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        cameraProfileImageActivityResultLauncher.launch(cameraIntent);
     }
 
     private void multiGallery() {
@@ -965,189 +1021,20 @@ public class PavilionFragment extends Fragment implements PostListeners {
     }
 
     private void openCameraVideo() {
-//        File saveFolder = new File(Environment.getExternalStorageDirectory(), "Utopiaxxx");
-//        try {
-//            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
-//
-//            if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//                startActivityForResult(takeVideoIntent, CAPTURE_VIDEO);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         videolaunchercamera.launch(intent);
     }
 
-    private void openGalleryVideo() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), PICK_VIDEO);
+    //TODO takes video from gallery
+    private void openVideoFromGallery() {
+
+        Intent intent = new Intent();
+        intent.setType("video/mp4*");
+        intent.setAction(Intent.ACTION_PICK);
+        startActivityIntentVideoFromGallery.launch(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == PICK_IMAGE_id) {
-                try {
-                    selectedImageid = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    cursor = getActivity().getContentResolver().query(selectedImageid, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    columnindex = cursor.getColumnIndex(filePathColumn[0]);
-                    file_pathid = cursor.getString(columnindex);
-                    URIid = Uri.parse("file://" + file_pathid);
-                    postFile = file_pathid;
-                    cursor.close();
-                    System.out.println("cccccccc   " + postFile);
-                    up_image.setVisibility(View.VISIBLE);
-                    Glide.with(getActivity()).load(postFile).into(up_image);
-                    setHasOptionsMenu(true);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } else if (requestCode == CAMERA_REQUEST_id) {
-                try {
-                    String[] projection = {MediaStore.Images.Media.DATA};
-                    @SuppressWarnings("deprecation")
-                    Cursor cursor = getActivity().managedQuery(mCapturedImageURIid, projection, null, null, null);
-                    int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String capturedImageFilePath = cursor.getString(column_index_data);
-                    postFile = capturedImageFilePath;
-                    up_image.setVisibility(View.VISIBLE);
-                    Glide.with(getActivity()).load(postFile).into(up_image);
-
-                    System.out.println("cccccccc   " + postFile);
-                    setHasOptionsMenu(true);
-
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } else if (requestCode == PICK_VIDEO) {
-                Uri selectedImageUri = data.getData();
-
-                Cursor cursor = null;
-                try {
-                    String[] proj = {MediaStore.Images.Media.DATA};
-                    CursorLoader loader = new CursorLoader(getActivity(), selectedImageUri, proj, null, null, null);
-                    cursor = loader.loadInBackground();
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String file_path = cursor.getString(column_index);
-
-                    filemanagerstring = file_path;
-                    postFile = filemanagerstring;
-                    cursor.close();
-                    System.out.println("selectedVideoPath y " + filemanagerstring);
-//                dialog_camera.dismiss();
-                    if (filemanagerstring != null) {
-                        loaderView.showLoader();
-                        //progress.show();
-                        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(file_path, MediaStore.Images.Thumbnails.MINI_KIND);
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        thumb.compress(Bitmap.CompressFormat.PNG, 40, stream);
-//                    uploadVideo_taskimage(Global.URL, filemanagerstring, byteArray);
-                        try {
-                            FileBody filebodyVideo = new FileBody(new File(filemanagerstring));
-                            long kblength = new File(filemanagerstring).length();
-                            kblength = kblength / 1024;
-                            long mblength = kblength / 1024;
-                            System.out.println("file.mblength() = " + mblength);
-//                            if (mblength > 51) {
-//                                System.out.println("file.length() = " + mblength);
-//                                Global.msgDialog(getActivity(), getResources().getString(R.string.File_Size_Too_Large_Must_be_less_than_50_MB));
-//                                //progress.dismiss();
-//                                loaderView.hideLoader();
-//                            } else {
-//                                up_image.setVisibility(View.VISIBLE);
-//                                up_image.setImageBitmap(thumb);
-//                                //progress.dismiss();
-//                                loaderView.hideLoader();
-//                                setHasOptionsMenu(true);
-//                            }
-                            up_image.setVisibility(View.VISIBLE);
-                            up_image.setImageBitmap(thumb);
-                            //progress.dismiss();
-                            loaderView.hideLoader();
-                            setHasOptionsMenu(true);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
-                    }
-                }
-
-                // Log.e("Attachment Path:", attachmentFile);
-
-            } else if (requestCode == CAPTURE_VIDEO) {
-                Uri selectedVideo = data.getData();
-
-                String[] filePathColumn = {MediaStore.Video.Media.DATA};
-                Cursor cursor = getActivity().getContentResolver().query(selectedVideo, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnindex = cursor.getColumnIndex(filePathColumn[0]);
-                filemanagerstring = cursor.getString(columnindex);
-                cursor.close();
-                System.out.println("filemanagerstring x  " + filemanagerstring);
-                postFile = filemanagerstring;
-//                dialog_camera.dismiss();
-                if (filemanagerstring != null) {
-                    //progress.show();
-                    loaderView.showLoader();
-//                    Bitmap bitmap = ((BitmapDrawable) imgPreview.getDrawable()).getBitmap();
-                    Bitmap video_thumbnail = ThumbnailUtils.createVideoThumbnail(filemanagerstring, MediaStore.Video.Thumbnails.MINI_KIND);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    video_thumbnail.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-//                    uploadVideo_taskimage(Global.URL, filemanagerstring, byteArray);
-                    try {
-                        FileBody filebodyVideo = new FileBody(new File(filemanagerstring));
-                        long kblength = new File(filemanagerstring).length();
-                        kblength = kblength / 1024;
-                        long mblength = kblength / 1024;
-                        System.out.println("file.mblength() = " + mblength);
-//                        if (mblength > 51) {
-//                            System.out.println("file.length() = " + mblength);
-//                            Global.msgDialog(getActivity(), getResources().getString(R.string.File_Size_Too_Large_Must_be_less_than_50_MB));
-//                            //progress.dismiss();
-//                            loaderView.hideLoader();
-//                        } else {
-//                            up_image.setVisibility(View.VISIBLE);
-//                            up_image.setImageBitmap(video_thumbnail);
-//                            //progress.dismiss();
-//                            loaderView.hideLoader();
-//                            setHasOptionsMenu(true);
-//                        }
-
-                        up_image.setVisibility(View.VISIBLE);
-                        up_image.setImageBitmap(video_thumbnail);
-                        //progress.dismiss();
-                        loaderView.hideLoader();
-                        setHasOptionsMenu(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        }
-//        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void DeleteFeed(final String id, int pos) {
+    public void DeleteFeed(final String id) {
         //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "delete_post", new Response.Listener<String>() {
             @Override
@@ -1157,7 +1044,19 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     JSONObject jsonObject = new JSONObject(response.toString());
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
 
-                        //ResetFeed();
+                        // Find and remove the deleted post from the list
+                        for (int i = 0; i < modelArrayList.size(); i++) {
+                            if (modelArrayList.get(i).getId().equals(id)) {
+                                modelArrayList.remove(i);
+                                adapter.notifyItemRemoved(i);
+                                adapter.notifyItemRangeChanged(i, modelArrayList.size());
+                                break;
+                            }
+                        }
+                        // Reset RecyclerView scroll behavior if needed
+                       // post_list.smoothScrollBy(0, 1);
+                        //post_list.smoothScrollBy(0, -1);
+
                     } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
                         Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
                     } else {
@@ -1423,6 +1322,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 case POST_TYPE_IMAGE:
                     entity.addPart("postText", new StringBody(postText));
 
+                   // Toaster.customToast(postFile);
+
                     if (!postFile.isEmpty()) {
                         File file = new File(postFile);
                         FileBody fileBody = new FileBody(file);
@@ -1479,30 +1380,27 @@ public class PavilionFragment extends Fragment implements PostListeners {
             }
 
             MultipartRequest req = new MultipartRequest(Global.URL + "new_post",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                //progress.dismiss();
-                                loaderView.hideLoader();
-                                up_text.setText("");
-                                up_image.setImageURI(null);
-                                Log.e("Pavilion", response);
-                                JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
-                                if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
+                    response -> {
+                        try {
+                            //progress.dismiss();
+                            loaderView.hideLoader();
+                            up_text.setText("");
+                            up_image.setImageURI(null);
+                            Log.e("Pavilion", response);
+                            JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
+                            if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
 
-                                    Log.d("PostResponse", jsonObject + "");
+                                Log.d("PostResponse", jsonObject + "");
 //                            JSONArray array = jsonObject.getJSONArray("posts");
-                                    ResetFeed();
+                                ResetFeed();
 //                            Global.msgDialog(getActivity(), jsonObject.optString("msg"));
-                                } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
-                                    Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
-                                } else {
-                                    Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
+                                Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
+                            } else {
+                                Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     },
                     new Response.ErrorListener() {
@@ -1531,7 +1429,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
 
     }
-
 
     private void ResetFeed() {
         feedText = "";
@@ -1566,6 +1463,29 @@ public class PavilionFragment extends Fragment implements PostListeners {
         post_list.smoothScrollBy(0, 1);
         post_list.smoothScrollBy(0, -1);
 
+
+        post_list.clearOnScrollListeners();
+        post_list.addOnScrollListener(new RecycleViewPaginationScrollListener(mLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+//                    page++;
+                after_post_id = modelArrayList.get(modelArrayList.size() - 1).getId();
+                getFeed();
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+
+        });
+
         if (Global.isOnline(requireActivity())) {
             getFeed();
         } else {
@@ -1588,18 +1508,51 @@ public class PavilionFragment extends Fragment implements PostListeners {
         Log.e("Pavilion", post.toString());
         Intent intent = new Intent(getActivity(), FeedDetailsActivity.class);
         intent.putExtra("feed_id", post.getId());
+        intent.putExtra("type","t");
         startActivity(intent);
     }
 
     @Override
     public void onShareClickListener(NewPostModel post) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, post.getDetails_url());
-//        shareIntent.setType("text/html");
-        shareIntent.setType("text/plain");
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivity(Intent.createChooser(shareIntent, "Share"));
+//        Intent shareIntent = new Intent();
+//        shareIntent.setAction(Intent.ACTION_SEND);
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, post.getDetails_url());
+////        shareIntent.setType("text/html");
+//        shareIntent.setType("text/plain");
+//        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(Intent.createChooser(shareIntent, "Share"));
+
+
+        if (post.getPost_type().equalsIgnoreCase("text") && !post.getPostFile().isEmpty()) {
+            String imageUrl = post.getPostFile();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+
+        } else if (post.getPost_type().equalsIgnoreCase("link") && !post.getPostLinkImage().isEmpty()) {
+            String imageUrl = post.getPostLinkImage();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("image")) {
+            String imageUrl = post.getPostFile();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("video")) {
+            String imageUrl = post.getThumb();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("profile_cover_picture")) {
+            String imageUrl = post.getPostFile();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("photo_multi")) {
+            String imageUrl = post.getPhoto_multi().get(0).getImage();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("youtube")) {
+            String imageUrl = post.getPostLinkImage();
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else if (post.getPost_type().equalsIgnoreCase("profile_picture")) {
+            String imageUrl = "";
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        } else {
+            String imageUrl = "";
+            generateSharingLink(Integer.parseInt(post.getId()), post.getPublisherName(), imageUrl, post.getPost_type());
+        }
+
     }
 
     @Override
@@ -1612,12 +1565,14 @@ public class PavilionFragment extends Fragment implements PostListeners {
         // DeleteFeed(id);
     }
 
-
     @Override
     public void onPostDeleteFeedListener(String id, int pos) {
-        modelArrayList.remove(pos);
-        adapter.notifyItemRemoved(pos);
-        DeleteFeed(id, pos);
+
+       // Toaster.customToast(id +" is");
+
+//        modelArrayList.remove(pos);
+//        adapter.notifyItemRemoved(pos);
+        DeleteFeed(id);
     }
 
     @Override
@@ -1776,29 +1731,21 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     @Override
     public void onProfileClickListener(NewPostModel post) {
-//        if (post.getPublisher_type().equalsIgnoreCase("user")) {
-//            Intent intent = new Intent(getActivity(), UserDetails.class);
-//            intent.putExtra("user_id", post.getPublisherId());
-//            intent.putExtra("FROM", "2");
-//            startActivity(intent);
-//            getActivity().finish();
-//        } else {
-//            Intent intent = new Intent(getActivity(), PagesDetails.class);
-//            intent.putExtra("page_id", post.getPublisherId());
-//            intent.putExtra("FROM", "2");
-//            startActivity(intent);
-//            getActivity().finish();
-//        }
+
+        Intent intent = new Intent(getActivity(), UserDetails.class);
+        intent.putExtra("user_id", post.getPublisherId());
+        intent.putExtra("FROM", "2");
+        startActivity(intent);
+        getActivity().finish();
+
     }
 
     /*get search user list by api*/
     private void getUserSearchList(String searchKey) {
-        //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + Global.SEARCH_USER_LIST_API, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("SearchUser Response", response);
-                //loaderView.hideLoader();
                 searchUserArrayList.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -1855,14 +1802,13 @@ public class PavilionFragment extends Fragment implements PostListeners {
             }
         }, error -> {
             error.printStackTrace();
-            //loaderView.hideLoader();
             Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
-                param.put("user_id", "1387");
-                param.put("s", "d46e3041de65228dfe11f66de56f5f02c22e6cf639f96877e600810a3075ec1ddd53728122917009d19a006fd6d25d23c93d3bf4e48eb25f");
+                param.put("user_id", SessionManager.get_user_id(prefs));
+                param.put("s", SessionManager.get_session_id(prefs));
                 param.put("search_key", searchKey);
 
                 Log.e("Pavilion", param.toString());
@@ -1932,7 +1878,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         queue.add(jsonObjectRequest);
     }
 
-
     /**
      * open camera and gallery using this bottomSliderDialog
      */
@@ -1951,7 +1896,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
             case "image":
                 tv_camera.setOnClickListener(v -> {
                     dialog.dismiss();
-                    openCamera();
+                    //openCamera();
+                    openCameraProfileImage();
                 });
                 tvGallery.setOnClickListener(v -> {
                     dialog.dismiss();
@@ -1970,7 +1916,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 });
                 tvGallery.setOnClickListener(v -> {
                     dialog.dismiss();
-                    openGalleryVideo();
+                    //openGalleryVideo();
+                    openVideoFromGallery();
                 });
                 tvCancel.setOnClickListener(v -> {
                     postType = "";
@@ -1984,6 +1931,60 @@ public class PavilionFragment extends Fragment implements PostListeners {
         // System.out.println("MilesSeconds"+""+(System.currentTimeMillis()-now)+"");
 
         dialog.show();
+
+    }
+
+
+    public void generateSharingLink(int postId, String postedBy, String postLink, String postType) {
+
+        //profile_picture---(postFile)
+        //text--- Plain Text| with image (postFile)
+        //link  -- Plain link| with image link(postLinkImage)
+        // image -- (postFile)
+        // video -- (thumb)
+        //profile_cover_picture --(postFile)
+        //photo_multi -- photo_multi[] = image[0]
+        // youtube -- (postLinkImage)
+
+
+        Log.d("ImageUrl", postLink + "///" + postType + "?" + postId);
+
+        String deepLink = "https://www.criconet.com/" + "?type=post" + "/" + postId;
+
+
+        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse(deepLink))
+                .setDomainUriPrefix("https://criconet.page.link")
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                .setSocialMetaTagParameters(
+                        new DynamicLink.SocialMetaTagParameters.Builder()
+                                .setTitle(postedBy + " " + "posted on criconet")
+                                .setDescription(postedBy + " " + "posted on criconet")
+                                .setImageUrl(Uri.parse(postLink))
+                                .build())
+                .setAndroidParameters(
+                        new DynamicLink.AndroidParameters.Builder("com.pb.criconet")
+                                .setFallbackUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.pb.criconet"))
+                                .setMinimumVersion(1)
+                                .build())
+                .buildShortDynamicLink()
+                .addOnCompleteListener(getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        Uri shortLink = task.getResult().getShortLink();
+
+                        //deepSharingLinkForFeed = tipsTitleShare + "\n" + "\n" + "*" + tipsDetailsShare + "*" + "\n" + "\n"  + shortLink;
+
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Criconet");
+                        intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                        startActivity(Intent.createChooser(intent, "send"));
+
+                    } else {
+                        Toaster.customToast("Failed to share event.");
+                    }
+                });
+
 
     }
 

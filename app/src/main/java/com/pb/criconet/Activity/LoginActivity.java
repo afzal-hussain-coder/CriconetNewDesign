@@ -1,5 +1,6 @@
 package com.pb.criconet.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +26,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.pb.criconet.R;
 import com.pb.criconet.databinding.ActivityLoginBinding;
 import com.pb.criconet.model.UserData;
@@ -58,6 +64,35 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(activityLoginBinding.getRoot());
         mContext = this;
         mActivity = this;
+
+//        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(mActivity, new OnSuccessListener<InstanceIdResult>() {
+//            @Override
+//            public void onSuccess(InstanceIdResult instanceIdResult) {
+//                String newToken = instanceIdResult.getToken();
+//
+//                Log.e("newToken", newToken);
+//            }
+//        });
+
+        // Inside your Activity or other component
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            // Get the FCM token
+                            String token = task.getResult();
+                            // Print the token
+                            SessionManager.save_devicetoken(prefs, token);
+                            Log.d("FCM_TOKEN", "Token: " + token);
+                        } else {
+                            // Handle error
+                            Log.w("FCM_TOKEN", "Fetching FCM registration token failed", task.getException());
+                        }
+                    }
+                });
+
+
 
         loaderView = CustomLoaderView.initialize(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -146,7 +181,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (jsonObject1.length() > 0) {
                                     SessionManager.save_academyId(prefs, jsonObject1.getString("id"));
                                     SessionManager.save_academyNumber(prefs, jsonObject1.getString("contact_person_phone"));
-
+                                    SessionManager.save_academyName(prefs,jsonObject1.getString("name"));
+                                    SessionManager.save_academyAddress(prefs,jsonObject1.getString("address"));
 
                                     if (jsonObject1.has("role")) {
                                         JSONObject jsonObject2 = jsonObject1.getJSONObject("role");
@@ -349,6 +385,9 @@ public class LoginActivity extends AppCompatActivity {
                                 if (jsonObject1.length() > 0) {
                                     SessionManager.save_academyId(prefs, jsonObject1.getString("id"));
                                     SessionManager.save_academyNumber(prefs,jsonObject1.getString("contact_person_phone"));
+                                    SessionManager.save_academyName(prefs,jsonObject1.getString("name"));
+                                    SessionManager.save_academyAddress(prefs,jsonObject1.getString("address"));
+
                                     if(jsonObject1.has("role")){
                                         JSONObject jsonObject2= jsonObject1.getJSONObject("role");
                                         if(jsonObject2.has("role_id")){

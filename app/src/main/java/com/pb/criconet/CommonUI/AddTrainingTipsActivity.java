@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -36,6 +38,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -82,7 +85,9 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,6 +101,7 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
 
     ArrayList<DataModel> option_category = new ArrayList<>();
     ArrayList<DataModel> option_privacy = new ArrayList<>();
+    ArrayList<DataModel> option_mediaType = new ArrayList<>();
 
     public static Uri image_uri = null;
     Context mContext;
@@ -145,6 +151,11 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
     private File songFile;
 
     String selectedCategoryId ="";
+    String privacy ="";
+    String privacyId="";
+    String postFile="";
+    String mediaType ="";
+    String imagePath="";
 
 
     //todo get record video using camera
@@ -154,6 +165,7 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     Intent intent = result.getData();
+                    postFile = getRealPathFromURI(result.getData().getData(), mContext);
                     activityAddTrainingTipsBinding.flVideo.setVisibility(View.VISIBLE);
                     activityAddTrainingTipsBinding.videoView.setVideoURI(intent.getData());
                     activityAddTrainingTipsBinding.videoView.start();
@@ -208,9 +220,9 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
             }
         });
 
-        option_privacy.add(new DataModel("Only For Academy"));
-        option_privacy.add(new DataModel("Only For Coach"));
-        option_privacy.add(new DataModel("Public"));
+        option_privacy.add(new DataModel("Only For Academy","1"));
+        option_privacy.add(new DataModel("Only For Coach","2"));
+        option_privacy.add(new DataModel("Public","3"));
 
 
         activityAddTrainingTipsBinding.dropPrivacy.setOptionList(option_privacy);
@@ -221,6 +233,47 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
 
             @Override
             public void onClickDone(String name,String id) {
+                privacy = name;
+                privacyId = id;
+
+            }
+
+
+            @Override
+            public void onDismiss() {
+            }
+        });
+
+        option_mediaType.add(new DataModel("Video"));
+        option_mediaType.add(new DataModel("Image"));
+        option_mediaType.add(new DataModel("Audio"));
+
+
+        activityAddTrainingTipsBinding.dropTipsSource.setOptionList(option_mediaType);
+        activityAddTrainingTipsBinding.dropTipsSource.setClickListener(new BookingHistoryDropDown.onClickInterface() {
+            @Override
+            public void onClickAction() {
+            }
+
+            @Override
+            public void onClickDone(String name,String id) {
+                mediaType = name;
+
+                if(mediaType.equalsIgnoreCase("Video")){
+                    activityAddTrainingTipsBinding.tvVideo.setVisibility(View.VISIBLE);
+                    activityAddTrainingTipsBinding.tvPicImage.setVisibility(View.GONE);
+                    activityAddTrainingTipsBinding.tvAudio.setVisibility(View.GONE);
+
+                }else if(mediaType.equalsIgnoreCase("Image")){
+                    activityAddTrainingTipsBinding.tvAudio.setVisibility(View.GONE);
+                    activityAddTrainingTipsBinding.tvVideo.setVisibility(View.GONE);
+                    activityAddTrainingTipsBinding.tvPicImage.setVisibility(View.VISIBLE);
+
+                }else if(mediaType.equalsIgnoreCase("Audio")){
+                    activityAddTrainingTipsBinding.tvVideo.setVisibility(View.GONE);
+                    activityAddTrainingTipsBinding.tvPicImage.setVisibility(View.GONE);
+                    activityAddTrainingTipsBinding.tvAudio.setVisibility(View.VISIBLE);
+                }
 
 
             }
@@ -230,6 +283,9 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
             public void onDismiss() {
             }
         });
+
+
+
 
 
         //todo tips title component
@@ -311,6 +367,50 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
             activityAddTrainingTipsBinding.flAudio.setVisibility(View.GONE);
         });
 
+        activityAddTrainingTipsBinding.flSave.setOnClickListener(v -> {
+            if (checkValidation()) {
+                if(Global.isOnline(mContext)){
+                    getAddAcademtTips();
+                }else{
+                    Global.showDialog(mActivity);
+                }
+            }
+        });
+
+    }
+
+    private static String getRealPathFromURI(Uri uri, Context context) {
+        Uri returnUri = uri;
+        Cursor returnCursor = context.getContentResolver().query(returnUri, null, null, null, null);
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+        returnCursor.moveToFirst();
+        String name = (returnCursor.getString(nameIndex));
+
+        File file = new File(context.getFilesDir(), name);
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bytesAvailable = inputStream.available();
+
+
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
+            }
+
+            inputStream.close();
+            outputStream.close();
+            Log.e("File Path", "Path " + file.getAbsolutePath());
+
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+        return file.getAbsolutePath();
     }
 
 
@@ -771,6 +871,29 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
         queue.add(postRequest);
     }
 
+    private boolean checkValidation() {
+
+        if(selectedCategoryId.isEmpty()){
+            Toaster.customToast("Please Select Category");
+            return false;
+        }else if(activityAddTrainingTipsBinding.editTextTitle.getText().toString().length()<8){
+            activityAddTrainingTipsBinding.filledTextFieldTitle.setErrorEnabled(true);
+            activityAddTrainingTipsBinding.filledTextFieldTitle.setError("Title should not be less than 8 characters");
+            activityAddTrainingTipsBinding.filledTextFieldTitle.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.app_light_red)));
+            return false;
+        }else if(activityAddTrainingTipsBinding.EditTextWhatDes.getText().toString().length()<8){
+            activityAddTrainingTipsBinding.filledInputLayoutDes.setErrorEnabled(true);
+            activityAddTrainingTipsBinding.filledInputLayoutDes.setError("Message should not be less than 8 characters");
+            activityAddTrainingTipsBinding.filledInputLayoutDes.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.app_light_red)));
+            return false;
+        } else if(privacy.isEmpty()){
+            Toaster.customToast("Select Privacy for Tips");
+            return false;
+        }
+
+        return true;
+    }
+
     public void getAddAcademtTips() {
         try {
             loaderView.showLoader();
@@ -789,18 +912,41 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
                 entity.addPart("privacy", new StringBody("1"));
             }
             else {
-                //entity.addPart("privacy", new StringBody(privacyId));
+                entity.addPart("privacy", new StringBody(privacyId));
             }
 
-            //entity.addPart("details", new StringBody(des));
+            entity.addPart("details", new StringBody(activityAddTrainingTipsBinding.EditTextWhatDes.getText().toString()));
             entity.addPart("training_tips_id", new StringBody(""));
 
 
-//            if (!postFile.isEmpty()) {
-//                File file = new File(postFile);
-//                FileBody fileBody = new FileBody(file);
-//                entity.addPart("video_tips", fileBody);
-//            }
+            if(mediaType.equalsIgnoreCase("Video")){
+                entity.addPart("type", new StringBody(mediaType));
+                if (!postFile.isEmpty()) {
+                    File file = new File(postFile);
+                    FileBody fileBody = new FileBody(file);
+                    entity.addPart("video_tips", fileBody);
+                }
+            }else if(mediaType.equalsIgnoreCase("Image")){
+                entity.addPart("type", new StringBody(mediaType));
+
+                Log.d("ImagePath",imagePath);
+                if (!imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    FileBody fileBody = new FileBody(file);
+                    entity.addPart("video_tips", fileBody);
+                }
+            }else if(mediaType.equalsIgnoreCase("Audio")){
+                entity.addPart("type", new StringBody(mediaType));
+
+
+                if (!mFileName.isEmpty()) {
+                    File file = new File(mFileName);
+                    FileBody fileBody = new FileBody(file);
+                    entity.addPart("video_tips", fileBody);
+                }
+            }
+
+
 
 
             MultipartRequest req = new MultipartRequest(Global.URL + Global.ACADEMY_TRAINING_TIPS,
@@ -856,13 +1002,9 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            //progress.dismiss();
-                            loaderView.hideLoader();
-                            error.printStackTrace();
-                        }
+                    error -> {
+                        loaderView.hideLoader();
+                        error.printStackTrace();
                     },
                     entity);
 
@@ -886,6 +1028,7 @@ public class AddTrainingTipsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (null != image_uri) {
+            imagePath = image_uri.getPath();
             activityAddTrainingTipsBinding.flImage.setVisibility(View.VISIBLE);
             activityAddTrainingTipsBinding.roundedImagePic.setVisibility(View.VISIBLE);
             activityAddTrainingTipsBinding.roundedImagePic.setImageURI(image_uri);

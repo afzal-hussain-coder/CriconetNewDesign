@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Streaming.LiveMatchesActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".Activity.Streaming.LiveMatchesActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -13,16 +13,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="@dimen/_10sdp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/week_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_45sdp"
             android:footerDividersEnabled="true"
-            android:visibility="visible"
-            android:paddingBottom="@dimen/_45sdp" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/notfound"

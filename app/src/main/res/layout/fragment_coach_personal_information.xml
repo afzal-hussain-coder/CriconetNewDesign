@@ -9,12 +9,84 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/_20sdp"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:background="@drawable/profile_bg">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/cover_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_140sdp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:background="@drawable/image_placeholder"
+                app:riv_border_color="@color/bckground_light"
+                app:riv_corner_radius_bottom_left="@dimen/_20sdp"
+                app:riv_corner_radius_bottom_right="@dimen/_20sdp"
+                app:riv_mutate_background="true" />
+
+            <RelativeLayout
+                android:id="@+id/middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/doted_circle"
+                    android:padding="@dimen/_4sdp"
+                    android:src="@drawable/placeholder_user" />
+
+                <LinearLayout
+                    android:id="@+id/li_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="-30dp"
+                    android:layout_marginTop="@dimen/_55sdp"
+                    android:layout_toEndOf="@+id/profile_pic"
+                    android:background="@drawable/circle_camera"
+                    android:padding="@dimen/_4sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_add_a_photo_black_24dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_add"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:text="@string/add_academy_logo"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_9sdp" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/ic_add_a_photo_black_24dp" />
+        </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_20sdp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,19 +178,53 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-                <com.pb.criconet.util.LanguageDropDown
-                    android:id="@+id/drop_language"
-                    style="@style/formDropDown"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/filledTextPhone"
+                    style="@style/OutlinedRoundBoxFilled"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_social"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/languages"
+                    android:hint="@string/phone"
+                    android:textAppearance="@style/full_name_"
+                    android:textColorHint="@color/gray"
+                    app:boxStrokeColor="@color/blue_intro_color"
+                    app:errorEnabled="false"
+                    app:hintTextColor="@color/dimGray">
+
+                    <!--this is the actual edit text which takes the input-->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:textColor="@color/blue_intro_color"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/textView_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:hint="@string/language_of_training"
+                    android:textColorHint="@color/gray"
+                    android:gravity="center_vertical"
                     android:background="@drawable/chip_bg"
                     android:backgroundTint="@color/grayLight"
                     android:drawableEnd="@drawable/down_arrow"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_10sdp" />
+                    android:padding="@dimen/_15sdp"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_10sdp"  />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/filledTextField_address1"
                     style="@style/OutlinedRoundBoxFilled"
@@ -179,44 +285,50 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.pb.criconet.util.BookingHistoryDropDown
-                    android:id="@+id/drop_city"
-                    style="@style/formDropDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/city"
-                    android:background="@drawable/chip_bg"
-                    android:backgroundTint="@color/grayLight"
-                    android:drawableEnd="@drawable/down_arrow"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_10sdp" />
-                <com.pb.criconet.util.BookingHistoryDropDown
-                    android:id="@+id/drop_state"
-                    style="@style/formDropDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/state"
-                    android:background="@drawable/chip_bg"
-                    android:backgroundTint="@color/grayLight"
-                    android:drawableEnd="@drawable/down_arrow"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/_10sdp" />
+
                 <com.pb.criconet.util.BookingHistoryDropDown
                     android:id="@+id/drop_country"
                     style="@style/formDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/country"
+                    android:hint="@string/country"
+                    android:textColorHint="@color/gray"
                     android:background="@drawable/chip_bg"
                     android:backgroundTint="@color/grayLight"
                     android:drawableEnd="@drawable/down_arrow"
                     android:padding="@dimen/_10sdp"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.pb.criconet.util.BookingHistoryDropDown
+                    android:id="@+id/drop_state"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/state"
+                    android:textColorHint="@color/gray"
+                    android:background="@drawable/chip_bg"
+                    android:backgroundTint="@color/grayLight"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_10sdp" />
+
+                <com.pb.criconet.util.BookingHistoryDropDown
+                    android:id="@+id/drop_city"
+                    style="@style/formDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="@string/city"
+                    android:textColorHint="@color/gray"
+                    android:background="@drawable/chip_bg"
+                    android:backgroundTint="@color/grayLight"
+                    android:drawableEnd="@drawable/down_arrow"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/blue_intro_color"
                     android:textSize="@dimen/_10sdp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -242,7 +354,7 @@
                         android:fontFamily="@font/poppins_regular"
                         android:gravity="center_vertical"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@color/blue_intro_color"
                         tools:ignore="TouchTargetSizeCheck" />

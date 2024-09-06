@@ -90,6 +90,8 @@ public class SessionManager {
     private static String PARTY_GROUP_TXT="party_group_txt";
     private static String PARTY_GROUP_ID="party_group_id";
     private static String CREATED_MATCH_ID="match_id";
+    private static String ACADEMY_NAME ="ACADEMYNAME";
+    private static String ACADEMY_ADDRESS ="AcademyAddress";
 
 
 //    private static String CARTYPEID = "CARTYPEID";
@@ -206,6 +208,23 @@ public class SessionManager {
     public static String get_academyNumber(SharedPreferences prefs) {
         return prefs.getString(academyNumber, "");
     }
+
+    public static void save_academyName(SharedPreferences prefs, String value) {
+        SessionManager.savePreference(prefs, ACADEMY_NAME, value);
+    }
+
+    public static String get_academyName(SharedPreferences prefs) {
+        return prefs.getString(ACADEMY_NAME, "");
+    }
+
+    public static void save_academyAddress(SharedPreferences prefs, String value) {
+        SessionManager.savePreference(prefs, ACADEMY_ADDRESS, value);
+    }
+
+    public static String get_academyAddress(SharedPreferences prefs) {
+        return prefs.getString(ACADEMY_ADDRESS, "");
+    }
+
 
     public static void save_academyNumber(SharedPreferences prefs, String value) {
         SessionManager.savePreference(prefs, academyNumber, value);

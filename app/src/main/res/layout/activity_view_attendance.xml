@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_intro_color"
+    android:fitsSystemWindows="true"
+    tools:context=".CommonUI.ContactUsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_innerpage" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:mcv_arrowColor="@color/white"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:mcv_dateTextAppearance="@style/calendor_"
+            app:mcv_headerTextAppearance="@style/calendor_"
+            app:mcv_weekDayTextAppearance="@style/calendor_"
+            app:mcv_selectionColor="@color/purple_700"
+            app:mcv_showOtherDates="none"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/calendarView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/present"
+                    android:textAppearance="@style/calendor_">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:text="P"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/blue_intro_color"
+                    android:background="@drawable/circle_camera"
+                    android:backgroundTint="@color/indicator_selector"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/calendor_">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/absent"
+                    android:textAppearance="@style/calendor_">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:text="A"
+                    android:textSize="@dimen/_10sdp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/circle_camera"
+                    android:backgroundTint="@color/app_light_red"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/calendor_">
+
+                </TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

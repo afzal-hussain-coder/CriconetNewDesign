@@ -105,6 +105,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/opensans_semibold"
         android:text="@string/notice_boar"
+        android:visibility="gone"
         android:textAppearance="@style/notice_boar"
         android:lineSpacingExtra="-7sp"
         android:gravity="center_horizontal|top"

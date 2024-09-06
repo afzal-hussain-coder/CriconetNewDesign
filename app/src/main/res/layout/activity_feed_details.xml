@@ -192,12 +192,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/ivPostimageSingleImageMultiImage"
+                                android:id="@+id/ivPostimage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:contentDescription="@string/app_name"
+                                android:src="@drawable/image_placeholder"
                                 android:visibility="visible" />
 
                             <RelativeLayout
@@ -220,14 +221,12 @@
                             </RelativeLayout>
                         </LinearLayout>
 
-                        <include layout="@layout/post_list_adapter_links_layout" />
-
-                        <include layout="@layout/post_list_adapter_options_layout" />
 
                     </LinearLayout>
 
                     <!-- TYPE_VIDEO-->
                     <LinearLayout
+                        android:id="@+id/liVideo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
@@ -368,7 +367,7 @@
                             android:text="dwvghvhgdvwhgdvwqhgvdghwqvd"
                             android:textColor="@color/blue_intro_color"
                             android:textSize="@dimen/_9sdp"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                         <com.luseen.autolinklibrary.AutoLinkTextView
                             android:id="@+id/post_text_autolinkVideo"
@@ -382,52 +381,97 @@
                             android:text="sdwqfdwqfhdgqfwdy"
                             android:textColor="@color/blue_intro_color"
                             android:textSize="@dimen/_9sdp"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
+<!--                        <FrameLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_250sdp"-->
+<!--                            android:visibility="gone">-->
+
+<!--                            <com.allattentionhere.autoplayvideos.AAH_VideoImage-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:scaleType="centerInside"-->
+<!--                                android:tag="aah_vi" />-->
+
+<!--                            <ImageView-->
+<!--                                android:id="@+id/img_playback"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="left|bottom"-->
+<!--                                android:layout_margin="@dimen/_8sdp"-->
+<!--                                android:contentDescription="@string/app_name"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:srcCompat="@drawable/ic_play"-->
+<!--                                tools:ignore="RtlHardcoded" />-->
+
+<!--                            <ImageView-->
+<!--                                android:id="@+id/img_vol"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="right|bottom"-->
+<!--                                android:layout_margin="8dp"-->
+<!--                                android:contentDescription="@string/app_name"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:srcCompat="@drawable/ic_unmute"-->
+<!--                                tools:ignore="RtlHardcoded" />-->
+<!--                        </FrameLayout>-->
                         <FrameLayout
+                            android:id="@+id/flVideo"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_250sdp"
+                            android:layout_height="wrap_content"
+                            android:background="#000"
                             android:visibility="visible">
 
-                            <com.allattentionhere.autoplayvideos.AAH_VideoImage
+                            <VideoView
+                                android:id="@+id/videoview"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_gravity="center_horizontal"
+                                android:visibility="visible"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:layout_height="@dimen/post_height"/>
+                            <!--
+                            <com.allattentionhere.autoplayvideos.AAH_VideoImage
+                                android:id="@+id/AAH_video"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/post_height"
                                 android:scaleType="centerInside"
-                                android:tag="aah_vi" />
+                                android:tag="aah_vi"
+                                android:visibility="visible" />-->
 
-                            <ImageView
-                                android:id="@+id/img_playback"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:layout_margin="@dimen/_8sdp"
-                                android:contentDescription="@string/app_name"
-                                android:visibility="gone"
-                                app:srcCompat="@drawable/ic_play"
-                                tools:ignore="RtlHardcoded" />
+                            <!--                    <ImageView-->
+                            <!--                        android:id="@+id/img_playback"-->
+                            <!--                        android:layout_width="wrap_content"-->
+                            <!--                        android:layout_height="wrap_content"-->
+                            <!--                        android:layout_gravity="left|bottom"-->
+                            <!--                        android:layout_margin="8dp"-->
+                            <!--                        android:src="@drawable/ic_play"-->
+                            <!--                        android:visibility="gone"-->
+                            <!--                        app:tint="@color/light_text_color" />-->
 
-                            <ImageView
-                                android:id="@+id/img_vol"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right|bottom"
-                                android:layout_margin="8dp"
-                                android:contentDescription="@string/app_name"
-                                android:visibility="gone"
-                                app:srcCompat="@drawable/ic_unmute"
-                                tools:ignore="RtlHardcoded" />
+                            <!--                    <ImageView-->
+                            <!--                        android:id="@+id/img_vol"-->
+                            <!--                        android:layout_width="wrap_content"-->
+                            <!--                        android:layout_height="wrap_content"-->
+                            <!--                        android:layout_gravity="right|bottom"-->
+                            <!--                        android:layout_margin="8dp"-->
+                            <!--                        app:tint="@color/light_text_color"-->
+                            <!--                        android:src="@drawable/ic_unmute"-->
+                            <!--                        android:visibility="gone" />-->
                         </FrameLayout>
 
-                        <include layout="@layout/post_list_adapter_links_layout" />
+<!--                        <include layout="@layout/post_list_adapter_links_layout" />-->
 
-                        <include layout="@layout/post_list_adapter_options_layout" />
+<!--                        <include layout="@layout/post_list_adapter_options_layout" />-->
                     </LinearLayout>
 
                     <!-- TYPE_TEXT, TYPE_LINK, TYPE_YOUTUBE-->
                     <LinearLayout
+                        android:id="@+id/liLink"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:orientation="vertical">
                         <!--android:background="@color/light_text_color"-->
 
@@ -565,7 +609,7 @@
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:contentDescription="@string/app_name"
                             android:background="@color/white"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tvPostTextLink"
@@ -668,9 +712,13 @@
                             </RelativeLayout>
                         </LinearLayout>
 
-                        <include layout="@layout/post_list_adapter_links_layout" />
-                        <include layout="@layout/post_list_adapter_options_layout" />
+<!--                        <include layout="@layout/post_list_adapter_links_layout" />-->
+<!--                        <include layout="@layout/post_list_adapter_options_layout" />-->
                     </LinearLayout>
+
+                    <include layout="@layout/post_list_adapter_links_layout" />
+
+                    <include layout="@layout/post_list_adapter_options_layout" />
 
 
                 </LinearLayout>
@@ -851,6 +899,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:tint="@color/dimGray"
+                    android:visibility="gone"
                     android:src="@drawable/photo_camera_black_24dp">
                 </ImageView>
             </LinearLayout>

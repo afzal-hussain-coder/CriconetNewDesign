@@ -47,7 +47,7 @@ public class AcademyListAdapter extends RecyclerView.Adapter<AcademyListAdapter.
         holder.academyListChildBinding.tvAddress.setText(academyListModel.getAddress());
 
         holder.academyListChildBinding.flContact.setOnClickListener(v -> {
-            itemClickListener.academyContactClick(academyListModel.getContact_person_phone());
+            itemClickListener.academyContactClick(academyListModel.getId(),academyListModel.getContact_person_phone());
         });
 
         holder.itemView.setOnClickListener(v -> {
@@ -72,6 +72,6 @@ public class AcademyListAdapter extends RecyclerView.Adapter<AcademyListAdapter.
 
     public interface academyItemClickListener {
         void academyItemClickEvent(AcademyListModel academyListModel);
-        void academyContactClick(String number);
+        void academyContactClick(String academyId,String number);
     }
 }

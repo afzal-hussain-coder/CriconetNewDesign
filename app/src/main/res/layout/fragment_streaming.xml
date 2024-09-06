@@ -202,7 +202,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
     <include
         layout="@layout/nav_header_streaming"
         android:visibility="gone" />

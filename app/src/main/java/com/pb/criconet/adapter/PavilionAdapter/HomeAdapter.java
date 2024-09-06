@@ -39,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkTextView;
+import com.pb.criconet.Activity.UserDetails;
 import com.pb.criconet.R;
 import com.pb.criconet.inteface.pavilionInterface.PostListeners;
 import com.pb.criconet.model.pavilionModel.ImageModel;
@@ -325,19 +326,19 @@ public class HomeAdapter extends AAH_VideosAdapter {
                                 for (int i = 0; i < data.getTagsusers().size(); i++) {
                                     // Toaster.customToast(match + "/" + tagModelArrayList.get(i).getUser_id() + "?" + tagModelArrayList.get(i).getMatch_name());
                                     if (match.equalsIgnoreCase(data.getTagsusers().get(i).getMatch_name().trim())) {
-//                                        if (data.getPublisher_type().equalsIgnoreCase("user")) {
-//                                            Intent intent = new Intent(context, UserDetails.class);
-//                                            intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
-//                                            intent.putExtra("FROM", "3");
-//                                            context.startActivity(intent);
-//                                            context.finish();
-//                                        } else {
+                                        if (data.getPublisher_type().equalsIgnoreCase("user")) {
+                                            Intent intent = new Intent(context, UserDetails.class);
+                                            intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
+                                            intent.putExtra("FROM", "3");
+                                            context.startActivity(intent);
+                                            context.finish();
+                                        } else {
 //                                            Intent intent = new Intent(context, PagesDetails.class);
 //                                            intent.putExtra("page_id", data.getPage_id());
 //                                            intent.putExtra("FROM", "3");
 //                                            context.startActivity(intent);
 //                                            context.finish();
-//                                        }
+                                        }
                                     }
                                 }
                             }
@@ -660,19 +661,19 @@ public class HomeAdapter extends AAH_VideosAdapter {
                                 for (int i = 0; i < data.getTagsusers().size(); i++) {
                                     // Toaster.customToast(match + "/" + tagModelArrayList.get(i).getUser_id() + "?" + tagModelArrayList.get(i).getMatch_name());
                                     if (match.equalsIgnoreCase(data.getTagsusers().get(i).getMatch_name().trim())) {
-//                                        if (data.getPublisher_type().equalsIgnoreCase("user")) {
-//                                            Intent intent = new Intent(context, UserDetails.class);
-//                                            intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
-//                                            intent.putExtra("FROM", "3");
-//                                            context.startActivity(intent);
-//                                            context.finish();
-//                                        } else {
+                                        if (data.getPublisher_type().equalsIgnoreCase("user")) {
+                                            Intent intent = new Intent(context, UserDetails.class);
+                                            intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
+                                            intent.putExtra("FROM", "3");
+                                            context.startActivity(intent);
+                                            context.finish();
+                                        } else {
 //                                            Intent intent = new Intent(context, PagesDetails.class);
 //                                            intent.putExtra("page_id", data.getPage_id());
 //                                            intent.putExtra("FROM", "3");
 //                                            context.startActivity(intent);
 //                                            context.finish();
-//                                        }
+                                        }
                                     }
                                 }
                             }
@@ -1032,19 +1033,19 @@ public class HomeAdapter extends AAH_VideosAdapter {
                                     for (int i = 0; i < data.getTagsusers().size(); i++) {
                                         // Toaster.customToast(match + "/" + tagModelArrayList.get(i).getUser_id() + "?" + tagModelArrayList.get(i).getMatch_name());
                                         if (match.equalsIgnoreCase(data.getTagsusers().get(i).getMatch_name().trim())) {
-//                                            if (data.getPublisher_type().equalsIgnoreCase("user")) {
-//                                                Intent intent = new Intent(context, UserDetails.class);
-//                                                intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
-//                                                intent.putExtra("FROM", "3");
-//                                                context.startActivity(intent);
-//                                                context.finish();
-//                                            } else {
+                                            if (data.getPublisher_type().equalsIgnoreCase("user")) {
+                                                Intent intent = new Intent(context, UserDetails.class);
+                                                intent.putExtra("user_id", data.getTagsusers().get(i).getUser_id());
+                                                intent.putExtra("FROM", "3");
+                                                context.startActivity(intent);
+                                                context.finish();
+                                            } else {
 //                                                Intent intent = new Intent(context, PagesDetails.class);
 //                                                intent.putExtra("page_id", data.getPage_id());
 //                                                intent.putExtra("FROM", "3");
 //                                                context.startActivity(intent);
 //                                                context.finish();
-//                                            }
+                                            }
                                         }
                                     }
                                 }

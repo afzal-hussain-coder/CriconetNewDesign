@@ -1,2 +1,0 @@
-io.agora.rtc
-string app_name

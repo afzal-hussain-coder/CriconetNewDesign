@@ -57,7 +57,7 @@
                         android:layout_alignParentEnd="true"
                         android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/tv_session_time"
+                            android:id="@+id/tv_commentTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_8sdp"
@@ -90,10 +90,26 @@
                     android:gravity="center_vertical|left"
                     android:layout_alignParentStart="true"
                     android:text="Catch all the latest and breaking news on India Cricket Team. Get all updates on India Cricket Team players, coach and its fans at Criconet"
-                    android:textSize="@dimen/_9sdp"
+                    android:textSize="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/black"
+                    android:visibility="visible"
                     android:fontFamily="@font/opensans_semibold" />
+
+                <com.luseen.autolinklibrary.AutoLinkTextView
+                    android:id="@+id/post_text_autolink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:gravity="start"
+                    android:text="asvdhsvdhsavdhvs"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_9sdp"
+                    android:visibility="gone" />
+
+
 
             </LinearLayout>
 
@@ -112,7 +128,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_gravity="bottom"
                     android:text="@string/Like"
-                    android:textSize="@dimen/_8sdp"
+                    android:textSize="@dimen/_10sdp"
                     android:layout_toLeftOf="@+id/li_end"
                     android:textColor="@color/dimGray"
                     android:fontFamily="@font/opensans_bold" />
@@ -133,9 +149,9 @@
                         android:id="@+id/tv_LikeCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        android:text=""
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:layout_toLeftOf="@+id/li_end"
                         android:textColor="@color/dimGray"
                         android:fontFamily="@font/opensans_bold" />
@@ -153,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/reply"
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:layout_toLeftOf="@+id/li_end"
                         android:textColor="@color/dimGray"
                         android:fontFamily="@font/opensans_bold" />
@@ -163,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:text="2"
                         android:layout_marginStart="@dimen/_3sdp"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:layout_toLeftOf="@+id/li_end"
                         android:textColor="@color/dimGray"
                         android:fontFamily="@font/opensans_bold" />
@@ -174,7 +190,7 @@
                 android:id="@+id/rv_replaycomment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

@@ -60,57 +60,58 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             clickItemNavigation = bundle.getInt("type");
+            if (clickItemNavigation == 0) {
+                PavilionFragment fragment1 = new PavilionFragment();
+                moveToFragment(fragment1);
+            } else if (clickItemNavigation == 1) {
+
+                CoachFragment fragment1 = new CoachFragment();
+                moveToFragment(fragment1);
+
+                if (img_e.getVisibility() == View.GONE) {
+                    img_e.setVisibility(View.VISIBLE);
+                    img_e.startAnimation(animation);
+                }
+                if (li_e.getVisibility() == View.VISIBLE) {
+                    li_e.setVisibility(View.GONE);
+                }
+
+                if (img_p.getVisibility() == View.VISIBLE) {
+                    img_p.setVisibility(View.GONE);
+                    img_p.clearAnimation();
+                }
+                if (li_p.getVisibility() == View.GONE) {
+                    li_p.setVisibility(View.VISIBLE);
+                }
+
+                if (img_s.getVisibility() == View.VISIBLE) {
+                    img_s.setVisibility(View.GONE);
+                    img_s.clearAnimation();
+                }
+                if (li_s.getVisibility() == View.GONE) {
+                    li_s.setVisibility(View.VISIBLE);
+                }
+
+                if (img_a.getVisibility() == View.VISIBLE) {
+                    img_a.setVisibility(View.GONE);
+                    img_a.clearAnimation();
+                }
+                if (li_a.getVisibility() == View.GONE) {
+                    li_a.setVisibility(View.VISIBLE);
+                }
+
+
+            } else if (clickItemNavigation == 2) {
+                StreamingFragment fragment1 = new StreamingFragment();
+                moveToFragment(fragment1);
+            } else if (clickItemNavigation == 3) {
+                AcademyFragment fragment1 = new AcademyFragment();
+                moveToFragment(fragment1);
+            }
         }
 
 
-        if (clickItemNavigation == 0) {
-            PavilionFragment fragment1 = new PavilionFragment();
-            moveToFragment(fragment1);
-        } else if (clickItemNavigation == 1) {
 
-            CoachFragment fragment1 = new CoachFragment();
-            moveToFragment(fragment1);
-
-            if (img_e.getVisibility() == View.GONE) {
-                img_e.setVisibility(View.VISIBLE);
-                img_e.startAnimation(animation);
-            }
-            if (li_e.getVisibility() == View.VISIBLE) {
-                li_e.setVisibility(View.GONE);
-            }
-
-            if (img_p.getVisibility() == View.VISIBLE) {
-                img_p.setVisibility(View.GONE);
-                img_p.clearAnimation();
-            }
-            if (li_p.getVisibility() == View.GONE) {
-                li_p.setVisibility(View.VISIBLE);
-            }
-
-            if (img_s.getVisibility() == View.VISIBLE) {
-                img_s.setVisibility(View.GONE);
-                img_s.clearAnimation();
-            }
-            if (li_s.getVisibility() == View.GONE) {
-                li_s.setVisibility(View.VISIBLE);
-            }
-
-            if (img_a.getVisibility() == View.VISIBLE) {
-                img_a.setVisibility(View.GONE);
-                img_a.clearAnimation();
-            }
-            if (li_a.getVisibility() == View.GONE) {
-                li_a.setVisibility(View.VISIBLE);
-            }
-
-
-        } else if (clickItemNavigation == 2) {
-            StreamingFragment fragment1 = new StreamingFragment();
-            moveToFragment(fragment1);
-        } else if (clickItemNavigation == 3) {
-            AcademyFragment fragment1 = new AcademyFragment();
-            moveToFragment(fragment1);
-        }
 
     }
 

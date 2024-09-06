@@ -131,7 +131,7 @@ public class CoachDetailsActivity extends AppCompatActivity {
 
         if (Global.isOnline(mContext)) {
             getCoachDetails();
-            getCoachDete();
+            //getCoachDete();
         } else {
             Global.showDialog((Activity) mContext);
         }
@@ -183,12 +183,10 @@ public class CoachDetailsActivity extends AppCompatActivity {
 
 
         activityCoachDetailsBinding.calendarView.setOnDayClickListener(eventDay -> {
-//            slide_down = AnimationUtils.loadAnimation(mContext,
-//                    R.anim.slide_down);
-//            activityCoachDetailsBinding.liSessionLayout.setAnimation(slide_down);
             activityCoachDetailsBinding.liSessionLayout.setVisibility(View.VISIBLE);
             mslotId = "";
             dateGott = Global.getDateGot(eventDay.getCalendar().getTime().toString());
+
             if (previousDate.compareTo(eventDay.getCalendar().getTime()) == -1) {
                 if (Global.isOnline(mActivity)) {
                     getDateSlote(dateGott, CoachId);
@@ -297,7 +295,7 @@ public class CoachDetailsActivity extends AppCompatActivity {
 
                         // all details and set to the view
 
-                        Glide.with(mContext).load(jsonObjectData.getString("avatar")).into(activityCoachDetailsBinding.ivRoundedProfile);
+                        Glide.with(mContext).load(jsonObjectData.getString("avatar")).placeholder(mContext.getResources().getDrawable(R.drawable.placeholder_user)).into(activityCoachDetailsBinding.ivRoundedProfile);
                         activityCoachDetailsBinding.tvCoachName.setText(jsonObjectData.getString("name"));
                         activityCoachDetailsBinding.tvCoachExp.setText(jsonObjectData.getString("exps"));
                         activityCoachDetailsBinding.tvCoachPrice.setText("Price: " + jsonObjectData.getString("charge_amount") + " INR/Session");
@@ -481,9 +479,6 @@ public class CoachDetailsActivity extends AppCompatActivity {
                 if (modelArrayListdate.getApiStatus().equalsIgnoreCase("200")) {
 
                     days = new Calendar[modelArrayListdate.getData().size()];
-//                        List<Calendar>calendars =new ArrayList<>(modelArrayList.getData().size());
-//                        Toaster.customToast(calendars.size()+"");
-//                        datePicker.setDisabledDays(calendars);
                     for (int i = 0; i < modelArrayListdate.getData().size(); i++) {
 
                         try {

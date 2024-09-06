@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".Activity.Coach.CoachDetailsActivity">
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_innerpage" />
@@ -13,25 +14,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_margin="@dimen/_20sdp"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivRoundedProfile"
                 android:layout_width="@dimen/_130sdp"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/_140sdp"
                 android:scaleType="fitXY"
-                app:riv_corner_radius="@dimen/_5sdp"
-                android:src="@drawable/coach_avtar" />
+                android:src="@drawable/coachpic"
+                app:riv_corner_radius="@dimen/_5sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:orientation="vertical">
 
@@ -42,7 +44,7 @@
                     android:fontFamily="@font/opensans_bold"
                     android:gravity="top"
                     android:lineSpacingExtra="-1sp"
-                    android:text="Neil Seth"
+                    android:text="Nimesh Sharma"
                     android:textColor="@color/blue_intro_color"
                     android:textSize="@dimen/_12sdp" />
 
@@ -53,7 +55,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/opensans_regular"
                     android:gravity="top"
-                    android:text="Skills &amp; speciality"
+                    android:text="22 Yrs Experience"
                     android:textColor="@color/blue_intro_color"
                     android:textSize="@dimen/_10sdp" />
 
@@ -63,70 +65,71 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/opensans_regular"
                     android:gravity="top"
-                    android:text="@string/check_scores"
+                    android:visibility="gone"
+                    android:text="Price: 2,180 INR/ Session"
                     android:textColor="@color/blue_intro_color"
                     android:textSize="@dimen/_10sdp" />
+                <LinearLayout
+                    android:id="@+id/tvOfferl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/li_pri"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/offer_price"
+                        android:visibility="gone"
+                        android:textColor="@color/indicator_selector"
+                        android:textSize="@dimen/_8sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+
+                    <TextView
+                        android:id="@+id/tvOfferP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_9sdp"
+                        app:fontFamily="@font/opensans_semibold" />
+                </LinearLayout>
 
                 <RatingBar
                     android:id="@+id/ratingBar"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:numStars="5"
                     android:rating="5"
                     android:theme="@style/RatingBar"
                     tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-                <com.google.android.material.chip.ChipGroup
+
+                <TextView
+                    android:id="@+id/tv_checkavailability"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipCpp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/opensans_regular"
-                        android:text="Cricket"
-                        android:textColor="@color/purple_700"
-                        android:textSize="@dimen/_9sdp"
-                        app:chipBackgroundColor="#FFF"
-                        app:chipStrokeColor="@color/purple_700"
-                        app:chipStrokeWidth="1dp" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipJava"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/opensans_regular"
-                        android:text="India"
-                        android:textColor="@color/purple_700"
-                        android:textSize="@dimen/_9sdp"
-                        app:chipBackgroundColor="#FFF"
-                        app:chipStrokeColor="@color/purple_700"
-                        app:chipStrokeWidth="1dp" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipPython"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/opensans_regular"
-                        android:text="Tag"
-                        android:textColor="@color/purple_700"
-                        android:textSize="@dimen/_9sdp"
-                        app:chipBackgroundColor="#FFF"
-                        app:chipStrokeColor="@color/purple_700"
-                        app:chipStrokeWidth="1dp" />
-
-                </com.google.android.material.chip.ChipGroup>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="top"
+                    android:padding="@dimen/_5sdp"
+                    android:visibility="gone"
+                    android:text="Check availability"
+                    android:textColor="@color/blue_intro_color"
+                    android:textSize="@dimen/_12sdp" />
 
                 <FrameLayout
-                    android:id="@+id/fl_book"
+                    android:id="@+id/fl_call"
                     android:layout_width="@dimen/_60sdp"
-                    android:layout_alignParentEnd="true"
                     android:layout_height="@dimen/_25sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_centerHorizontal="true">
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -163,212 +166,448 @@
 
                 </FrameLayout>
 
-            </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/fl_update"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_5sdp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/button_bg_top" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_13sdp"
+                        android:src="@drawable/button_bg_bottom" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_2sdp"
+                        android:background="@drawable/button_bg"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lineHeight="@dimen/_27sdp"
+                        android:text="@string/update"
+                        android:textAppearance="@style/register" />
+
+                </FrameLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipSpecializationGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+        </com.google.android.material.chip.ChipGroup>
+
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
             <LinearLayout
                 android:id="@+id/li_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical">
 
 
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/li_book_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:orientation="vertical">
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/liCalandor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/calendor_bg"
+                            android:orientation="vertical">
+
+                            <com.applandeo.materialcalendarview.CalendarView
+                                android:id="@+id/calendarView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                app:abbreviationsBarColor="@color/purple_700"
+                                app:abbreviationsLabelsColor="@color/white"
+                                app:daysLabelsColor="@color/white"
+                                app:disabledDaysLabelsColor="@color/app_green"
+                                app:eventsEnabled="true"
+                                app:forwardButtonSrc="@drawable/ic_arrow_right"
+                                app:headerColor="@color/purple_700"
+                                app:headerLabelColor="@color/white"
+                                app:pagesColor="@color/purple_700"
+                                app:previousButtonSrc="@drawable/ic_arrow_left"
+                                app:selectionColor="@color/indicator_selector"
+                                app:todayLabelColor="@color/purple_700"
+                                app:type="one_day_picker"
+                                app:typeface="@font/opensans_regular" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/li_session_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:id="@+id/li_session_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/calendor_bg"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_session_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical|center_horizontal"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_15sdp"
+                                    android:layout_marginEnd="@dimen/_10sdp"
+                                    android:layout_marginBottom="@dimen/_10sdp">
+
+                                </androidx.recyclerview.widget.RecyclerView>
+
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:id="@+id/fl_final_book"
+                                android:layout_width="@dimen/_120sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/_10sdp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/button_bg_top" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="@dimen/_13sdp"
+                                    android:src="@drawable/button_bg_bottom" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:layout_marginBottom="@dimen/_2sdp"
+                                    android:background="@drawable/button_bg"
+                                    android:visibility="visible" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:lineHeight="@dimen/_27sdp"
+                                    android:text="@string/book_coach"
+                                    android:textAppearance="@style/register" />
+
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@+id/fl_add_to_cart"
+                                android:layout_width="@dimen/_120sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/_5sdp">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/button_bg_top"
+                                    android:backgroundTint="@color/blue_intro_color" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="@dimen/_13sdp"
+                                    android:src="@drawable/button_bg_bottom" />
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:layout_marginBottom="@dimen/_2sdp"
+                                    android:background="@drawable/button_bg"
+                                    android:backgroundTint="@color/blue_intro_color"
+                                    android:visibility="visible" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:lineHeight="@dimen/_27sdp"
+                                    android:text="@string/add_to_cart"
+                                    android:textAppearance="@style/register" />
+
+                            </FrameLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/iv_close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:background="@drawable/circle_opaque_black"
+                        android:padding="@dimen/_7sdp"
                         android:src="@drawable/close_black_24dp"
-                        app:tint="@color/purple_700">
+                        app:tint="@color/white">
 
                     </ImageView>
-                    <CalendarView
-                        android:id="@+id/calendorView"
-                        android:layout_width="match_parent"
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/liBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_bio"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/calendor_bg"
-                        android:theme="@style/CalenderViewCustom"
-                        android:dateTextAppearance="@style/CalenderViewDateCustomText"
-                        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText">
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Bio"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_13sdp" />
 
-                    </CalendarView>
-
-                    <LinearLayout
-                        android:id="@+id/li_session_layout"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_bioDetails"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:id="@+id/li_session_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="visible"
-                            android:background="@drawable/calendor_bg"
-                            android:orientation="vertical">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_session_time"
-                                android:layout_width="match_parent"
-                                android:layout_gravity="center_vertical|center_horizontal"
-                                android:layout_marginStart="@dimen/_10sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginBottom="@dimen/_10sdp"
-                                android:layout_height="wrap_content">
-
-                            </androidx.recyclerview.widget.RecyclerView>
-
-                        </LinearLayout>
-
-                        <FrameLayout
-                            android:id="@+id/fl_final_book"
-                            android:layout_width="@dimen/_120sdp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_height="@dimen/_30sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_centerHorizontal="true">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/button_bg_top" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/_13sdp"
-                                android:src="@drawable/button_bg_bottom" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/_2sdp"
-                                android:layout_marginBottom="@dimen/_2sdp"
-                                android:background="@drawable/button_bg"
-                                android:visibility="visible" />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/opensans_semibold"
-                                android:lineHeight="@dimen/_27sdp"
-                                android:text="@string/book_coach"
-                                android:textAppearance="@style/register" />
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/fl_add_to_cart"
-                            android:layout_width="@dimen/_120sdp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_height="@dimen/_30sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_centerHorizontal="true">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/blue_intro_color"
-                                android:background="@drawable/button_bg_top" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/_13sdp"
-                                android:src="@drawable/button_bg_bottom" />
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/_2sdp"
-                                android:layout_marginBottom="@dimen/_2sdp"
-                                android:background="@drawable/button_bg"
-                                android:backgroundTint="@color/blue_intro_color"
-                                android:visibility="visible" />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/opensans_semibold"
-                                android:lineHeight="@dimen/_27sdp"
-                                android:text="@string/add_to_cart"
-                                android:textAppearance="@style/register" />
-
-                        </FrameLayout>
-                    </LinearLayout>
-
-
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum. "
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_11sdp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_bio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_bold"
-                    android:gravity="top"
-                    android:lineSpacingExtra="-1sp"
-                    android:text="@string/about"
-                    android:textColor="@color/blue_intro_color"
-                    android:textSize="@dimen/_13sdp" />
-                <TextView
-                    android:id="@+id/tv_bioDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:gravity="top"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum. "
-                    android:textColor="@color/blue_intro_color"
-                    android:textSize="@dimen/_11sdp" />
 
-
-
-                <TextView
-                    android:id="@+id/tv_achievement"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/liLanguage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/opensans_bold"
-                    android:gravity="top"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:lineSpacingExtra="-1sp"
-                    android:text="Experience"
-                    android:textColor="@color/blue_intro_color"
-                    android:textSize="@dimen/_13sdp" />
-                <TextView
-                    android:id="@+id/tv_tv_achievementDetails"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Languages:"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="English (Indian), Hindi"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/liAchievement"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:gravity="top"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum. "
-                    android:textColor="@color/blue_intro_color"
-                    android:textSize="@dimen/_11sdp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_achievement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Achievements"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_tv_achievementDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna."
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/liWhatYouLean"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_whatYourLearn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="What you learn"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_whatYourLearnDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/liCourseOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_courseOutline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="top"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="Course outline"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_courseOutlineDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="top"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis rutrum vitae eros id egestas. Mauris nec purus magna. Nulla eros ipsum, vestibulum at ligula et, faucibus varius nulla. Maecenas in tincidunt felis. Vestibulum suscipit, nisi id ornare congue, dui metus vestibulum diam, in imperdiet odio lacus a ipsum. "
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/liCertificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <TextView
+                            android:id="@+id/tv_certificate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/opensans_bold"
+                            android:gravity="top"
+                            android:lineSpacingExtra="-1sp"
+                            android:text="Certificate"
+                            android:textColor="@color/blue_intro_color"
+                            android:textSize="@dimen/_13sdp" />
+
+                        <ImageView
+                            android:id="@+id/iv_zoom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/zoom_out_map_24dp" />
+
+                    </RelativeLayout>
+
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rounded_iv_certificate"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_170sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/cerficate"
+                        app:riv_corner_radius="@dimen/_10sdp">
+
+                    </com.makeramen.roundedimageview.RoundedImageView>
+                </LinearLayout>
 
 
             </LinearLayout>

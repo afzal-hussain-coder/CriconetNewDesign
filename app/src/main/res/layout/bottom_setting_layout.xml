@@ -40,6 +40,7 @@
         android:gravity="center_vertical|left"
         android:padding="@dimen/_10sdp"
         android:text="@string/report_comment"
+        android:visibility="gone"
         android:textColor="@color/dimGray"
         android:textSize="@dimen/_10sdp" />
 

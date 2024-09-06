@@ -3,11 +3,27 @@ package com.pb.criconet.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class DataModelSpecialities {
 
-    public class Datum {
+    public static class Datum {
+
+        public Datum(JSONObject jsonObject){
+            try {
+                this.id=jsonObject.getString("id");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                this.title = jsonObject.getString("title");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         @SerializedName("id")
         @Expose

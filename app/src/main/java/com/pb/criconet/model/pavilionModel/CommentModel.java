@@ -1,5 +1,7 @@
 package com.pb.criconet.model.pavilionModel;
 
+import com.google.gson.JsonIOException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,13 +17,23 @@ public class CommentModel {
 //"avatar": "https://criconetonline.com/upload/photos/2017/12/7zuO8Sx5gglDj5CQ1R1q_avatar.jpg","cover": "https://criconetonline.com/upload/photos/d-cover.jpg"}
 
 
-    private String id;
-    private String comment_text;
-    private String time;
-    private String user_id;
-    private String name;
-    private String avatar;
-    private String user_email;
+    private String id="";
+    private String comment_text="";
+    private String time="";
+    private String user_id="";
+    private String name="";
+    private String avatar="";
+    private String user_email="";
+
+    public String getComment_likes() {
+        return comment_likes;
+    }
+
+    public void setComment_likes(String comment_likes) {
+        this.comment_likes = comment_likes;
+    }
+
+    private String comment_likes="";
 
     public String getComment_text() {
         return comment_text;
@@ -78,6 +90,16 @@ public class CommentModel {
 
     private ArrayList<TagModel>tagsusers;
 
+    public ArrayList<ReplyComments> getReplayCommentsList() {
+        return replayCommentsList;
+    }
+
+    public void setReplayCommentsList(ArrayList<ReplyComments> replayCommentsList) {
+        this.replayCommentsList = replayCommentsList;
+    }
+
+    private ArrayList<ReplyComments>replayCommentsList;
+
     // Decodes CommentModel json into CommentModel model object
     public static CommentModel fromJson(JSONObject jsonObject) {
         CommentModel b = new CommentModel();
@@ -92,6 +114,7 @@ public class CommentModel {
             b.user_id = jsonObject.optString("user_id");
             b.name = jsonObject.optString("name");
             b.avatar = jsonObject.optString("avatar");
+            b.comment_likes = jsonObject.optString("comment_likes");
             if(jsonObject.has("tagsusers")){
                 try {
                     b.tagsusers = handleTagData(jsonObject.getJSONArray("tagsusers"));
@@ -99,9 +122,15 @@ public class CommentModel {
                     e.printStackTrace();
                 }
 
-//                for (int i = 0; i < jsonObject.length(); i++) {
-//                    b.tagsusers.add(new TagModel(jsonObject.getJSONObject(String.valueOf(i))));
-//                }
+            }
+
+            if(jsonObject.has("replies")){
+                try {
+                    b.replayCommentsList = getReplyListComment(jsonObject.getJSONArray("replies"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
         } catch (Exception e) {
@@ -198,5 +227,13 @@ public class CommentModel {
             marketPlaces.add(new TagModel(jsonArray.getJSONObject(i)));
         }
         return marketPlaces;
+    }
+
+    public static ArrayList<ReplyComments> getReplyListComment(JSONArray jsonArray) throws JSONException {
+        ArrayList<ReplyComments> replayCommentsList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            replayCommentsList.add(new ReplyComments(jsonArray.getJSONObject(i)));
+        }
+        return  replayCommentsList;
     }
 }

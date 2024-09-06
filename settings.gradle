@@ -15,4 +15,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CriconetNewDesign"
-include ':app',':AnimatedLoadingIndicator',':rtcTokengenerator' ,':screensharing', ':libagorartc'
+include ':app',':AnimatedLoadingIndicator',':rtcTokengenerator' ,':screensharing'
+        //':libagorartc'
