@@ -92,7 +92,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -185,31 +187,60 @@ public class CoachPersonalInformationFragment extends Fragment {
             });
 
     //TODO get the image from gallery and display it on ProfilePic
+//    ActivityResultLauncher<Intent> galleryProfileImageActivityResultLauncher = registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(),
+//            new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        assert result.getData() != null;
+//                        Uri image_uri = result.getData().getData();
+//                        //profileImagePath = image_uri.toString();
+//
+//                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//
+//                        cursor = getActivity().getContentResolver().query(image_uri, filePathColumn, null, null, null);
+//                        cursor.moveToFirst();
+//                        columnindex = cursor.getColumnIndex(filePathColumn[0]);
+//                        file_pathid = cursor.getString(columnindex);
+//
+//                        profileImagePath = file_pathid;
+//                        fragmentCoachPersonalInformationBinding.profilePic.setImageURI(image_uri);
+//
+//                        updateImageTask(profileImagePath);
+//                    }
+//                }
+//            });
+
     ActivityResultLauncher<Intent> galleryProfileImageActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        assert result.getData() != null;
-                        Uri image_uri = result.getData().getData();
-                        //profileImagePath = image_uri.toString();
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
 
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        // Display the image using the URI
+                        fragmentCoachPersonalInformationBinding.profilePic.setImageURI(imageUri);
 
-                        cursor = getActivity().getContentResolver().query(image_uri, filePathColumn, null, null, null);
-                        cursor.moveToFirst();
-                        columnindex = cursor.getColumnIndex(filePathColumn[0]);
-                        file_pathid = cursor.getString(columnindex);
-                        // Log.e("Attachment Path:", attachmentFile);
-                        // URIid = Uri.parse("file://" + file_pathid);
-                        profileImagePath = file_pathid;
-                        fragmentCoachPersonalInformationBinding.profilePic.setImageURI(image_uri);
-
-                        updateImageTask(profileImagePath);
+                        // Handle the URI for further operations
+                        try {
+                            String filePath = copyUriToInternalStorage(imageUri);
+                            if (filePath != null) {
+                                updateImageTask(filePath); // Upload or process image
+                            } else {
+                                Toaster.customToast("Failed to copy the image");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
+
+
+
+
 
     //TODO capture the image using camera and display it on ProfilePic
     ActivityResultLauncher<Intent> cameraProfileImageActivityResultLauncher = registerForActivityResult(
@@ -1404,6 +1435,7 @@ public class CoachPersonalInformationFragment extends Fragment {
                 File file = new File(path);
                 FileBody fileBody = new FileBody(file);
                 if (img_type.equals("Profile")) {
+                    //Toaster.customToast(img_type);
                     entity.addPart("image_type", new StringBody("avatar"));
                     entity.addPart("image", fileBody);
                 } else if(img_type.equalsIgnoreCase("Banner")) {
@@ -1414,6 +1446,7 @@ public class CoachPersonalInformationFragment extends Fragment {
             MultipartRequest req = new MultipartRequest(Global.URL + "update_profile_picture", response -> {
                 try {
                     loaderView.hideLoader();
+                    Log.d("UpadteProfileIamge",response);
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
                         //getUsersDetails(SessionManager.get_user_id(prefs));
@@ -1529,7 +1562,7 @@ public class CoachPersonalInformationFragment extends Fragment {
             }
         }
 
-        Toaster.customToast("//"+data.optString("first_name"));
+        //Toaster.customToast("//"+data.optString("first_name"));
         if (data.has("first_name")) {
             fragmentCoachPersonalInformationBinding.editTextFirstName.setText(data.optString("first_name"));
         }
@@ -1606,5 +1639,66 @@ public class CoachPersonalInformationFragment extends Fragment {
 
 
     }
+
+
+    private String getFilePathFromUri(Uri uri) {
+        String filePath = null;
+
+        if (uri != null) {
+            // Check if the Uri scheme is "content" and use ContentResolver
+            if ("content".equalsIgnoreCase(uri.getScheme())) {
+                // Try to get the file path using the ContentResolver
+                Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+                if (cursor != null) {
+                    try {
+                        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        if (cursor.moveToFirst()) {
+                            filePath = cursor.getString(columnIndex);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        // Fallback for Android 10 (Scoped Storage), or if columnIndex doesn't exist
+                        filePath = copyUriToInternalStorage(uri);
+                    } finally {
+                        cursor.close();
+                    }
+                }
+            } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                // Directly use the file path if the Uri scheme is "file"
+                filePath = uri.getPath();
+            }
+        }
+
+        return filePath;
+    }
+
+    private String copyUriToInternalStorage(Uri uri) {
+        try {
+            // Open InputStream using ContentResolver
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                // Create a temporary file in the internal cache directory
+                File tempFile = new File(getActivity().getCacheDir(), "temp_image.jpg");
+                FileOutputStream outputStream = new FileOutputStream(tempFile);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
+                }
+
+                // Close the streams
+                outputStream.close();
+                inputStream.close();
+
+                // Return the path of the copied file in cache directory
+                return tempFile.getAbsolutePath();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }

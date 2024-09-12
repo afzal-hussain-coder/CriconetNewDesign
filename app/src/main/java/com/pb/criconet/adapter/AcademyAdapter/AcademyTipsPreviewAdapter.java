@@ -143,6 +143,7 @@ public class AcademyTipsPreviewAdapter extends RecyclerView.Adapter<RecyclerView
                     // Request layout and focus
                     ((MyViewHolder) holder).videoview.requestLayout();
                     ((MyViewHolder) holder).videoview.requestFocus();
+                    ///((MyViewHolder) holder).videoview.start();
 
                     // Set up an OnPreparedListener to ensure the video starts as soon as it is ready
                     ((MyViewHolder) holder).videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

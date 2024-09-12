@@ -40,12 +40,14 @@ import com.google.android.material.card.MaterialCardView;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkTextView;
 import com.pb.criconet.Activity.UserDetails;
+import com.pb.criconet.Activity.WebView_Activity;
 import com.pb.criconet.R;
 import com.pb.criconet.inteface.pavilionInterface.PostListeners;
 import com.pb.criconet.model.pavilionModel.ImageModel;
 import com.pb.criconet.model.pavilionModel.NewPostModel;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
+import com.pb.criconet.util.Toaster;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -544,6 +546,54 @@ public class HomeAdapter extends AAH_VideosAdapter {
 
                 /*this line is added on 27-07-23 to visible the status of verified user*/
 
+
+                holder.setVideoUrl(data.getPostFile());
+                holder.setLooping(true);
+                //load image/thumbnail into imageview
+                if (data.getThumb() != null && !data.getThumb().isEmpty()) {
+                    Picasso.get().load(((MyViewHolder) holder).getImageUrl()).config(Bitmap.Config.RGB_565).into(((MyViewHolder) holder).getAAH_ImageView());
+                }
+                ;//Ranjeet
+                //holder.setLooping(true);
+
+                //((MyViewHolder) holder).playVideo();
+                //to play pause videos manually (optional)
+                ((MyViewHolder) holder).img_playback.setOnClickListener(v -> {
+                    try {
+                        if (((MyViewHolder) holder).isPlaying()) {
+                            ((MyViewHolder) holder).pauseVideo();
+                            ((MyViewHolder) holder).setPaused(true);
+                        } else {
+                            ((MyViewHolder) holder).setPaused(false);
+                            ((MyViewHolder) holder).playVideo();
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+
+                //to mute/un-mute video (optional)
+                ((MyViewHolder) holder).img_vol.setOnClickListener(v -> {
+                    if (((MyViewHolder) holder).isMuted) {
+                        ((MyViewHolder) holder).unmuteVideo();
+                        ((MyViewHolder) holder).img_vol.setImageResource(R.drawable.ic_unmute);
+                    } else {
+                        ((MyViewHolder) holder).muteVideo();
+                        ((MyViewHolder) holder).img_vol.setImageResource(R.drawable.ic_mute);
+                    }
+                    ((MyViewHolder) holder).isMuted = !((MyViewHolder) holder).isMuted;
+                });
+
+                if (data.getPostFile() == null) {
+                    ((MyViewHolder) holder).img_vol.setVisibility(View.GONE);
+                    ((MyViewHolder) holder).img_playback.setVisibility(View.GONE);
+                } else {
+                    ((MyViewHolder) holder).img_vol.setVisibility(View.VISIBLE);
+                    ((MyViewHolder) holder).img_playback.setVisibility(View.VISIBLE);
+                }
+
                 if (data.getPublisher().getUser().getVerified() != null) {
                     if (data.getPublisher().getUser().getVerified().equalsIgnoreCase("1")) {
                         ((MyViewHolder) holder).iv_verified.setVisibility(View.VISIBLE);
@@ -704,51 +754,7 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 } else {
                     ((MyViewHolder) holder).setImageUrl(data.getThumb());
                 }
-                //load image/thumbnail into imageview
-                if (data.getThumb() != null && !data.getThumb().isEmpty()) {
-                    Picasso.get().load(((MyViewHolder) holder).getImageUrl()).config(Bitmap.Config.RGB_565).into(((MyViewHolder) holder).getAAH_ImageView());
-                }
-                holder.setVideoUrl(data.getPostFile());//Ranjeet
-                holder.setLooping(true);
 
-
-                //((MyViewHolder) holder).playVideo();
-                //to play pause videos manually (optional)
-                ((MyViewHolder) holder).img_playback.setOnClickListener(v -> {
-                    try {
-                        if (((MyViewHolder) holder).isPlaying()) {
-                            ((MyViewHolder) holder).pauseVideo();
-                            ((MyViewHolder) holder).setPaused(true);
-                        } else {
-                            ((MyViewHolder) holder).setPaused(false);
-                            ((MyViewHolder) holder).playVideo();
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-
-                //to mute/un-mute video (optional)
-                ((MyViewHolder) holder).img_vol.setOnClickListener(v -> {
-                    if (((MyViewHolder) holder).isMuted) {
-                        ((MyViewHolder) holder).unmuteVideo();
-                        ((MyViewHolder) holder).img_vol.setImageResource(R.drawable.ic_unmute);
-                    } else {
-                        ((MyViewHolder) holder).muteVideo();
-                        ((MyViewHolder) holder).img_vol.setImageResource(R.drawable.ic_mute);
-                    }
-                    ((MyViewHolder) holder).isMuted = !((MyViewHolder) holder).isMuted;
-                });
-
-                if (data.getPostFile() == null) {
-                    ((MyViewHolder) holder).img_vol.setVisibility(View.GONE);
-                    ((MyViewHolder) holder).img_playback.setVisibility(View.GONE);
-                } else {
-                    ((MyViewHolder) holder).img_vol.setVisibility(View.VISIBLE);
-                    ((MyViewHolder) holder).img_playback.setVisibility(View.VISIBLE);
-                }
 
                 ((MyViewHolder) holder).post_options.setOnClickListener(v -> {
                     if (data.getPublisher_type().equalsIgnoreCase("page")) {
@@ -1057,10 +1063,10 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 }
 
                 ((MyImageViewHolder) holder).post_link.setOnClickListener(v -> {
-//                    Toaster.customToast("cskjc" + data.getPostLink());
-//                    Intent i = new Intent(context, WebView_Activity.class);
-//                    i.putExtra(WebView_Activity.WebURL, data.getPostLink());
-//                    context.startActivity(i);
+                    //Toaster.customToast("cskjc" + data.getPostLink());
+                    Intent i = new Intent(context, WebView_Activity.class);
+                    i.putExtra(WebView_Activity.WebURL, data.getPostLink());
+                    context.startActivity(i);
                 });
 
 

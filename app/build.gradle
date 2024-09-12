@@ -10,8 +10,8 @@ android {
         applicationId "com.pb.criconet"
         minSdk 21
         targetSdk 34
-        versionCode 71
-        versionName "1.1.14"
+        versionCode 73
+        versionName "1.1.15"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
@@ -123,6 +123,9 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
     implementation 'androidx.multidex:multidex:2.0.1'
+   // implementation 'com.google.android.play:core:1.10.3' // In App Update
+   // implementation 'com.github.Redman1037:TSnackBar:V2.0.0'
+    //implementation 'com.google.android.play:app-update:2.1.0'
 
     implementation('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'

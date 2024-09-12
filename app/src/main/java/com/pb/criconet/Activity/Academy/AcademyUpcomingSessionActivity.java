@@ -69,8 +69,10 @@ public class AcademyUpcomingSessionActivity extends AppCompatActivity {
 
         if(FROM.equalsIgnoreCase("Past")){
             toolbarInnerpageBinding.toolbartext.setText(R.string.past_sessio);
+            activityAcademyUpcomingSessionBinding.tvNotFound.setText(mContext.getResources().getString(R.string.not_scheduled_past));
         }else{
             toolbarInnerpageBinding.toolbartext.setText(R.string.upcoming_se);
+            activityAcademyUpcomingSessionBinding.tvNotFound.setText(mContext.getResources().getString(R.string.not_scheduled));
         }
 
         if (Global.isOnline(mActivity)) {

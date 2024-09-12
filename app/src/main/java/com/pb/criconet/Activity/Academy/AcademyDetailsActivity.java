@@ -104,7 +104,7 @@ public class AcademyDetailsActivity extends AppCompatActivity {
 
         activityAcademyDetailsBinding.ivLinkend.setOnClickListener(v -> openSocialMedia("https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F13448164"));
 
-        activityAcademyDetailsBinding.ivYouTube.setOnClickListener(v -> openSocialMedia("https://www.instagram.com/criconet/"));
+        activityAcademyDetailsBinding.ivYouTube.setOnClickListener(v -> openSocialMedia("https://www.youtube.com/@criconetonline4849"));
 
         activityAcademyDetailsBinding.flContact.setOnClickListener(v -> {
             startActivity(new Intent(mContext, AcademyContactUsActivity.class).putExtra("FROM", "2").putExtra("ACADEMY_ID", academyId));

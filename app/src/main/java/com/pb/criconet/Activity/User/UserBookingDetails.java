@@ -144,9 +144,9 @@ public class UserBookingDetails extends AppCompatActivity {
             if (!bookingPaymentsDetails.getAvatar().isEmpty()) {
 
                 Glide.with(mActivity).load(bookingPaymentsDetails.getAvatar())
-                        .into(activityUserBookingDetailsBinding.ivRoundedProfile);
+                        .error(getResources().getDrawable(R.drawable.image_placeholder)).into(activityUserBookingDetailsBinding.ivRoundedProfile);
             } else {
-                Glide.with(mActivity).load(R.drawable.coachpic)
+                Glide.with(mActivity).load(R.drawable.image_placeholder)
                         .into(activityUserBookingDetailsBinding.ivRoundedProfile);
             }
 

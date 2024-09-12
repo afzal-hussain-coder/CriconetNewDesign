@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,6 +38,7 @@ import com.pb.criconet.R;
 import com.pb.criconet.databinding.ActivityLoginBinding;
 import com.pb.criconet.model.UserData;
 import com.pb.criconet.util.CustomLoaderView;
+import com.pb.criconet.util.DeviceInfo;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
@@ -65,6 +68,23 @@ public class LoginActivity extends AppCompatActivity {
         mContext = this;
         mActivity = this;
 
+        loaderView = CustomLoaderView.initialize(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        queue = Volley.newRequestQueue(mContext);
+
+        SessionManager.save_deviceName(prefs, DeviceInfo.logDeviceName());
+        SessionManager.save_deviceVersion(prefs,DeviceInfo.getAndroidVersion());
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            int versionCode = packageInfo.versionCode; // Note: versionCode is deprecated in API 28+
+            SessionManager.save_androidVersion(prefs,versionName);
+            Log.i("DeviceInfo", "versionName: " + versionName);
+            Log.i("DeviceInfo", "versionCode: " + versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 //        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(mActivity, new OnSuccessListener<InstanceIdResult>() {
 //            @Override
 //            public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -92,11 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-        loaderView = CustomLoaderView.initialize(this);
-        prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        queue = Volley.newRequestQueue(mContext);
 
         /*Gmail Login*/
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

@@ -10,10 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.pb.criconet.R;
 import com.pb.criconet.databinding.UserBookingListItemBinding;
 import com.pb.criconet.model.Coaching.BookingHistory;
 import com.pb.criconet.util.Global;
+
 import java.util.List;
 
 public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingListAdapter.MyViewHolder> {
@@ -37,7 +40,18 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Glide.with(mContext).load(data.get(position).getAvatar()).into(holder.UserBookingListItemBinding.ivProfile);
+        // Define the radius for rounded corners
+        int cornerRadius = 20; // Adjust this value as needed
+
+// Apply the transformation when loading the image
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.image_placeholder)
+                .error(R.drawable.image_placeholder)
+                .transform(new RoundedCorners(cornerRadius));
+
+        Glide.with(mContext).load(data.get(position).getAvatar()).error(mContext.getResources().getDrawable(R.drawable.image_placeholder)).placeholder(mContext.getResources().getDrawable(R.drawable.image_placeholder)).into(holder.UserBookingListItemBinding.ivProfile);
+                //.apply(requestOptions)
+
 
         holder.itemView.setOnClickListener(v -> {
             coachItemClickListener.viewDetails(data.get(position).getId());
@@ -79,7 +93,6 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         } else {
             holder.UserBookingListItemBinding.flJoinSession.setVisibility(View.GONE);
         }
-
 
 
         holder.UserBookingListItemBinding.flJoinSession.setOnClickListener(v -> {

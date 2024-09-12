@@ -7,7 +7,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,6 +23,7 @@ import com.pb.criconet.Fragment.CoachFragments.CoachFragment;
 import com.pb.criconet.Fragment.PavilionFragment;
 import com.pb.criconet.Fragment.StreamingFragment;
 import com.pb.criconet.R;
+import com.pb.criconet.util.DeviceInfo;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         PavilionFragment fragment1 = new PavilionFragment();
         moveToFragment(fragment1);
-
-
 
         inItView();
     }

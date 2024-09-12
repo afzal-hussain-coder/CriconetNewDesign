@@ -596,12 +596,22 @@
     <string name="follow">Follow</string>
     <string name="academy_support">Contact Academy</string>
     <string name="not_scheduled">There is no upcoming session scheduled</string>
+    <string name="not_scheduled_past">There is no past session scheduled</string>
     <string name="awaiting_for_coaches_to_add_tips">Awaiting for coaches to add tips!</string>
     <string name="select_media_type">Select Media Types</string>
     <string name="pause">Pause</string>
     <string name="play">Play</string>
     <string name="view_attandence">"View Attendance "</string>
     <string name="student_dashboard">My Academy</string>
+    <string name="Update_cancelled_by_user">Update cancelled by user</string>
+    <string name="Update_Success">Update Success</string>
+    <string name="Update_Failed">Update Failed</string>
+    <string name="New_app_is_ready">New app is ready!</string>
+    <string name="Install">Install</string>
+    <string name="InstallStateUpdatedListener_state">"InstallStateUpdatedListener:state: "</string>
+    <string name="devicename">Device name : </string>
+    <string name="deviceVersion">Device Version : </string>
+    <string name="androidVersion">App Version : </string>
 
 
 </resources>

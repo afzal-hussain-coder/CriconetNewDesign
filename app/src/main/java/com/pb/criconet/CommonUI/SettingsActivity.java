@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         activitySettingsBinding.rlEditProfile.setOnClickListener(v -> {
 
             if (SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")) {
-                startActivity(new Intent(mActivity, RegisterAsAnECoachActivity.class));
+                startActivity(new Intent(mActivity, RegisterAsAnECoachActivity.class).putExtra("FROM","1"));
                 //finish();
             }else{
                 startActivity(new Intent(mActivity, UserProfileActivity.class).putExtra("FROM","2"));

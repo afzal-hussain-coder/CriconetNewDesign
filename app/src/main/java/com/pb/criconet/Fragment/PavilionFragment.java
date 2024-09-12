@@ -187,6 +187,11 @@ public class PavilionFragment extends Fragment implements PostListeners {
     ImageView iv_logout;
     FrameLayout fl_post;
     private Uri photoUri;
+    RelativeLayout rl_add_post;
+    Animation animation_up;
+    Animation animation_down;
+    ImageView img_add_post;
+    ImageView img_close_post;
 
 
     ActivityResultLauncher<Intent> videolaunchercamera = registerForActivityResult(
@@ -327,8 +332,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         Animation animation_right = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_left_to_right);
         Animation animation_left = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_right_to_left);
 
-        Animation animation_down = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
-        Animation animation_up = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        animation_down = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+        animation_up = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
 
         ImageView img_navigation = view.findViewById(R.id.img_navigation);
         img_navigation.setOnClickListener(v -> {
@@ -362,9 +367,9 @@ public class PavilionFragment extends Fragment implements PostListeners {
             alertDialog.show();
         });
 
-        ImageView img_add_post = view.findViewById(R.id.img_add_post);
-        ImageView img_close_post = view.findViewById(R.id.img_close_post);
-        RelativeLayout rl_add_post = view.findViewById(R.id.rl_add_post);
+        img_add_post = view.findViewById(R.id.img_add_post);
+        img_close_post = view.findViewById(R.id.img_close_post);
+        rl_add_post = view.findViewById(R.id.rl_add_post);
         rl_add_post.setVisibility(View.GONE);
 
         img_add_post.setOnClickListener(v -> {
@@ -420,25 +425,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
         adapter = new HomeAdapter(getActivity(), modelArrayList, this);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        post_list.setLayoutManager(mLayoutManager);
-        post_list.setItemAnimator(new DefaultItemAnimator());
-
-        post_list.setActivity(requireActivity()); //todo before setAdapter
-        //optional - to play only first visible video
-        post_list.setPlayOnlyFirstVideo(true);
-
-        // false by default
-        //optional - by default we check if url ends with ".mp4". If your urls do not end with mp4, you can set this param to false and implement your own check to see if video points to url
-//        post_list.setCheckForMp4(false); //true by default
-
-        //optional - download videos to local storage (requires "android.permission.WRITE_EXTERNAL_STORAGE" in manifest or ask in runtime)
-        //post_list.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
-        //post_list.setDownloadVideos(true); // false by default
-        post_list.setVisiblePercent(90); // percentage of View that needs to be visible to start playing
-        post_list.setAdapter(adapter);
-        //call this functions when u want to start autoplay on loading async lists (eg firebase)
-        post_list.smoothScrollBy(0, 1);
-        post_list.smoothScrollBy(0, -1);
 
         if (Global.isOnline(requireActivity())) {
             getFeed();
@@ -566,6 +552,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         fl_post.setOnClickListener(v -> {
             searchUsername = "";
             feedText = up_text.getText().toString().trim();
+            rl_add_post.startAnimation(animation_up);
+            rl_add_post.setVisibility(View.GONE);
             if (postType.equals(POST_TYPE_VIDEO)) {
                 //uploadVideoToServer(feedText);
                 PostFeedFinal(feedText);
@@ -588,7 +576,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
             Glide.with(getActivity()).load(SessionManager.get_image(prefs)).placeholder(getActivity().getResources().getDrawable(R.drawable.user_default)).error(getActivity().getResources().getDrawable(R.drawable.user_default)).into(profile_pic);
         }
 
-       TextView tvProfileName = layout_nav.findViewById(R.id.tvProfileName);
+        TextView tvProfileName = layout_nav.findViewById(R.id.tvProfileName);
         tvProfileName.setText(SessionManager.get_name(prefs));
 
         ImageView iv_settings = layout_nav.findViewById(R.id.iv_settings);
@@ -600,13 +588,12 @@ public class PavilionFragment extends Fragment implements PostListeners {
         xyz_academy.setOnClickListener(v -> {
 
             if (SessionManager.get_profiletype(prefs).equalsIgnoreCase("coach")) {
-                startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class).putExtra("FROM","1"));
+                startActivity(new Intent(getActivity(), RegisterAsAnECoachActivity.class).putExtra("FROM", "1"));
                 //finish();
-            }else{
-                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("FROM","2"));
-               // finish();
+            } else {
+                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("FROM", "2"));
+                // finish();
             }
-
 
 
         });
@@ -735,6 +722,31 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 e.printStackTrace();
             }
         });
+
+        ImageView ivfacebook = layout_nav.findViewById(R.id.ivfacebook);
+        ivfacebook.setOnClickListener(view -> {
+            openSocialMedia("https://www.facebook.com/criconetonline");
+        });
+        ImageView ivInstagram = layout_nav.findViewById(R.id.ivInstagram);
+        ivInstagram.setOnClickListener(view -> {
+            openSocialMedia("https://x.com/i/flow/login?redirect_after_login=%2Fcriconetonline");
+        });
+        ImageView ivYoutube = layout_nav.findViewById(R.id.ivYoutube);
+        ivYoutube.setOnClickListener(view -> {
+            openSocialMedia("https://www.youtube.com/@criconetonline4849");
+        });
+        ImageView ivLinkend = layout_nav.findViewById(R.id.ivLinkend);
+        ivLinkend.setOnClickListener(view -> {
+            openSocialMedia("https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F13448164");
+        });
+
+        TextView tvDeviceName = layout_nav.findViewById(R.id.tvDeviceName);
+        tvDeviceName.setText(" " + Global.capitizeString(SessionManager.get_deviceName(prefs)));
+        TextView tvDeviceVersion = layout_nav.findViewById(R.id.tvDeviceVersion);
+        tvDeviceVersion.setText(" " + SessionManager.get_deviceVersion(prefs));
+        TextView tvAndroidAppVersion = layout_nav.findViewById(R.id.tvAndroidAppVersion);
+        tvAndroidAppVersion.setText(" " + SessionManager.get_androidVersion(prefs));
+
     }
 
     private void getFeed() {
@@ -1054,7 +1066,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                             }
                         }
                         // Reset RecyclerView scroll behavior if needed
-                       // post_list.smoothScrollBy(0, 1);
+                        // post_list.smoothScrollBy(0, 1);
                         //post_list.smoothScrollBy(0, -1);
 
                     } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
@@ -1322,7 +1334,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 case POST_TYPE_IMAGE:
                     entity.addPart("postText", new StringBody(postText));
 
-                   // Toaster.customToast(postFile);
+                    // Toaster.customToast(postFile);
 
                     if (!postFile.isEmpty()) {
                         File file = new File(postFile);
@@ -1385,7 +1397,9 @@ public class PavilionFragment extends Fragment implements PostListeners {
                             //progress.dismiss();
                             loaderView.hideLoader();
                             up_text.setText("");
-                            up_image.setImageURI(null);
+                            up_image.setImageDrawable(null);
+                            img_close_post.setVisibility(View.GONE);
+                            img_add_post.setVisibility(View.VISIBLE);
                             Log.e("Pavilion", response);
                             JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                             if (jsonObject.optString("api_text").equalsIgnoreCase("success")) {
@@ -1457,7 +1471,8 @@ public class PavilionFragment extends Fragment implements PostListeners {
         //optional - download videos to local storage (requires "android.permission.WRITE_EXTERNAL_STORAGE" in manifest or ask in runtime)
         //post_list.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
         //post_list.setDownloadVideos(true); // false by default
-        post_list.setVisiblePercent(90); // percentage of View that needs to be visible to start playing
+        post_list.setVisiblePercent(90);
+        post_list.setActivity(getActivity());// percentage of View that needs to be visible to start playing
         post_list.setAdapter(adapter);
         //call this functions when u want to start autoplay on loading async lists (eg firebase)
         post_list.smoothScrollBy(0, 1);
@@ -1494,6 +1509,12 @@ public class PavilionFragment extends Fragment implements PostListeners {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        post_list.playAvailableVideos(0);
+    }
+
+    @Override
     public void onLikeClickListener(NewPostModel post) {
         likeFeed(post.getId());
     }
@@ -1508,7 +1529,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
         Log.e("Pavilion", post.toString());
         Intent intent = new Intent(getActivity(), FeedDetailsActivity.class);
         intent.putExtra("feed_id", post.getId());
-        intent.putExtra("type","t");
+        intent.putExtra("type", "t");
         startActivity(intent);
     }
 
@@ -1568,7 +1589,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
     @Override
     public void onPostDeleteFeedListener(String id, int pos) {
 
-       // Toaster.customToast(id +" is");
+        // Toaster.customToast(id +" is");
 
 //        modelArrayList.remove(pos);
 //        adapter.notifyItemRemoved(pos);
@@ -1934,7 +1955,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
     }
 
-
     public void generateSharingLink(int postId, String postedBy, String postLink, String postType) {
 
         //profile_picture---(postFile)
@@ -1987,5 +2007,13 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
 
     }
+
+
+    private void openSocialMedia(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
 
 }

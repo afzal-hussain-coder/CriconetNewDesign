@@ -93,6 +93,9 @@ public class SessionManager {
     private static String ACADEMY_NAME ="ACADEMYNAME";
     private static String ACADEMY_ADDRESS ="AcademyAddress";
 
+    private static String DEVICE_NAME ="DEVICE_NAME";
+    private static String DEVICE_VERSION ="DEVICE_VERSION";
+    private static String APP_VERSION_NAME ="APP_VERSION_NAME";
 
 //    private static String CARTYPEID = "CARTYPEID";
 //    private static String CARTYPENAME = "CARTYPENAME";
@@ -211,6 +214,30 @@ public class SessionManager {
 
     public static void save_academyName(SharedPreferences prefs, String value) {
         SessionManager.savePreference(prefs, ACADEMY_NAME, value);
+    }
+
+    public static String get_deviceName(SharedPreferences prefs) {
+        return prefs.getString(DEVICE_NAME, "");
+    }
+
+    public static void save_deviceName(SharedPreferences prefs, String value) {
+        SessionManager.savePreference(prefs, DEVICE_NAME, value);
+    }
+
+    public static String get_deviceVersion(SharedPreferences prefs) {
+        return prefs.getString(DEVICE_VERSION, "");
+    }
+
+    public static void save_deviceVersion(SharedPreferences prefs, String value) {
+        SessionManager.savePreference(prefs, DEVICE_VERSION, value);
+    }
+
+    public static String get_androidVersion(SharedPreferences prefs) {
+        return prefs.getString(APP_VERSION_NAME, "");
+    }
+
+    public static void save_androidVersion(SharedPreferences prefs, String value) {
+        SessionManager.savePreference(prefs, APP_VERSION_NAME, value);
     }
 
     public static String get_academyName(SharedPreferences prefs) {

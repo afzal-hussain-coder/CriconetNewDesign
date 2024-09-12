@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/blue_intro_color"
     tools:context=".Activity.Coach.CoachFeedBackReviewActivity">
 
     <include
@@ -25,28 +25,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_pic"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
-                    app:civ_border_width="@dimen/_1sdp"
-                    app:civ_border_color="@color/grayLight"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:src="@drawable/students_image" />
-
-                <TextView
-                    android:id="@+id/tvChangePhoto"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:lineSpacingExtra="-1sp"
-                    android:text="@string/change_phot"
-                    android:textColor="@color/darkGray"
-                    android:textSize="@dimen/_12sdp" />
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        app:civ_border_width="@dimen/_1sdp"
+                        app:civ_border_color="@color/grayLight"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/students_image" />
+
+                    <TextView
+                        android:id="@+id/tvChangePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:lineSpacingExtra="-1sp"
+                        android:text="@string/change_phot"
+                        android:textColor="@color/darkGray"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,8 +279,6 @@
                             tools:ignore="TouchTargetSizeCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-
 
                     <FrameLayout
                         android:id="@+id/fl_submit"

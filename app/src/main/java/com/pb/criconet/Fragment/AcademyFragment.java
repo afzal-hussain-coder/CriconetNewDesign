@@ -477,6 +477,36 @@ public class AcademyFragment extends Fragment {
                     });
             alertDialog.show();
         });
+
+        ImageView ivfacebook = layout_nav.findViewById(R.id.ivfacebook);
+        ivfacebook.setOnClickListener(view -> {
+            openSocialMedia("https://www.facebook.com/criconetonline");
+        });
+        ImageView ivInstagram = layout_nav.findViewById(R.id.ivInstagram);
+        ivInstagram.setOnClickListener(view -> {
+            openSocialMedia("https://x.com/i/flow/login?redirect_after_login=%2Fcriconetonline");
+        });
+        ImageView ivYoutube = layout_nav.findViewById(R.id.ivYoutube);
+        ivYoutube.setOnClickListener(view -> {
+            openSocialMedia("https://www.youtube.com/@criconetonline4849");
+        });
+        ImageView ivLinkend = layout_nav.findViewById(R.id.ivLinkend);
+        ivLinkend.setOnClickListener(view -> {
+            openSocialMedia("https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F13448164");
+        });
+
+        TextView tvDeviceName = layout_nav.findViewById(R.id.tvDeviceName);
+        tvDeviceName.setText(" "+Global.capitizeString(SessionManager.get_deviceName(prefs)));
+        TextView tvDeviceVersion = layout_nav.findViewById(R.id.tvDeviceVersion);
+        tvDeviceVersion.setText(" "+SessionManager.get_deviceVersion(prefs));
+        TextView tvAndroidAppVersion = layout_nav.findViewById(R.id.tvAndroidAppVersion);
+        tvAndroidAppVersion.setText(" "+SessionManager.get_androidVersion(prefs));
+    }
+
+    private void openSocialMedia(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     private void getPageUrl() {

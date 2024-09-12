@@ -179,9 +179,9 @@ public class SavedPostActivity extends AppCompatActivity implements PostListener
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> param = new HashMap<>();
-                param.put("user_id", "1387");
+                param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("after_post_id", after_post_id);
-                param.put("s", "d46e3041de65228dfe11f66de56f5f02c22e6cf639f96877e600810a3075ec1ddd53728122917009d19a006fd6d25d23c93d3bf4e48eb25f");
+                param.put("s", SessionManager.get_session_id(prefs));
                 return param;
             }
         };

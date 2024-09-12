@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -39,6 +40,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_15sdp"
         android:text="@string/campus_amba"
+        android:visibility="gone"
         android:textAppearance="@style/campus_amba"
         android:lineSpacingExtra="-7sp"
         android:fontFamily="@font/opensans_semibold"
@@ -184,24 +186,125 @@
         android:layout_marginTop="@dimen/_20sdp">
 
         <ImageView
+            android:id="@+id/ivfacebook"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:src="@drawable/facebook_navigation_drawer"/>
+            android:src="@drawable/facebook_navigation_drawer"
+            app:tint="@color/white" />
         <ImageView
+            android:id="@+id/ivInstagram"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@drawable/insta_navigation_drawer"/>
+            android:src="@drawable/insta_navigation_drawer"
+            app:tint="@color/white"/>
         <ImageView
+            android:id="@+id/ivYoutube"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@drawable/youtube_navigation_drawer"/>
+            android:src="@drawable/youtube_navigation_drawer"
+            app:tint="@color/white"/>
         <ImageView
+            android:id="@+id/ivLinkend"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@drawable/linkedin_navigation_drawer"/>
+            android:src="@drawable/linkedin_navigation_drawer"
+            app:tint="@color/white"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_20sdp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/devicename"
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+            <TextView
+                android:id="@+id/tvDeviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:text=" "
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/deviceVersion"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+            <TextView
+                android:id="@+id/tvDeviceVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:text=" "
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@string/androidVersion"
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+            <TextView
+                android:id="@+id/tvAndroidAppVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/opensans_semibold"
+                android:text=" "
+                android:textAppearance="@style/careers"
+                android:lineSpacingExtra="-7sp"
+                android:gravity="center_horizontal|top"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
