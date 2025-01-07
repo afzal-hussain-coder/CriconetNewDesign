@@ -48,6 +48,7 @@ import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.chip.Chip;
 import com.google.gson.Gson;
+import com.mukesh.OnOtpCompletionListener;
 import com.mukesh.OtpView;
 import com.pb.criconet.Activity.User.UserBookingDetails;
 import com.pb.criconet.R;
@@ -131,7 +132,7 @@ public class CoachDetailsActivity extends AppCompatActivity {
 
         if (Global.isOnline(mContext)) {
             getCoachDetails();
-            //getCoachDete();
+            getCoachDete();
         } else {
             Global.showDialog((Activity) mContext);
         }
@@ -183,9 +184,12 @@ public class CoachDetailsActivity extends AppCompatActivity {
 
 
         activityCoachDetailsBinding.calendarView.setOnDayClickListener(eventDay -> {
-            activityCoachDetailsBinding.liSessionLayout.setVisibility(View.VISIBLE);
+
             mslotId = "";
-            dateGott = Global.getDateGot(eventDay.getCalendar().getTime().toString());
+
+           // Log.d("date",Global.convertGMT(eventDay.getCalendar().getTime().toString()));
+
+            dateGott = Global.convertGMT(eventDay.getCalendar().getTime().toString());
 
             if (previousDate.compareTo(eventDay.getCalendar().getTime()) == -1) {
                 if (Global.isOnline(mActivity)) {
@@ -426,6 +430,7 @@ public class CoachDetailsActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 TimeSlot modelArrayList = gson.fromJson(response, TimeSlot.class);
                 if (modelArrayList.getApiStatus().equalsIgnoreCase("200")) {
+                    activityCoachDetailsBinding.liSessionLayout.setVisibility(View.VISIBLE);
                     activityCoachDetailsBinding.rvSessionTime.setAdapter(new SessionTimeListAdapter(mContext, modelArrayList.getData(), new SessionTimeListAdapter.getSlotIdInterface() {
                         @Override
                         public void getSlotId(String slotId) {
@@ -435,6 +440,7 @@ public class CoachDetailsActivity extends AppCompatActivity {
                         }
                     }));
                 } else {
+                    activityCoachDetailsBinding.liSessionLayout.setVisibility(View.GONE);
                     dateGott = "";
                     Toaster.customToast(modelArrayList.getErrors().getErrorText());
                 }
@@ -758,14 +764,16 @@ public class CoachDetailsActivity extends AppCompatActivity {
             resendOTP(phoneNumber);
         });
         otpView = dialog.findViewById(R.id.otp_view);
-        /*otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
+
+        otpView.setOtpCompletionListener(new OnOtpCompletionListener() {
             @Override
             public void onOtpCompleted(String s) {
 
             }
         });
         otpView.setOtpCompletionListener(s -> {
-        });*/
+
+        });
 
         btContinue.setOnClickListener(v -> {
             lay_otp_expire.setVisibility(View.VISIBLE);

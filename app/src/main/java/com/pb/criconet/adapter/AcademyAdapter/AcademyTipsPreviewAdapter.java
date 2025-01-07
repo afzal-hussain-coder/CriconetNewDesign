@@ -27,6 +27,7 @@ import com.pb.criconet.model.AcademyModel.AcademyTipsPreviewModel;
 import com.pb.criconet.model.pavilionModel.NewPostModel;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
+import com.potyvideo.library.AndExoPlayerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class AcademyTipsPreviewAdapter extends RecyclerView.Adapter<RecyclerView
     protected ItemListener mListener;
     String FROM="";
     SharedPreferences preferences;
-    //private MediaPlayer mPlayer=null;
 
     private MediaPlayer mPlayer = null;
     private int playingPosition = -1;
@@ -139,37 +139,7 @@ public class AcademyTipsPreviewAdapter extends RecyclerView.Adapter<RecyclerView
                     ((MyViewHolder)holder).rl_video.setVisibility(View.GONE);
                 }else{
                     ((MyViewHolder)holder).rl_video.setVisibility(View.VISIBLE);
-                    ((MyViewHolder)holder).videoview.setVideoPath(academyTipsPreviewModel.getVideo_path());
-                    // Request layout and focus
-                    ((MyViewHolder) holder).videoview.requestLayout();
-                    ((MyViewHolder) holder).videoview.requestFocus();
-                    ///((MyViewHolder) holder).videoview.start();
-
-                    // Set up an OnPreparedListener to ensure the video starts as soon as it is ready
-                    ((MyViewHolder) holder).videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-                                @Override
-                                public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                                    if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                                        // Video is ready, start playback
-                                        ((MyViewHolder) holder).videoview.start();
-                                        return true;
-                                    }
-                                    return false;
-                                }
-                            });
-
-                            // Set up a completion listener if you want to take some action when the video ends
-                            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    // Handle video completion
-                                }
-                            });
-                        }
-                    });
+                    ((MyViewHolder)holder).andExoPlayerView.setSource(academyTipsPreviewModel.getVideo_path());
                 }
 
 //                if((FROM.equalsIgnoreCase("2") && !SessionManager.get_user_id(preferences).equalsIgnoreCase(academyTipsPreviewModel.getUser_id()))|| FROM.equalsIgnoreCase("3") || SessionManager.get_getRoleId(preferences).equalsIgnoreCase("3")){
@@ -325,20 +295,21 @@ public class AcademyTipsPreviewAdapter extends RecyclerView.Adapter<RecyclerView
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         ExpandableTextView tv_des;
-        VideoView videoview;
+        //VideoView videoview;
         TextView edit_text_name, tvoffer;
         RelativeLayout rl_video;
         ImageView iv_close;
         ImageView iv_share;
+        AndExoPlayerView andExoPlayerView;
         //ImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvoffer = itemView.findViewById(R.id.tvoffer);
             tv_des = itemView.findViewById(R.id.tv_des);
-            videoview = itemView.findViewById(R.id.videoview);
-            videoview.setMediaController(new MediaController(mContext));
-            new MediaController(mContext).setAnchorView(videoview);
+            andExoPlayerView = itemView.findViewById(R.id.VideoView);
+            //videoview.setMediaController(new MediaController(mContext));
+            //new MediaController(mContext).setAnchorView(videoview);
             edit_text_name = itemView.findViewById(R.id.edit_text_name);
             rl_video = itemView.findViewById(R.id.rl_video);
             iv_close = itemView.findViewById(R.id.iv_close);

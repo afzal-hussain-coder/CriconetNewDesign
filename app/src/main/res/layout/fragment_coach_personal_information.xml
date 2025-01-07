@@ -69,7 +69,7 @@
                     android:layout_below="@+id/li_add"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:fontFamily="@font/opensans_semibold"
-                    android:text="@string/add_academy_logo"
+                    android:text="@string/add_profile_logo"
                     android:textColor="@color/blue_intro_color"
                     android:textSize="@dimen/_9sdp" />
             </RelativeLayout>
@@ -203,6 +203,7 @@
                         android:gravity="center_vertical"
                         android:imeOptions="actionNext"
                         android:inputType="phone"
+                        android:maxLength="10"
                         android:maxLines="1"
                         android:textColor="@color/blue_intro_color"
                         tools:ignore="TouchTargetSizeCheck" />

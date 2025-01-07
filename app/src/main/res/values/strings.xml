@@ -198,6 +198,7 @@
     <string name="type_you_have_any_suggestions">Type here... if you have any suggestions?</string>
     <string name="coach_review">Coach Review</string>
     <string name="regsiter_as_a_coach">Register as a Coach</string>
+    <string name="upadate_as_a_coach">Update Coach Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="personal_information"> Personal Information</string>
@@ -558,6 +559,7 @@
     <string name="youtube_profile">Youtube profile</string>
     <string name="add_academy_gallery">Add Academy Gallery</string>
     <string name="add_academy_logo">Add Academy Logo</string>
+    <string name="add_profile_logo">Add Profile Logo</string>
     <string name="select_multiple_gallery_iamge">Select multiple image for academy gallery</string>
     <string name="select_single_image_for_banner">Select single image for academy Banner</string>
     <string name="select_multiple_gallery_video">Select Video for your Academy</string>
@@ -612,6 +614,12 @@
     <string name="devicename">Device name : </string>
     <string name="deviceVersion">Device Version : </string>
     <string name="androidVersion">App Version : </string>
+    <string name="batting_tips">Batting Tips</string>
+    <string name="_11_fast_bowling_tips_to_help_you_take_wickets">11 Fast Bowling Tips To Help You Take Wickets</string>
+    <string name="booking_cancelled">Booking Cancelled</string>
+    <string name="apply">Apply</string>
+    <string name="clear">Clear</string>
+    <string name="currently_there_are_no_live_matches">Currently there are no live matches</string>
 
 
 </resources>

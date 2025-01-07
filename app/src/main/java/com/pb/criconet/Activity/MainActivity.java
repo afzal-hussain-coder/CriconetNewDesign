@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 import com.pb.criconet.Fragment.AcademyFragment;
 import com.pb.criconet.Fragment.CoachFragments.CoachFragment;
 import com.pb.criconet.Fragment.PavilionFragment;
@@ -37,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     int clickItemNavigation = 0;
     Animation animation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +48,37 @@ public class MainActivity extends AppCompatActivity {
         mActivity = this;
         mContext = this;
 
-
         animation = AnimationUtils.loadAnimation(mContext, R.anim.bounce);
 
         PavilionFragment fragment1 = new PavilionFragment();
         moveToFragment(fragment1);
 
+        showRateApp();
+
         inItView();
+    }
+
+
+    public void showRateApp() {
+        ReviewManager reviewManager = ReviewManagerFactory.create(mContext);
+        Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                ReviewInfo reviewInfo = task.getResult();
+                Task<Void> flow = reviewManager.launchReviewFlow(this, reviewInfo);
+
+                flow.addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        Log.d("ReviewFlow", "Review dialog launched successfully.");
+                    } else {
+                        Log.e("ReviewFlow", "Failed to launch review dialog: " + task1.getException());
+                    }
+                });
+            } else {
+                Log.e("ReviewFlow", "Failed to request review flow: " + task.getException());
+            }
+        });
     }
 
 
@@ -111,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 moveToFragment(fragment1);
             }
         }
-
-
 
 
     }

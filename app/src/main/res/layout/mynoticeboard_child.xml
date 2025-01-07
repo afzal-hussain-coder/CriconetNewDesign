@@ -25,8 +25,23 @@
 
             </com.makeramen.roundedimageview.RoundedImageView>
 
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/circle_opaque_black"
+                android:padding="@dimen/_5sdp"
+                android:visibility="gone"
+                android:src="@drawable/close_black_24dp"
+                app:tint="@color/white">
+
+            </ImageView>
+
+
             <TextView
-                android:id="@+id/app"
+                android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rIV_myBlog"
@@ -43,7 +58,7 @@
                 android:id="@+id/e_coaching_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/app"
+                android:layout_below="@+id/tvType"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -79,6 +94,7 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/opensans_regular"
                     android:text="June 30, 2022"
+                    android:visibility="gone"
                     android:textAppearance="@style/june_30_202" />
 
             </RelativeLayout>

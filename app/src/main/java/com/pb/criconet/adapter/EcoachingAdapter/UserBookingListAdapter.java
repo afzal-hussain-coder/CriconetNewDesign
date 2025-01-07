@@ -50,7 +50,7 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
                 .transform(new RoundedCorners(cornerRadius));
 
         Glide.with(mContext).load(data.get(position).getAvatar()).error(mContext.getResources().getDrawable(R.drawable.image_placeholder)).placeholder(mContext.getResources().getDrawable(R.drawable.image_placeholder)).into(holder.UserBookingListItemBinding.ivProfile);
-                //.apply(requestOptions)
+        //.apply(requestOptions)
 
 
         holder.itemView.setOnClickListener(v -> {
@@ -61,6 +61,8 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
             coachItemClickListener.sendFeedback(position);
         });
 
+        holder.UserBookingListItemBinding.tvBookingDatee.setText(data.get(position).getBooking_date());
+
         holder.UserBookingListItemBinding.tvBookingDate.setText(
                 Global.convertUTCDateToLocalDate(data.get(position).getOnlineSessionStartTime()) + " , " + data.get(position).getBookingSlotTxt());
 
@@ -68,10 +70,16 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
                 + mContext.getString(R.string.minute));
         holder.UserBookingListItemBinding.tvName.setText(data.get(position).getName());
 
+
         if (data.get(position).getBtn1().equalsIgnoreCase("Confirmed")) {
             holder.UserBookingListItemBinding.tvBookingStatus.setVisibility(View.VISIBLE);
+            holder.UserBookingListItemBinding.tvBookingStatusCancelled.setVisibility(View.GONE);
+        } else if (data.get(position).getBtn1().equalsIgnoreCase("Cancelled")) {
+            holder.UserBookingListItemBinding.tvBookingStatus.setVisibility(View.GONE);
+            holder.UserBookingListItemBinding.tvBookingStatusCancelled.setVisibility(View.VISIBLE);
         } else {
             holder.UserBookingListItemBinding.tvBookingStatus.setVisibility(View.GONE);
+            holder.UserBookingListItemBinding.tvBookingStatusCancelled.setVisibility(View.GONE);
         }
 
         if (data.get(position).getBtn2() != null && !data.get(position).getBtn2().equalsIgnoreCase("")) {
@@ -101,7 +109,7 @@ public class UserBookingListAdapter extends RecyclerView.Adapter<UserBookingList
         });
 
 
-        // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coachItemClickListener.viewDetails(position));
+        // holder.UserBookingListItemBinding.flViewDetails.setOnClickListener(v -> coatv_booking_statuschItemClickListener.viewDetails(position));
 //
 //        holder.UserBookingListItemBinding.getRoot().setOnClickListener(v -> coachItemClickListener.viewDetails(position));
 //

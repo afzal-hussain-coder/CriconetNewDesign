@@ -2,9 +2,11 @@ package com.pb.criconet.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +47,19 @@ public class BlockUserAdapter extends RecyclerView.Adapter<BlockUserAdapter.MyVi
         }
 
         holder.itemBlockUserBinding.tvName.setText(newUserModel.getName());
+
+        if (blockUserList.get(position).getVerified().equalsIgnoreCase("1")) {
+            holder.itemBlockUserBinding.ivVerified.setVisibility(View.VISIBLE);
+            if(blockUserList.get(position).getVerified().equalsIgnoreCase("1") &&
+                    blockUserList.get(position).getCriconet_verified().equalsIgnoreCase("1")){
+                holder.itemBlockUserBinding.ivVerified.setColorFilter(ContextCompat.getColor(mContext, R.color.purple_200));
+            }else{
+                holder.itemBlockUserBinding.ivVerified.setColorFilter(ContextCompat.getColor(mContext, R.color.verified_user_color));
+            }
+        } else {
+            holder.itemBlockUserBinding.ivVerified.setVisibility(View.GONE);
+            holder.itemBlockUserBinding.ivVerified.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.bckground_light));
+        }
 
         holder.itemBlockUserBinding.flUserBlock.setOnClickListener(v -> {
             unBlockInterface.unBlockUser(newUserModel.getUser_id(),position);

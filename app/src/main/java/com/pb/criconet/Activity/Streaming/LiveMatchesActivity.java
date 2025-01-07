@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -40,6 +43,7 @@ public class LiveMatchesActivity extends AppCompatActivity {
     private RequestQueue queue;
     private SharedPreferences prefs;
     Activity mContext;
+    Animation anim = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,18 @@ public class LiveMatchesActivity extends AppCompatActivity {
         activityLiveMatchesBinding.weekList.setLayoutManager(new LinearLayoutManager(mContext));
         activityLiveMatchesBinding.weekList.setHasFixedSize(true);
 
+        anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(3000); //You can manage the blinking time with this parameter
+        anim.setStartOffset(30);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+
+        //activityLiveMatchesBinding.txtCurrently.startAnimation(anim);
+
+        activityLiveMatchesBinding.flBookLiveStream.setOnClickListener(view -> {
+            startActivity(new Intent(mContext, BookLiveStreamingActivity.class));
+        });
+
 
         if (Global.isOnline(mContext)) {
             getLiveMatchesNew();
@@ -68,6 +84,13 @@ public class LiveMatchesActivity extends AppCompatActivity {
         }
 
 
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityLiveMatchesBinding.VideoView.pausePlayer();
     }
 
     private void getLiveMatchesNew() {
@@ -93,9 +116,10 @@ public class LiveMatchesActivity extends AppCompatActivity {
 //                            }
 
                             if (dataNew.size() == 0) {
-                                activityLiveMatchesBinding.notfound.setVisibility(View.VISIBLE);
+                                activityLiveMatchesBinding.liNotfound.setVisibility(View.VISIBLE);
+                                activityLiveMatchesBinding.VideoView.setSource("https://www.criconet.com/assets/new-Criconet-video.mp4");
                             } else {
-                                activityLiveMatchesBinding.notfound.setVisibility(View.GONE);
+                               activityLiveMatchesBinding.liNotfound.setVisibility(View.GONE);
                                 activityLiveMatchesBinding.weekList.setAdapter(new LiveMatchAdapter(dataNew, mContext));
                             }
 
@@ -131,4 +155,5 @@ public class LiveMatchesActivity extends AppCompatActivity {
         postRequest.setRetryPolicy(policy);
         queue.add(postRequest);
     }
+
 }

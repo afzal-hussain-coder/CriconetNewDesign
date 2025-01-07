@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import com.pb.criconet.util.CustomLoaderView;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
+
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -167,7 +169,7 @@ public class UserBookingDetails extends AppCompatActivity {
             activityUserBookingDetailsBinding.tvBookingId.setText(getResources().getString(R.string.bookingId) + " " + bookingPaymentsDetails.getBooking_id());
             activityUserBookingDetailsBinding.tvSessionDate.setText(Global.convertUTCDateToLocalDate(bookingPaymentsDetails.getOnlineSessionStartTime()) + " , " + bookingPaymentsDetails.getBookingSlotTxt());
 
-            activityUserBookingDetailsBinding.tvCoachPrice.setText(getResources().getString(R.string.price) + "\u20B9" +bookingPaymentsDetails.getPaymentAmount());
+            activityUserBookingDetailsBinding.tvCoachPrice.setText(getResources().getString(R.string.price) + "\u20B9" + bookingPaymentsDetails.getPaymentAmount());
 
 //            tvBookingDate.setText(Global.getDate(Long.parseLong(bookingPaymentsDetails.getBookingTime())));
 //
@@ -188,8 +190,12 @@ public class UserBookingDetails extends AppCompatActivity {
 
             if (bookingPaymentsDetails.getBookingStatus().equalsIgnoreCase("1")) {
                 activityUserBookingDetailsBinding.tvBookingStatus.setText(getString(R.string.bookingConfirmed));
+                activityUserBookingDetailsBinding.liCancelled.setVisibility(View.GONE);
+                activityUserBookingDetailsBinding.liConfirmed.setVisibility(View.VISIBLE);
             } else {
-                activityUserBookingDetailsBinding.tvBookingStatus.setText(getResources().getString(R.string.Booking_in_processing));
+                activityUserBookingDetailsBinding.flCancelBooking.setVisibility(View.GONE);
+                activityUserBookingDetailsBinding.liCancelled.setVisibility(View.VISIBLE);
+                activityUserBookingDetailsBinding.liConfirmed.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {
@@ -266,7 +272,7 @@ public class UserBookingDetails extends AppCompatActivity {
     private void getBookingDetails() {
         loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "get_booking_details", (Response.Listener<String>) response -> {
-            Log.d("BookingDetails",response);
+            Log.d("BookingDetails", response);
             loaderView.hideLoader();
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -294,7 +300,7 @@ public class UserBookingDetails extends AppCompatActivity {
                 param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("s", SessionManager.get_session_id(prefs));
                 param.put("booking_id", bookingId);
-                Log.d("Param",param.toString());
+                Log.d("Param", param.toString());
                 return param;
             }
         };

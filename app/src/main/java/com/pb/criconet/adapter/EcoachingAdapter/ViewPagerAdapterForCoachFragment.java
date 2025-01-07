@@ -16,6 +16,7 @@ public class ViewPagerAdapterForCoachFragment extends FragmentPagerAdapter {
 
     private String fromWhere;
     private Bundle dataBundle;
+    private boolean isSwipeEnabled = true;
 
     // Constructor to accept 'from_where'
     public ViewPagerAdapterForCoachFragment(@NonNull FragmentManager fm, int behavior,String fromWhere) {

@@ -107,7 +107,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/opensans_semibold"
         android:text="@string/notice_boar"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textAppearance="@style/notice_boar"
         android:lineSpacingExtra="-7sp"
         android:gravity="center_horizontal|top"
@@ -233,7 +233,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/opensans_semibold"
                 android:text="@string/devicename"
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />
@@ -244,7 +245,8 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/opensans_semibold"
                 android:text=" "
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />
@@ -261,7 +263,8 @@
                 android:fontFamily="@font/opensans_semibold"
                 android:text="@string/deviceVersion"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />
@@ -272,7 +275,8 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/opensans_semibold"
                 android:text=" "
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />
@@ -289,7 +293,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/opensans_semibold"
                 android:text="@string/androidVersion"
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />
@@ -300,7 +305,8 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/opensans_semibold"
                 android:text=" "
-                android:textAppearance="@style/careers"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="-7sp"
                 android:gravity="center_horizontal|top"
                 />

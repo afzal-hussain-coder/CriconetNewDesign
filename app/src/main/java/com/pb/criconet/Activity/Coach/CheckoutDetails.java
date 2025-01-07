@@ -106,7 +106,7 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
         Glide.with(this).load(modelArrayList.getData().getAvatar()).placeholder(mContext.getResources().getDrawable(R.drawable.user_default)).into(activityCheckoutDetailsBinding.ivRoundedProfile);
         activityCheckoutDetailsBinding.tvCoachName.setText(modelArrayList.getData().getName());
         activityCheckoutDetailsBinding.tvCoachExp.setText(modelArrayList.getData().getExps());
-        activityCheckoutDetailsBinding.tvCoachPrice.setText(modelArrayList.getData().getPrice().getCoachPrice());
+        activityCheckoutDetailsBinding.tvCoachPrice.setText("Price: " + "\u20B9" + modelArrayList.getData().getPrice().getCoachPrice());
         activityCheckoutDetailsBinding.tvSessiondate.setText(Global.convertUTCDateToLocall(ordercreate.getPaymentOption().getSessionDate()));
 
         if (modelArrayList.getData().getPrice().getOfferId().equalsIgnoreCase("0")) {
@@ -134,30 +134,44 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
 
         activityCheckoutDetailsBinding.flProceedToPay.setOnClickListener(v -> {
 
-            try {
-                if (payableAmount == 0) {
-                    Intent intent = new Intent(mContext, UserBookingHistory.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    if (coupon_status.equalsIgnoreCase("apply")) {
-                        if (Global.isOnline(mActivity)) {
-                            BookCoach();
-                        } else {
-                            Global.showDialog(mActivity);
-                        }
-                    } else {
-                        if (Global.isOnline(mActivity)) {
-                            startPayment();
-                        } else {
-                            Global.showDialog(mActivity);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-
+            if (Global.isOnline(mActivity)) {
+                BookCoach();
+            } else {
+                Global.showDialog(mActivity);
             }
+
+
+//            try {
+//                if (payableAmount == 0) {
+////                    Intent intent = new Intent(mContext, UserBookingHistory.class);
+////                    startActivity(intent);
+////                    finish();
+//
+//                    if (Global.isOnline(mActivity)) {
+//                        sendPaymentSuccess("");
+//                    } else {
+//                        Global.showDialog(mActivity);
+//                    }
+//
+//                } else {
+//                    if (coupon_status.equalsIgnoreCase("apply")) {
+//                        if (Global.isOnline(mActivity)) {
+//                            BookCoach();
+//                        } else {
+//                            Global.showDialog(mActivity);
+//                        }
+//                    } else {
+//                        if (Global.isOnline(mActivity)) {
+//                            startPayment();
+//                        } else {
+//                            Global.showDialog(mActivity);
+//                        }
+//                    }
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//
+//            }
         });
 
         activityCheckoutDetailsBinding.bookingConLayout.ivClose.setOnClickListener(v -> {
@@ -272,7 +286,7 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
                     // payableAmount =jsonObject1.getString("payment_amount");
                     payableAmount = Integer.parseInt(jsonObject1.getString("total_payable_amount"));
 
-                    activityCheckoutDetailsBinding.tvTotalPayableAmount.setText(getResources().getString(R.string.total_payable_amount) + "\u20B9" + payableAmount);
+                    activityCheckoutDetailsBinding.tvTotalPayableAmount.setText(getResources().getString(R.string.total_payable_amount) + "\u20B9" + payableAmount/100);
 
                 } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
                     coupon_status = "";
@@ -366,12 +380,12 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
     }
 
     private void BookCoach() {
-        //loaderView.showLoader();
+        loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "create_booking_order", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Booking Response", response);
-                //loaderView.hideLoader();
+                loaderView.hideLoader();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     Gson gson = new Gson();
@@ -538,24 +552,34 @@ public class CheckoutDetails extends AppCompatActivity implements PaymentResultL
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("api_text").equalsIgnoreCase("success")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                    BookingPaymentsDetails bookingPaymentsDetails = new BookingPaymentsDetails(jsonObject1);
+
+                    if(payableAmount==0){
+                        Intent intent = new Intent(mContext, UserBookingHistory.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+
+                        BookingPaymentsDetails bookingPaymentsDetails = new BookingPaymentsDetails(jsonObject1);
 
 
-                    MILI_SECONDS = 2000;
-                    activityCheckoutDetailsBinding.bookingConLayout.getRoot().setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            activityCheckoutDetailsBinding.bookingConLayout.getRoot().setVisibility(View.GONE);
-                            Intent intent = new Intent(mContext, UserBookingDetails.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.putExtra("Data", (Serializable) bookingPaymentsDetails);
-                            intent.putExtra("FROM", "1");
-                            //intent.putExtra("PAYLATER", "PAID");
-                            startActivity(intent);
-                            finish();
-                        }
-                    }, MILI_SECONDS);
+                        MILI_SECONDS = 2000;
+                        activityCheckoutDetailsBinding.bookingConLayout.getRoot().setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                activityCheckoutDetailsBinding.bookingConLayout.getRoot().setVisibility(View.GONE);
+                                Intent intent = new Intent(mContext, UserBookingDetails.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("Data", (Serializable) bookingPaymentsDetails);
+                                intent.putExtra("FROM", "1");
+                                //intent.putExtra("PAYLATER", "PAID");
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, MILI_SECONDS);
+                    }
+
+
 
 
                 } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {

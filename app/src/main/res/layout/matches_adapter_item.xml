@@ -33,12 +33,12 @@
 
             <ImageButton
                 android:id="@+id/play_icon"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:layout_centerInParent="true"
                 android:background="@color/transparent"
                 android:scaleType="centerInside"
-                android:src="@drawable/youtube_play" />
+                android:src="@drawable/play_icon" />
         </RelativeLayout>
 
 

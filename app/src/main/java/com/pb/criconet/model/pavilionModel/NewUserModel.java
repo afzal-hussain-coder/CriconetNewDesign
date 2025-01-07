@@ -16,6 +16,17 @@ public class NewUserModel implements Parcelable {
     private String avatar;
     private String cover;
 
+
+    public String getWo_IsFollowing() {
+        return Wo_IsFollowing;
+    }
+
+    public void setWo_IsFollowing(String wo_IsFollowing) {
+        Wo_IsFollowing = wo_IsFollowing;
+    }
+
+    private String Wo_IsFollowing;
+
     public String getCriconet_verified() {
         return criconet_verified;
     }
@@ -62,6 +73,7 @@ public class NewUserModel implements Parcelable {
             b.first_name = jsonObject.optString("first_name");
             b.last_name = jsonObject.optString("last_name");
             b.avatar = jsonObject.optString("avatar");
+            b.Wo_IsFollowing = jsonObject.optString("Wo_IsFollowing");
             b.cover = jsonObject.optString("cover");
             b.gender = jsonObject.optString("gender");
             b.name = jsonObject.optString("name");
@@ -117,6 +129,7 @@ public class NewUserModel implements Parcelable {
         this.first_name = ((String) in.readValue((String.class.getClassLoader())));
         this.last_name = ((String) in.readValue((String.class.getClassLoader())));
         this.avatar = ((String) in.readValue((String.class.getClassLoader())));
+        //this.Wo_IsFollowing = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.cover = ((String) in.readValue((String.class.getClassLoader())));
         this.gender = ((String) in.readValue((String.class.getClassLoader())));
         this.verified = ((String) in.readValue((String.class.getClassLoader())));
@@ -135,6 +148,7 @@ public class NewUserModel implements Parcelable {
         dest.writeValue(first_name);
         dest.writeValue(last_name);
         dest.writeValue(avatar);
+       // dest.writeValue(Wo_IsFollowing);
         dest.writeValue(cover);
         dest.writeValue(gender);
         dest.writeValue(name);
@@ -210,6 +224,7 @@ public class NewUserModel implements Parcelable {
                 ", name='" + name + '\'' +
                 ", verified='" + verified + '\'' +
                 ", criconet_verified='" + criconet_verified + '\'' +
+               ", Wo_IsFollowing='" + Wo_IsFollowing + '\'' +
                 '}';
     }
 

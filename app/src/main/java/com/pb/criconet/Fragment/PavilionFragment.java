@@ -114,6 +114,7 @@ import com.pb.criconet.util.MultipartRequest;
 import com.pb.criconet.util.RecycleViewPaginationScrollListener;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
+import com.pb.criconet.util.VideoManager;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -407,32 +408,31 @@ public class PavilionFragment extends Fragment implements PostListeners {
         rv_searchUser.setHasFixedSize(true);
 
         fl_post = rootView.findViewById(R.id.fl_post);
-        post_list = rootView.findViewById(R.id.post_list);
         up_image = rootView.findViewById(R.id.up_image);
         add_photo = rootView.findViewById(R.id.add_photo);
         add_video = rootView.findViewById(R.id.add_video);
-        notfound = rootView.findViewById(R.id.notfound);
         up_text = rootView.findViewById(R.id.up_text);
         spn_privacy = rootView.findViewById(R.id.spn_privacy);
 
         post_list = rootView.findViewById(R.id.post_list);
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
-        post_list.addItemDecoration(itemDecorator);
-        post_list.setHasFixedSize(true);
-        notfound = rootView.findViewById(R.id.notfound);
-        modelArrayList = new ArrayList<>();
-        adapter = new HomeAdapter(getActivity(), modelArrayList, this);
-        mLayoutManager = new LinearLayoutManager(getActivity());
 
+//        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+//        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+//        post_list.addItemDecoration(itemDecorator);
+//        post_list.setHasFixedSize(true);
+//
+//        modelArrayList = new ArrayList<>();
+//        adapter = new HomeAdapter(getActivity(), modelArrayList, this);
+//        mLayoutManager = new LinearLayoutManager(getActivity());
+//        post_list.setLayoutManager(mLayoutManager);
+//        post_list.setItemAnimator(new DefaultItemAnimator());
 
         if (Global.isOnline(requireActivity())) {
-            getFeed();
+            //getFeed();
             getPageUrl();
         } else {
             Global.showDialog(getActivity());
         }
-
 
         ResetFeed();
 
@@ -534,7 +534,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         });
 
-
         add_photo.setOnClickListener(v -> {
             postType = POST_TYPE_IMAGE;
 
@@ -552,15 +551,24 @@ public class PavilionFragment extends Fragment implements PostListeners {
         fl_post.setOnClickListener(v -> {
             searchUsername = "";
             feedText = up_text.getText().toString().trim();
-            rl_add_post.startAnimation(animation_up);
-            rl_add_post.setVisibility(View.GONE);
-            if (postType.equals(POST_TYPE_VIDEO)) {
-                //uploadVideoToServer(feedText);
-                PostFeedFinal(feedText);
-                //new UploadFileToServer().execute();
-            } else {
-                PostFeedFinal(feedText);
-            }
+
+//            if(feedText.isEmpty()){
+//                Toaster.customToast("Please share your thought!");
+//                //rl_add_post.startAnimation(animation_up);
+//                rl_add_post.setVisibility(View.VISIBLE);
+//            }else{
+
+                rl_add_post.startAnimation(animation_up);
+                rl_add_post.setVisibility(View.GONE);
+                if (postType.equals(POST_TYPE_VIDEO)) {
+                    //uploadVideoToServer(feedText);
+                    PostFeedFinal(feedText);
+                    //new UploadFileToServer().execute();
+                } else {
+                    PostFeedFinal(feedText);
+                }
+          //  }
+
 
         });
 
@@ -750,7 +758,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
     }
 
     private void getFeed() {
-        //progress.show();
         loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "home_posts", new Response.Listener<String>() {
             @Override
@@ -758,7 +765,7 @@ public class PavilionFragment extends Fragment implements PostListeners {
                 Log.d("homeResponse", response);
                 loaderView.hideLoader();
                 try {
-                    JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
+                    JSONObject jsonObject = new JSONObject(response.toString());
                     if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
                         JSONArray array = jsonObject.getJSONArray("posts");
                         if (array.length() < 1) {
@@ -771,7 +778,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
                         adapter.notifyDataSetChanged();
 
                         if (after_post_id.equals("0")) {
-//                                if (page == 1) {
                             post_list.smoothScrollBy(0, 1);
                             post_list.smoothScrollBy(0, -1);
 
@@ -791,13 +797,10 @@ public class PavilionFragment extends Fragment implements PostListeners {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                loaderView.hideLoader();
-                Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-            }
+        }, error -> {
+            error.printStackTrace();
+            loaderView.hideLoader();
+            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
         }) {
             @Override
             protected Map<String, String> getParams() {
@@ -1445,6 +1448,14 @@ public class PavilionFragment extends Fragment implements PostListeners {
     }
 
     private void ResetFeed() {
+
+        if (Global.isOnline(requireActivity())) {
+            getFeed();
+           // getPageUrl();
+        } else {
+            Global.showDialog(getActivity());
+        }
+
         feedText = "";
         postType = "";
         postFile = "";
@@ -1466,13 +1477,13 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         // false by default
         //optional - by default we check if url ends with ".mp4". If your urls do not end with mp4, you can set this param to false and implement your own check to see if video points to url
-//        post_list.setCheckForMp4(false); //true by default
+        post_list.setCheckForMp4(false); //true by default
 
         //optional - download videos to local storage (requires "android.permission.WRITE_EXTERNAL_STORAGE" in manifest or ask in runtime)
         //post_list.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
         //post_list.setDownloadVideos(true); // false by default
         post_list.setVisiblePercent(90);
-        post_list.setActivity(getActivity());// percentage of View that needs to be visible to start playing
+
         post_list.setAdapter(adapter);
         //call this functions when u want to start autoplay on loading async lists (eg firebase)
         post_list.smoothScrollBy(0, 1);
@@ -1484,7 +1495,6 @@ public class PavilionFragment extends Fragment implements PostListeners {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
-//                    page++;
                 after_post_id = modelArrayList.get(modelArrayList.size() - 1).getId();
                 getFeed();
             }
@@ -1501,11 +1511,11 @@ public class PavilionFragment extends Fragment implements PostListeners {
 
         });
 
-        if (Global.isOnline(requireActivity())) {
-            getFeed();
-        } else {
-            Global.showDialog(getActivity());
-        }
+//        if (Global.isOnline(requireActivity())) {
+//            getFeed();
+//        } else {
+//            Global.showDialog(getActivity());
+//        }
     }
 
     @Override
@@ -1513,6 +1523,9 @@ public class PavilionFragment extends Fragment implements PostListeners {
         super.onResume();
         post_list.playAvailableVideos(0);
     }
+
+
+
 
     @Override
     public void onLikeClickListener(NewPostModel post) {
@@ -1854,6 +1867,19 @@ public class PavilionFragment extends Fragment implements PostListeners {
         super.onStop();
         post_list.stopVideos();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        post_list.stopVideos();
+        VideoManager.getInstance().releasePlayer();
+    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        post_list.stopVideos();
+//    }
 
     public void logout() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());

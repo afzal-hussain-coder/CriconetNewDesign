@@ -128,6 +128,7 @@ public class FeedDetailsActivity extends AppCompatActivity {
 
             Log.d("FeedId", feed_id);
         }
+
         inItView();
 
         if (Global.isOnline(mContext)) {
@@ -328,6 +329,7 @@ public class FeedDetailsActivity extends AppCompatActivity {
             startActivity(new Intent(mContext, CustomeCameraActivity.class)
                     .putExtra("FROM", "FeedDetailsActivity"));
         });
+
         activityFeedDetailsBinding.imgClose.setOnClickListener(v -> {
             activityFeedDetailsBinding.flAttachedImage.setVisibility(GONE);
             LinearLayout.LayoutParams layoutParams =

@@ -227,7 +227,7 @@
                                 app:pagesColor="@color/purple_700"
                                 app:previousButtonSrc="@drawable/ic_arrow_left"
                                 app:selectionColor="@color/indicator_selector"
-                                app:todayLabelColor="@color/purple_700"
+                                app:todayLabelColor="@color/white"
                                 app:type="one_day_picker"
                                 app:typeface="@font/opensans_regular" />
 

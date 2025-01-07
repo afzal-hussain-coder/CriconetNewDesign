@@ -135,6 +135,12 @@ public class StreamingFragment extends Fragment {
         fragmentStreamingBinding.VideoView.pausePlayer();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        fragmentStreamingBinding.VideoView.pausePlayer();
+    }
+
     private void drawerNavigation(RelativeLayout layout_nav){
 
 

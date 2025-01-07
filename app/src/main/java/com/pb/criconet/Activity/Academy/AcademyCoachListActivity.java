@@ -46,7 +46,7 @@ public class AcademyCoachListActivity extends AppCompatActivity {
 
     Context mContext;
     Activity mActivity;
-    String academyId="";
+    String academyId = "";
     ArrayList<AcademyListModel.AcademyCoaches> academyCoachesArrayList = null;
     AcademyListModel.AcademyCoaches academyCoaches;
 
@@ -79,26 +79,34 @@ public class AcademyCoachListActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
         activityAcademyCoachListBinding.rvAcademyCoach.setHasFixedSize(true);
-        activityAcademyCoachListBinding.rvAcademyCoach.setLayoutManager(new GridLayoutManager(mActivity,2));
-
-
+        activityAcademyCoachListBinding.rvAcademyCoach.setLayoutManager(new GridLayoutManager(mActivity, 2));
         activityAcademyCoachListBinding.rvAcademyCoach.setAdapter(new AcademyCoachAdapter(mContext, academyCoachesArrayList, (manageCoachesModel) -> {
 
-            Intent intent =new Intent(mContext, ManageAcademyCoachDetailsActivity.class);
+            Intent intent = new Intent(mContext, ManageAcademyCoachDetailsActivity.class);
             Bundle args = new Bundle();
-            try{
-                args.putSerializable("ARRAYLIST",(Serializable)manageCoachesModel);
-                intent.putExtra("Certificate",args);
-                intent.putExtra("FROM","1");
-            }catch(Exception e){
+            try {
+                args.putSerializable("ARRAYLIST", (Serializable) manageCoachesModel);
+                intent.putExtra("Certificate", args);
+                intent.putExtra("FROM", "1");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             startActivity(intent);
 
         }));
+
+
+        if (academyCoachesArrayList.isEmpty()) {
+            activityAcademyCoachListBinding.tvnotfound.setVisibility(View.VISIBLE);
+            activityAcademyCoachListBinding.rvAcademyCoach.setVisibility(View.GONE);
+        } else {
+            activityAcademyCoachListBinding.tvnotfound.setVisibility(View.GONE);
+            activityAcademyCoachListBinding.rvAcademyCoach.setVisibility(View.VISIBLE);
+        }
     }
 
-    }
+}
 
 

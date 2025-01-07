@@ -17,44 +17,57 @@
         android:layout_below="@+id/toolbar">
 
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:id="@+id/material_card"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_alignParentTop="true"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="@dimen/_10sdp"
-            app:cardMaxElevation="@dimen/_20sdp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
 
-            <RelativeLayout
+            <EditText
+                android:id="@+id/edit_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp">
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/search_bg"
+                android:fontFamily="@font/opensans_regular"
+                android:hint="@string/search_by_name_location"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/blue_intro_color"
+                android:textColorHint="@color/blue_intro_color"
+                android:textSize="@dimen/_10sdp" />
 
-                <EditText
-                    android:id="@+id/edit_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_centerVertical="true"
+            <LinearLayout
+                android:id="@+id/liApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_search"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/fl_submit"
-                    android:background="@drawable/search_bg"
-                    android:fontFamily="@font/opensans_regular"
-                    android:hint="@string/search_by_name_location"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="@dimen/_8sdp"
+                    android:fontFamily="@font/opensans_semibold"
+                    android:lineHeight="@dimen/_27sdp"
+                    android:text="@string/clear"
                     android:textColor="@color/blue_intro_color"
-                    android:textColorHint="@color/blue_intro_color"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible" />
 
                 <FrameLayout
                     android:id="@+id/fl_submit"
-                    android:layout_width="@dimen/_110sdp"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_30sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center_horizontal">
 
@@ -88,13 +101,15 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/opensans_semibold"
                         android:lineHeight="@dimen/_27sdp"
-                        android:text="@string/submit"
+                        android:text="@string/apply"
                         android:textAppearance="@style/login" />
 
                 </FrameLayout>
-            </RelativeLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/week_list"

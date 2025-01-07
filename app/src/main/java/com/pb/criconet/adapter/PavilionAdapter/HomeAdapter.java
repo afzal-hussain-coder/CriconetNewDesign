@@ -39,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.card.MaterialCardView;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkTextView;
+import com.pb.criconet.Activity.LikeDislikeActivity;
 import com.pb.criconet.Activity.UserDetails;
 import com.pb.criconet.Activity.WebView_Activity;
 import com.pb.criconet.R;
@@ -48,6 +49,7 @@ import com.pb.criconet.model.pavilionModel.NewPostModel;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
+import com.pb.criconet.util.VideoManager;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -76,6 +78,7 @@ public class HomeAdapter extends AAH_VideosAdapter {
         this.arrayList_image = chatname_list1;
         this.listeners = listeners;
         prefs = PreferenceManager.getDefaultSharedPreferences(mcontext);
+
     }
 
 
@@ -520,19 +523,19 @@ public class HomeAdapter extends AAH_VideosAdapter {
                     listeners.onProfileClickListener(data);
 //                        }
                 });
-                ((MyImageViewHolder) holder).like_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.likes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
-//                        context.finish();
+                ((MyImageViewHolder) holder).liLiked.setOnClickListener(v -> {
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.likes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
+                        context.finish();
                 });
-                ((MyImageViewHolder) holder).dislike_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.dislikes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
-//                        context.finish();
+                ((MyImageViewHolder) holder).liDisLiked.setOnClickListener(v -> {
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.dislikes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
+                        context.finish();
                 });
 
                 break;
@@ -880,17 +883,18 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 ((MyViewHolder) holder).user_name.setOnClickListener(v -> listeners.onProfileClickListener(data));
                 ((MyViewHolder) holder).user_image.setOnClickListener(v -> listeners.onProfileClickListener(data));
                 // MyWork
-                ((MyViewHolder) holder).like_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.likes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
+                ((MyViewHolder) holder).liLiked.setOnClickListener(v -> {
+
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.likes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
                 });
-                ((MyViewHolder) holder).dislike_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.dislikes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
+                ((MyViewHolder) holder).liDisLiked.setOnClickListener(v -> {
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.dislikes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
                 });
 
 
@@ -942,22 +946,34 @@ public class HomeAdapter extends AAH_VideosAdapter {
                     ((MyImageViewHolder) holder).post_content.setText(data.getPostLinkContent());
 
                 }
+
                 else if (getItemViewType(position) == TYPE_YOUTUBE) {
-                    ((MyImageViewHolder) holder).post_status.setText(context.getResources().getString(R.string.Shared_a_YouTube_Video));
-                    ((MyImageViewHolder) holder).youtube_view.setVisibility(View.VISIBLE);
-                    ((MyImageViewHolder) holder).post_link_image.setVisibility(View.GONE);
+                    MyImageViewHolder myHolder = (MyImageViewHolder) holder;
+                    myHolder.post_status.setText(context.getResources().getString(R.string.Shared_a_YouTube_Video));
+                    myHolder.youtube_view.setVisibility(View.VISIBLE);
+                    myHolder.post_link_image.setVisibility(View.GONE);
 
-
-                    /*new code add on 21-08-23*/
-                    ((MyImageViewHolder) holder).youtube_view.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    // Adding YouTubePlayerListener
+                    myHolder.youtube_view.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                         @Override
                         public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+
+                            Log.d("YouTubeLink",data.getPostLink());
+
                             String videoId = getVideoKey(data.getPostLink());
-                            youTubePlayer.loadVideo(videoId, 0);
+
+                            Log.d("videoId",videoId);// Extract video ID from data
+
+                            if (videoId != null && !videoId.isEmpty()) {
+
+                                Log.d("YouTubePlayer", "Loading video with ID: " + videoId);
+                                VideoManager.getInstance().setCurrentPlayer(youTubePlayer);
+                                youTubePlayer.cueVideo(videoId, 0);
+                            } else {
+                                Log.e("YouTubePlayer", "Invalid video ID: " + videoId);
+                            }
                         }
                     });
-
-
                 }
                 else {
                     ((MyImageViewHolder) holder).post_status.setText(context.getResources().getString(R.string.Shared_a_Message));
@@ -1242,17 +1258,17 @@ public class HomeAdapter extends AAH_VideosAdapter {
                 });
                 ((MyImageViewHolder) holder).user_image.setOnClickListener(v -> listeners.onProfileClickListener(data));
 
-                ((MyImageViewHolder) holder).like_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.likes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
+                ((MyImageViewHolder) holder).liLiked.setOnClickListener(v -> {
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.likes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
                 });
-                ((MyImageViewHolder) holder).dislike_link.setOnClickListener(v -> {
-//                        Intent i = new Intent(context, LikeDislike.class);
-//                        i.putExtra(LikeDislike.Type, context.getString(R.string.dislikes));
-//                        i.putExtra(LikeDislike.PostId, data.getId());
-//                        context.startActivity(i);
+                ((MyImageViewHolder) holder).liDisLiked.setOnClickListener(v -> {
+                        Intent i = new Intent(context, LikeDislikeActivity.class);
+                        i.putExtra(LikeDislikeActivity.Type, context.getString(R.string.dislikes));
+                        i.putExtra(LikeDislikeActivity.PostId, data.getId());
+                        context.startActivity(i);
                 });
                 break;
             }
@@ -1382,16 +1398,59 @@ public class HomeAdapter extends AAH_VideosAdapter {
 
     }
 
+//    private String getVideoKey(String url) {
+//
+//        Log.d("YoutUbelInk",url);
+//        String key = "";
+//        if (url.contains("v=")) {
+//            key = url.substring(url.lastIndexOf("v=") + 2);
+//        } else {
+//            key = url.substring(url.lastIndexOf("/") + 1);
+//        }
+//        //Timber.tag("Youtube Key :- ").e(key);
+//        return key;
+//    }
+
     private String getVideoKey(String url) {
         String key = "";
-        if (url.contains("v=")) {
-            key = url.substring(url.lastIndexOf("v=") + 2);
-        } else {
-            key = url.substring(url.lastIndexOf("/") + 1);
+        try {
+            // Handle YouTube short link format
+            if (url.contains("youtu.be/")) {
+                // Extract the video ID before any query parameters
+                int start = url.lastIndexOf("/") + 1;
+                int end = url.indexOf("?");
+                if (end == -1) {
+                    end = url.length();
+                }
+                key = url.substring(start, end);
+            }
+            // Handle YouTube standard link format
+            else if (url.contains("v=")) {
+                String[] params = url.split("[?&]");
+                for (String param : params) {
+                    if (param.startsWith("v=")) {
+                        key = param.substring(2);
+                        break;
+                    }
+                }
+            }
+            // Handle YouTube shorts link format
+            else if (url.contains("youtube.com/shorts/")) {
+                // Extract the video ID before any query parameters
+                int start = url.lastIndexOf("/") + 1;
+                int end = url.indexOf("?");
+                if (end == -1) {
+                    end = url.length();
+                }
+                key = url.substring(start, end);
+            }
+        } catch (Exception e) {
+            Log.e("getVideoKey", "Error extracting video key: " + e.getMessage());
         }
-        //Timber.tag("Youtube Key :- ").e(key);
         return key;
     }
+
+
 
     public class MyViewHolder extends AAH_CustomViewHolder {
         ImageView img_vol, img_playback;
@@ -1404,6 +1463,8 @@ public class HomeAdapter extends AAH_VideosAdapter {
         MaterialCardView relative_dash;
         AutoLinkTextView post_text_autolink;
         ImageView iv_verified;
+        LinearLayout liLiked;
+        LinearLayout liDisLiked;
 
         MyViewHolder(View x) {
             super(x);
@@ -1436,6 +1497,8 @@ public class HomeAdapter extends AAH_VideosAdapter {
             img_link_like = x.findViewById(R.id.img_link_like);
             img_link_dislike = x.findViewById(R.id.img_link_dislike);
 //          img_playback = (ImageView) x.findViewById(R.id.img_playback);
+            liLiked = x.findViewById(R.id.liLiked);
+            liDisLiked = x.findViewById(R.id.liDisLiked);
 
             post_text_autolink.setCustomModeColor(ContextCompat.getColor(context, R.color.app_green));
             post_text_autolink.setMentionModeColor(ContextCompat.getColor(context, R.color.verified_user_color));
@@ -1486,6 +1549,8 @@ public class HomeAdapter extends AAH_VideosAdapter {
         TextView img_count;
         AutoLinkTextView post_text_autolink;
         ImageView iv_verified;
+        LinearLayout liLiked;
+        LinearLayout liDisLiked;
 
         public MyImageViewHolder(View x) {
             super(x);
@@ -1526,6 +1591,8 @@ public class HomeAdapter extends AAH_VideosAdapter {
             dislike_link = x.findViewById(R.id.dislike_link);
             img_link_like = x.findViewById(R.id.img_link_like);
             img_link_dislike = x.findViewById(R.id.img_link_dislike);
+            liLiked = x.findViewById(R.id.liLiked);
+            liDisLiked = x.findViewById(R.id.liDisLiked);
 
             post_text_autolink.setCustomModeColor(ContextCompat.getColor(context, R.color.app_green));
             post_text_autolink.setMentionModeColor(ContextCompat.getColor(context, R.color.verified_user_color));

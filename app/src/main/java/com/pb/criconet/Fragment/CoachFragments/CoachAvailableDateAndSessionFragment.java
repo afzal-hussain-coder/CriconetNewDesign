@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.applandeo.materialcalendarview.EventDay;
 import com.google.gson.Gson;
+import com.pb.criconet.Activity.Coach.RegisterAsAnECoachActivity;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.EcoachingAdapter.SessionTimeListAdapter;
 import com.pb.criconet.adapter.EcoachingAdapter.TimeAdaptercoachh;
@@ -86,17 +87,22 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            fromWhere = getArguments().getString("FROM");
-//
-//            Toaster.customToast(fromWhere);
-//        }
+        if (getArguments() != null) {
+            fromWhere = getArguments().getString("FROM");
+
+            //Toaster.customToast(fromWhere);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentCoachDateSesssionBinding = FragmentCoachDateSesssionBinding.inflate(inflater, container, false);
+
+        // Retrieve the argument to set the button visibility
+        boolean showSaveButton = getArguments() != null && getArguments().getBoolean("showSaveButton", false);
+        fragmentCoachDateSesssionBinding.flSave.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
+
         return fragmentCoachDateSesssionBinding.getRoot();
     }
 
@@ -140,14 +146,25 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
             Log.e("DateError", "One of the date components is null or empty: year=" + year + ", month=" + month + ", day=" + day);
         }
 
-       // Toaster.customToast(fromWhere);
-//        if(fromWhere.equalsIgnoreCase("1")){
-//            if (Global.isOnline(getActivity())) {
-//                getUsersDetails();
-//            } else {
-//                Global.showDialog(getActivity());
-//            }
-//        }
+
+        if(fromWhere.equalsIgnoreCase("1")){
+            fragmentCoachDateSesssionBinding.flSave.setVisibility(View.VISIBLE);
+        }else{
+            fragmentCoachDateSesssionBinding.flSave.setVisibility(View.GONE);
+        }
+
+
+
+      // Toaster.customToast(fromWhere);
+        if(fromWhere.equalsIgnoreCase("1")){
+
+            if (Global.isOnline(getActivity())) {
+                getUsersDetails();
+            } else {
+                Global.showDialog(getActivity());
+            }
+        }
+
         initView();
     }
 
@@ -272,6 +289,8 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
             }
         });
 
+
+
         fragmentCoachDateSesssionBinding.flSave.setOnClickListener(view -> {
             selectedTimeSlot = selectedTimeSlott;
 
@@ -349,7 +368,8 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
                 Map<String, String> param = new HashMap<>();
                 param.put("user_id", SessionManager.get_user_id(prefs));
                 param.put("s", SessionManager.get_session_id(prefs));
-                //param.put("date", dateGot);
+                param.put("date", dateGot);
+                System.out.println("data   " + param);
                 return param;
             }
         };
@@ -447,20 +467,18 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
     public void getUsersDetails() {
         //loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "get_user_data",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("getUserDetails", response);
-                        //loaderView.hideLoader();
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.toString());
-                            if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
-                                JSONObject object = jsonObject.getJSONObject("coach_data");
+                response -> {
+                    Log.d("getUserDetails", response);
+                    //loaderView.hideLoader();
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
+                            JSONObject object = jsonObject.getJSONObject("coach_data");
 
-                                if (object.has("coach_available_date")) {
-                                    JSONArray jsonObject_personal_info = object.getJSONArray("coach_available_date");
-                                    setData(jsonObject_personal_info);
-                                }
+                            if (object.has("coach_available_date")) {
+                                JSONArray jsonObject_personal_info = object.getJSONArray("coach_available_date");
+                                setData(jsonObject_personal_info);
+                            }
 
 //                                if (object.has("coach_booking_close_time")) {
 //
@@ -470,14 +488,13 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
 //                                    //Toaster.customToast(closeTime);
 //                                }
 
-                            } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
-                                Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
-                            } else {
-                                Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else if (jsonObject.optString("api_text").equalsIgnoreCase("failed")) {
+                            Global.msgDialog(getActivity(), jsonObject.optJSONObject("errors").optString("error_text"));
+                        } else {
+                            Global.msgDialog(getActivity(), getResources().getString(R.string.error_server));
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 },
                 new Response.ErrorListener() {
@@ -569,6 +586,12 @@ public class CoachAvailableDateAndSessionFragment extends Fragment {
             ft.detach(this).attach(this).commit();
         }
 
+    }
+
+    public void setSaveButtonVisibility(boolean isVisible) {
+        if (fragmentCoachDateSesssionBinding.flSave != null) {
+            fragmentCoachDateSesssionBinding.flSave.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        }
     }
 
 }

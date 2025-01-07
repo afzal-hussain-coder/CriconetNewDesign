@@ -2,6 +2,7 @@ package com.pb.criconet.Activity.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,7 @@ import com.pb.criconet.util.DataModel;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
 import com.pb.criconet.util.Toaster;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -98,7 +101,7 @@ public class UserBookingHistory extends AppCompatActivity {
             }
 
             @Override
-            public void onClickDone(String name,String id) {
+            public void onClickDone(String name, String id) {
 
                 if (name.equalsIgnoreCase("Cancelled booking")) {
                     filterType = "cancelled";
@@ -120,10 +123,34 @@ public class UserBookingHistory extends AppCompatActivity {
         activityUserBookingHistoryBinding.rvBooking.setLayoutManager(new LinearLayoutManager(mContext));
 
 
+        activityUserBookingHistoryBinding.flApply.setOnClickListener(view -> {
+            if (Global.isOnline(this)) {
+                getBookingHistory();
+            } else {
+                Global.showDialog(this);
+            }
+        });
+
+        activityUserBookingHistoryBinding.tvClear.setOnClickListener(view -> {
+            activityUserBookingHistoryBinding.liApply.setVisibility(View.GONE);
+            from_date = "";
+            to_date = "";
+            activityUserBookingHistoryBinding.tvFromDate.setText(mContext.getResources().getString(R.string.select_e_session_from_date));
+            activityUserBookingHistoryBinding.tvToDate.setText(mContext.getResources().getString(R.string.Select_e_Session_to_Date));
+            filterType = "";
+
+            if (Global.isOnline(this)) {
+                getBookingHistory();
+            } else {
+                Global.showDialog(this);
+            }
+
+        });
+
 
     }
 
-    public void openCalendarFromDate(TextView textView){
+    public void openCalendarFromDate(TextView textView) {
 
         final Calendar c = Calendar.getInstance();
 
@@ -141,7 +168,7 @@ public class UserBookingHistory extends AppCompatActivity {
 
                     from_date = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
 
-                    Toaster.customToast(from_date);
+                    //Toaster.customToast(from_date);
 
                     textView.setText(Global.getDateGotCoachh(year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth));
 
@@ -151,7 +178,7 @@ public class UserBookingHistory extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    public void openCalendarToDate(TextView textView){
+    public void openCalendarToDate(TextView textView) {
         final Calendar c = Calendar.getInstance();
 
         int year = c.get(Calendar.YEAR);
@@ -163,9 +190,13 @@ public class UserBookingHistory extends AppCompatActivity {
                 (view, year1, monthOfYear, dayOfMonth) -> {
 
                     to_date = year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                    Toaster.customToast(to_date);
+                    //Toaster.customToast(to_date);
 
                     textView.setText(Global.getDateGotCoachh(year1 + "-" + (monthOfYear + 1) + "-" + dayOfMonth));
+
+                    if (!from_date.isEmpty() && !to_date.isEmpty()) {
+                        activityUserBookingHistoryBinding.liApply.setVisibility(View.VISIBLE);
+                    }
 
                 },
 
@@ -177,9 +208,8 @@ public class UserBookingHistory extends AppCompatActivity {
     private void getBookingHistory() {
         loaderView.showLoader();
         StringRequest postRequest = new StringRequest(Request.Method.POST, Global.URL + "get_booking_history", response -> {
-            Log.d("BookingResponse",response);
+            Log.d("BookingResponse", response);
             loaderView.hideLoader();
-
 
             try {
                 Gson gson = new Gson();
@@ -192,12 +222,12 @@ public class UserBookingHistory extends AppCompatActivity {
                     activityUserBookingHistoryBinding.notfound.setVisibility(View.GONE);
                     activityUserBookingHistoryBinding.rvBooking.setVisibility(View.VISIBLE);
 
-                    activityUserBookingHistoryBinding.rvBooking.setAdapter(new UserBookingListAdapter(mContext,modelArrayList.getData(), new UserBookingListAdapter.coachItemClickListener() {
+                    activityUserBookingHistoryBinding.rvBooking.setAdapter(new UserBookingListAdapter(mContext, modelArrayList.getData(), new UserBookingListAdapter.coachItemClickListener() {
                         @Override
                         public void viewDetails(String bookingId) {
-                            startActivity(new Intent(mContext,UserBookingDetails.class)
-                                    .putExtra("BookingID",bookingId)
-                                    .putExtra("FROM","2"));
+                            startActivity(new Intent(mContext, UserBookingDetails.class)
+                                    .putExtra("BookingID", bookingId)
+                                    .putExtra("FROM", "2"));
                         }
 
                         @Override
@@ -252,7 +282,7 @@ public class UserBookingHistory extends AppCompatActivity {
                 param.put("bstatus", filterType);
                 param.put("from_date", from_date);
                 param.put("to_date", to_date);
-                Log.e("Param",param.toString());
+                Log.e("Param", param.toString());
                 return param;
             }
         };

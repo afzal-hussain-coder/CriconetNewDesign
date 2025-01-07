@@ -85,7 +85,7 @@
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipCpp"
@@ -164,13 +164,16 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/liConfirmed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="visible"
                     android:background="@drawable/booking_fileter_bg"
                     android:backgroundTint="@color/indicator_selector">
 
                     <TextView
+                        android:id="@+id/tvTitleStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
@@ -186,9 +189,52 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/paytoneone_regular"
-                        android:layout_marginTop="-22dp"
+                        android:layout_marginTop="-20dp"
                         android:gravity="center"
                         android:text="confirmed!"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_32sdp" />
+
+                    <ImageView
+                        android:id="@+id/ivStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:src="@drawable/confirmed_image"
+                        app:tint="@color/blue_intro_color">
+
+                    </ImageView>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/liCancelled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:background="@drawable/booking_fileter_bg"
+                    android:backgroundTint="@color/indicator_selector">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/paytoneone_regular"
+                        android:gravity="center"
+                        android:text="Your booking has been"
+                        android:textColor="@color/blue_intro_color"
+                        android:textSize="@dimen/_16sdp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/paytoneone_regular"
+                        android:layout_marginTop="-20dp"
+                        android:gravity="center"
+                        android:text="cancelled!"
                         android:textColor="@color/blue_intro_color"
                         android:textSize="@dimen/_32sdp" />
 
@@ -197,7 +243,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:src="@drawable/confirmed_image">
+                        android:src="@drawable/vicket"
+                        app:tint="@color/blue_intro_color">
 
                     </ImageView>
 

@@ -53,6 +53,7 @@ import com.pb.criconet.util.Toaster;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -470,65 +471,82 @@ public class BookLiveStreamingActivity extends AppCompatActivity {
         }
     }
 
+    private void setupCalendarView(CalendarView calendarView) {
+        // Get current date
+        Calendar currentDate = Calendar.getInstance();
+
+        // Set the first day of the month
+        currentDate.set(Calendar.DAY_OF_MONTH, 1);
+        long startOfMonth = currentDate.getTimeInMillis();  // Not used directly now
+
+        // Set the last day of the month
+        Calendar endOfMonthCalendar = Calendar.getInstance();
+        endOfMonthCalendar.set(Calendar.MONTH, currentDate.get(Calendar.MONTH));
+        endOfMonthCalendar.set(Calendar.YEAR, currentDate.get(Calendar.YEAR));
+        endOfMonthCalendar.set(Calendar.DAY_OF_MONTH, endOfMonthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+
+        // Set minimum and maximum dates using Calendar objects
+        calendarView.setMinimumDate(currentDate); // Set to first day of the current month
+        calendarView.setMaximumDate(endOfMonthCalendar); // Set to last day of the current month
+    }
+
     private void dateDialog(List<Calendar> selectedDatesOld) {
         Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_select_multiple_date);
         dialog.setCancelable(false);
+
         FrameLayout fl_cancell = dialog.findViewById(R.id.fl_cancell);
         fl_cancell.setOnClickListener(v -> {
             activityBookLiveStreamingBinding.tvSelectdate.setText("");
             dialog.dismiss();
         });
+
         FrameLayout fl_ok = dialog.findViewById(R.id.fl_ok);
         CalendarView calendarView = dialog.findViewById(R.id.calendarView);
 
-
         Calendar min = Calendar.getInstance();
-        Date previousDate = min.getTime();
-        min.add(Calendar.DAY_OF_MONTH, 0);
+        min.set(Calendar.DAY_OF_MONTH, 1);
+        min.set(Calendar.HOUR_OF_DAY, 0);
+        min.set(Calendar.MINUTE, 0);
+        min.set(Calendar.SECOND, 0);
+        min.set(Calendar.MILLISECOND, 0);
+        // Set the minimum date to today
         calendarView.setMinimumDate(min);
 
-
-        if (Global.getDateGot(calendarView.getCurrentPageDate().getTime().toString()).equals(Global.getDateGot(previousDate.toString())) || calendarView.getCurrentPageDate().getTime().compareTo(previousDate) > 0) {
-            calendarView.setClickable(false);
-        } else {
-            calendarView.setClickable(true);
-            fl_ok.setOnClickListener(v -> {
-
-                List<Calendar> selectedDates = calendarView.getSelectedDates();
-
-                if(selectedDates.size()==0){
-                    Toaster.customToast("Select date");
-                }else{
-                    selectedDatesOld.clear();
-                    for(int i=0;i<selectedDates.size();i++){
-                        selectedDatesOld.add(selectedDates.get(i));
+        fl_ok.setOnClickListener(v -> {
+            List<Calendar> selectedDates = calendarView.getSelectedDates();
+            if (selectedDates.size() == 0) {
+                Toaster.customToast("Select date");
+            } else {
+                selectedDatesOld.clear();
+                if (selectedDates.size() > 5) {
+                    Toaster.customToast("Select max five different dates");
+                } else {
+//                    for (Calendar date : selectedDates) {
+//                        selectedDatesOld.add(date);
+//                    }
+                    dialog.dismiss();
+                    StringBuilder langStringBuilder = new StringBuilder();
+                    String prefix = "";
+                    for (Calendar date : selectedDates) {
+                        langStringBuilder.append(prefix);
+                        prefix = ", ";
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        String formattedDate = sdf.format(date.getTime());
+                       Log.d("date",formattedDate);
+                        langStringBuilder.append(formattedDate);
                     }
-                    if(selectedDates.size()>5){
-                        Toaster.customToast("Select max five different date");
-                    }else{
-                        dialog.dismiss();
-                        langStringBuilder = new StringBuilder();
-                        String prefix = "";
-                        for (int i = 0; i < selectedDates.size(); i++) {
-                            langStringBuilder.append(prefix);
-                            prefix = ", ";
-                            langStringBuilder.append(Global.getDateGotCoach(selectedDates.get(i).getTime().toString()));
-                        }
-                        activityBookLiveStreamingBinding.tvSelectdate.setText(langStringBuilder.toString());
-                    }
-
-
+                    activityBookLiveStreamingBinding.tvSelectdate.setText(langStringBuilder.toString());
                 }
+            }
+        });
 
-
-            });
-
-
-        }
         calendarView.setSelectedDates(selectedDatesOld);
         dialog.show();
     }
+
+
+
 }

@@ -264,7 +264,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             return false;
         } else if (!Global.validateLength(address, 3)) {
-            activityUserProfileBinding.addressInputLayout.setError(mContext.getResources().getString(R.string.Enter_address_at_least_3_character));
+            activityUserProfileBinding.addressInputLayout.setError(mContext.getResources().getString(R.string.enter_address));
             activityUserProfileBinding.addressInputLayout.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
             return false;
         } else {

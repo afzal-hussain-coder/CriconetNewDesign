@@ -55,7 +55,10 @@
                 app:itemHeight="@dimen/_30sdp"
                 app:itemRadius="@dimen/_3sdp"
                 app:itemWidth="@dimen/_30sdp"
-                app:viewType="rectangle" />
+                app:viewType="rectangle"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
 
             <LinearLayout

@@ -45,6 +45,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair;
 import com.google.gson.Gson;
+import com.pb.criconet.Activity.Coach.RegisterAsAnECoachActivity;
 import com.pb.criconet.CustomeCamera.CustomeCameraActivity;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.EcoachingAdapter.CoachSpecialitiesListAdapter;
@@ -182,9 +183,9 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if (getArguments() != null) {
-//            fromWhere = getArguments().getString("FROM");
-//        }
+        if (getArguments() != null) {
+            fromWhere = getArguments().getString("FROM");
+        }
     }
 
     @Override
@@ -199,6 +200,10 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
                 requestPermissions(permissions, 112);
             }
         }
+
+        // Retrieve the argument to set the button visibility
+        boolean showSaveButton = getArguments() != null && getArguments().getBoolean("showSaveButton", false);
+        fragmentCoachProfessionalInformationBinding.flSave.setVisibility(showSaveButton ? View.VISIBLE : View.GONE);
 
         return fragmentCoachProfessionalInformationBinding.getRoot();
     }
@@ -219,13 +224,19 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             Global.showDialog(requireActivity());
         }
 
-//        if(fromWhere.equalsIgnoreCase("1")){
-//            if (Global.isOnline(getActivity())) {
-//                getUsersDetails();
-//            } else {
-//                Global.showDialog(getActivity());
-//            }
-//        }
+        if(fromWhere.equalsIgnoreCase("1")){
+            fragmentCoachProfessionalInformationBinding.flSave.setVisibility(View.VISIBLE);
+        }else{
+            fragmentCoachProfessionalInformationBinding.flSave.setVisibility(View.GONE);
+        }
+
+        if(fromWhere.equalsIgnoreCase("1")){
+            if (Global.isOnline(getActivity())) {
+                getUsersDetails();
+            } else {
+                Global.showDialog(getActivity());
+            }
+        }
     }
 
     private void inItView() {
@@ -421,6 +432,14 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             @Override
             public void onClickDone(String name, String id) {
                 selectedMonth = name;
+
+                if (selectedMonth.contains("months")) {
+                    selectedMonth = selectedMonth.replace("months", "");
+                    Toaster.customToast(selectedMonth);
+                } else if (selectedMonth.contains("month")) {
+                    selectedMonth = selectedMonth.replace("month", "");
+                    Toaster.customToast(selectedMonth);
+                }
             }
 
 
@@ -446,6 +465,17 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             @Override
             public void onClickDone(String name, String id) {
                 selectedYear = name;
+
+
+                if (selectedYear.contains("years")) {
+                    selectedYear = selectedYear.replace("years", "");
+                    Toaster.customToast(selectedYear);
+                } else if (selectedYear.contains("year")) {
+                    selectedYear = selectedYear.replace("year", "");
+                    Toaster.customToast(selectedYear);
+                }
+
+
             }
 
 
@@ -517,7 +547,7 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
                         for (String itemm : item) {
                             categoryId.append(prefix);
                             prefix = ",";
-                            categoryId.append(item);
+                            categoryId.append(itemm);
                         }
                     }
                 }));
@@ -593,10 +623,10 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             fragmentCoachProfessionalInformationBinding.filledTextFieldAmountPerSession.setErrorTextColor(ColorStateList.valueOf(getResources().getColor(R.color.app_light_red)));
             return false;
         }
-        else if(isTeramsChecked.equalsIgnoreCase("")){
-            Toaster.customToast(getActivity().getResources().getString(R.string.Please_check_tearms));
-            return false;
-        }
+//        else if(isTeramsChecked.equalsIgnoreCase("")){
+//            Toaster.customToast(getActivity().getResources().getString(R.string.Please_check_tearms));
+//            return false;
+//        }
 
         return true;
     }
@@ -613,7 +643,7 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             entity.addPart("exp_years", new StringBody(selectedYear.trim()));
             entity.addPart("exp_months", new StringBody(selectedMonth.trim()));
             entity.addPart("about_coach_profile", new StringBody(otherInformation));
-            entity.addPart("cuurency_code", new StringBody("otherInformation"));
+            entity.addPart("cuurency_code", new StringBody("INR"));
             entity.addPart("charge_amount", new StringBody(amount));
             entity.addPart("certificate_title", new StringBody(certificateTitle));
             entity.addPart("what_you_teach", new StringBody(whatYouTeach));
@@ -644,6 +674,7 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
                             SessionManager.save_profiletype(prefs, jsonObjectData.getString("profile_type"));
                             Toaster.customToast(jsonObject.optString("msg"));
                             isTeramsChecked="";
+                            ((RegisterAsAnECoachActivity) getActivity()).switchToNextFragment(2);
                             (fragmentCoachProfessionalInformationBinding.cbTearms).setChecked(false);
 
                         }
@@ -810,6 +841,7 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             profileTitle = data.optString("profile_title");
             fragmentCoachProfessionalInformationBinding.editTextCoachProfileTitle.setText(data.optString("profile_title"));
         }
+
         if (data.has("achievement")) {
 
             achievement = data.optString("achievement");
@@ -997,6 +1029,12 @@ public class CoachProfesionalInQualifocationFragment extends Fragment {
             }
         }
 
+    }
+
+    public void setSaveButtonVisibility(boolean isVisible) {
+        if (fragmentCoachProfessionalInformationBinding.flSave != null) {
+            fragmentCoachProfessionalInformationBinding.flSave.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        }
     }
 
 

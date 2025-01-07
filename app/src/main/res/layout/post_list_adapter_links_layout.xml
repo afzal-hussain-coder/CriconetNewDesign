@@ -20,8 +20,10 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/liLiked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -48,9 +50,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/liDisLiked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
                 android:orientation="horizontal">
 
                 <ImageView

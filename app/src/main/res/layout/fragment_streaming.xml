@@ -191,6 +191,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:lineHeight="@dimen/_27sdp"
+                    android:visibility="gone"
                     android:text="@string/How_does_it_work"
                     android:textColor="@color/purple_700"
                     android:textSize="@dimen/_14sdp" />

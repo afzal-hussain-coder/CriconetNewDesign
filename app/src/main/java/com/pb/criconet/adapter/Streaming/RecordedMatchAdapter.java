@@ -55,6 +55,7 @@ public class RecordedMatchAdapter extends RecyclerView.Adapter<RecordedMatchAdap
         holder.play_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("VideoLink",arrayList_image.get(position).getVideo_link());
                 Intent intent = new Intent(context, YoutubePlayerActivity.class);
                 intent.putExtra("url", arrayList_image.get(position).getVideo_link());
                 context.startActivity(intent);

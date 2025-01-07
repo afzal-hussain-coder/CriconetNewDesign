@@ -42,6 +42,7 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -57,6 +58,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -194,6 +198,15 @@ public class Global {
     public static final String DELETE_REPLY ="delete_reply";
     public static final String COMMENT_LIKE ="comment_like";
     public static final String COMMENT_REPLY_LIKE ="commnet_reply_like";
+    public static final String FOLLOW_USER="follow_user";
+
+    public static final String NOTICE_BOARD_LIST="notice_board_list";
+    public static final String CREATE_NOTICE_BOARD="create_notice_board";
+    public static final String NOTICE_BOARD_CATEGORIES="notice_board_categories";
+    public static final String DELETE_NOTICE_BOARD="delete_notice_board";
+
+
+
 
 
     //Blog Api
@@ -859,6 +872,26 @@ public class Global {
         return realdate;
     }
 
+    public static String convertGMT(String data) {
+        String inputDateStr = data;
+        String outputDateStr = "yyyy-MM-dd";
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputDateStr, Locale.ENGLISH);
+        String formattedDate="";
+        try {
+            // Parse the input date
+            Date date = inputFormat.parse(inputDateStr);
+            // Format the date to the desired output format
+            formattedDate = outputFormat.format(date);
+            System.out.println(formattedDate); // Outputs: 2024-09-28
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDate;
+    }
+
 
     public static String getDateGotCoach(String dateTime) {
         Date date = null;
@@ -868,6 +901,21 @@ public class Global {
             date = formatter.parse(dateTime);
             realdate = new SimpleDateFormat("dd-MM-yyyy").format(date);
 
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return realdate;
+    }
+
+    public static String getDateGotGMTT(String dateTime) {
+        Date date = null;
+        String realdate = null;
+        // Update the pattern to handle the timezone offset correctly
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'XXX yyyy");
+        try {
+            date = formatter.parse(dateTime);
+            // Format the date to the desired output
+            realdate = new SimpleDateFormat("yyyy-MM-dd").format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -1327,5 +1375,48 @@ public class Global {
     }
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String getFrOmDate(String data){
+        // Date string to be parsed
+        String dateString = data;
+
+        // Define the date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // Parse the date string into a LocalDateTime object
+        LocalDateTime parsedDate = LocalDateTime.parse(dateString, formatter);
+
+        // Get the current time
+        LocalDateTime now = LocalDateTime.now();
+
+        // Calculate the duration between the current time and the parsed date
+        Duration duration = Duration.between(parsedDate, now);
+
+        // Format the duration into a human-readable format
+        String relativeTime = formatDuration(duration);
+
+        // Print the relative time
+        System.out.println(relativeTime);
+        return  relativeTime;
+    }
+    // Method to format the duration into a human-readable format
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static String formatDuration(Duration duration) {
+        long seconds = duration.getSeconds();
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+
+        if (days > 0) {
+            return days + " days ago";
+        } else if (hours > 0) {
+            return hours + " hrs ago";
+        } else if (minutes > 0) {
+            return minutes + " mins ago";
+        } else {
+            return seconds + " secs ago";
+        }
+    }
 
 }

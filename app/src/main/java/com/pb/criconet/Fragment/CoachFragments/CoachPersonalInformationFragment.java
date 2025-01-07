@@ -62,6 +62,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.mukesh.OtpView;
 import com.pb.criconet.Activity.Academy.AddAcademyInformationActivity;
+import com.pb.criconet.Activity.Coach.RegisterAsAnECoachActivity;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.SpecialitiesAdapter;
 import com.pb.criconet.databinding.FragmentCoachPersonalInformationBinding;
@@ -237,9 +238,6 @@ public class CoachPersonalInformationFragment extends Fragment {
                     }
                 }
             });
-
-
-
 
 
     //TODO capture the image using camera and display it on ProfilePic
@@ -1419,7 +1417,9 @@ public class CoachPersonalInformationFragment extends Fragment {
 
         btContinue.setOnClickListener(v -> {
             dialog.dismiss();
-            //finish();
+
+            ((RegisterAsAnECoachActivity) getActivity()).switchToNextFragment(1);
+
         });
 
         dialog.show();

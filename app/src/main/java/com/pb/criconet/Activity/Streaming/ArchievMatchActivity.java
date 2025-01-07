@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
@@ -26,6 +28,7 @@ import com.pb.criconet.model.StreamingModel.VideoModel;
 import com.pb.criconet.util.CustomLoaderView;
 import com.pb.criconet.util.Global;
 import com.pb.criconet.util.SessionManager;
+import com.pb.criconet.util.Toaster;
 
 import org.json.JSONObject;
 
@@ -63,12 +66,40 @@ public class ArchievMatchActivity extends AppCompatActivity {
         activityArchievMatchBinding.weekList.setLayoutManager(new LinearLayoutManager(mContext));
         activityArchievMatchBinding.weekList.setHasFixedSize(true);
 
+        activityArchievMatchBinding.editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                activityArchievMatchBinding.liApply.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(charSequence.length()>0){
+                    activityArchievMatchBinding.liApply.setVisibility(View.VISIBLE);
+                }else{
+                    activityArchievMatchBinding.liApply.setVisibility(View.GONE);
+                }
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(editable.length()>0){
+                    activityArchievMatchBinding.liApply.setVisibility(View.VISIBLE);
+                }else{
+                    activityArchievMatchBinding.liApply.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
         activityArchievMatchBinding.flSubmit.setOnClickListener(v -> {
             search_value = activityArchievMatchBinding.editSearch.getText().toString().trim();
 
             if(search_value.isEmpty()){
-
+                Toaster.customToast("Please enter search keyword!");
             }else{
                 if (Global.isOnline(mContext)) {
                     getArchieveatch();
@@ -76,8 +107,19 @@ public class ArchievMatchActivity extends AppCompatActivity {
                     Global.showDialog(mContext);
                 }
             }
+        });
 
-
+        activityArchievMatchBinding.tvClear.setOnClickListener(view -> {
+            search_value ="";
+            activityArchievMatchBinding.editSearch.setText(mContext.getResources().getString(R.string.search_by_name_location));
+            if(activityArchievMatchBinding.liApply.getVisibility() == View.VISIBLE){
+                activityArchievMatchBinding.liApply.setVisibility(View.GONE);
+            }
+            if (Global.isOnline(mContext)) {
+                getArchieveatch();
+            } else {
+                Global.showDialog(mContext);
+            }
         });
 
         if (Global.isOnline(mContext)) {
@@ -101,7 +143,7 @@ public class ArchievMatchActivity extends AppCompatActivity {
                             JSONObject jsonObject2, jsonObject = new JSONObject(response.toString());
                             if (jsonObject.optString("api_text").equalsIgnoreCase("Success")) {
                                 data = new ArrayList<>();
-                                activityArchievMatchBinding.editSearch.setText("");
+                                //activityArchievMatchBinding.editSearch.setText("");
                                 data = VideoModel.fromJson(jsonObject.getJSONArray("data"));
 //                                int size = data.size();
 //                                size =0;

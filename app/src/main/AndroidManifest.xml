@@ -44,6 +44,13 @@
         android:theme="@style/Theme.CriconetNewDesign"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.LikeDislikeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.Academy.ViewAttendanceActivity"
             android:exported="false">
             <meta-data
@@ -559,7 +566,7 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_kwGXAE8hCqZnYY" /> <!-- test Api key rzp_test_kwGXAE8hCqZnYY exprire -->
+            android:value="rzp_live_GRQJ65vJqdOWGl" /> <!-- test Api key rzp_test_kwGXAE8hCqZnYY exprire -->
         <!-- live APi key rzp_live_GRQJ65vJqdOWGl -->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"

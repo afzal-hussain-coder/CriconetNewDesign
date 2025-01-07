@@ -64,8 +64,6 @@
                         android:visibility="visible" />
                 </RelativeLayout>
 
-
-
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
@@ -82,7 +80,7 @@
 
             <FrameLayout
                 android:id="@+id/fl_userBlock"
-                android:layout_width="@dimen/_80sdp"
+                android:layout_width="@dimen/_86sdp"
                 android:layout_height="@dimen/_28sdp"
                 android:layout_below="@id/li_tearms"
                 android:layout_centerHorizontal="true"
@@ -118,9 +116,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
+                    android:drawableStart="@drawable/plus"
+                    android:drawableTint="@color/white"
+                    android:drawablePadding="@dimen/_5sdp"
                     android:fontFamily="@font/opensans_semibold"
                     android:lineHeight="@dimen/_27sdp"
-                    android:text="@string/unblock"
+                    android:text="@string/follow"
                     android:textAppearance="@style/register" />
 
             </FrameLayout>

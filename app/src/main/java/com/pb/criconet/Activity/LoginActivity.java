@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         activityLoginBinding.liGmailLogin.setOnClickListener(v -> {
+
             googleSignIn();
         });
 

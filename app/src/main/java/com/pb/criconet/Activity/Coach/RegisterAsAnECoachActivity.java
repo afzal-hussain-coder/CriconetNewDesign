@@ -18,6 +18,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pb.criconet.Fragment.CoachFragments.CoachAvailableDateAndSessionFragment;
+import com.pb.criconet.Fragment.CoachFragments.CoachProfesionalInQualifocationFragment;
 import com.pb.criconet.R;
 import com.pb.criconet.adapter.EcoachingAdapter.ViewPagerAdapter;
 import com.pb.criconet.adapter.EcoachingAdapter.ViewPagerAdapterForCoachFragment;
@@ -49,6 +51,8 @@ public class RegisterAsAnECoachActivity extends AppCompatActivity {
     JSONObject JsonObjectQulification;
     JSONArray jsonObjectAvailableSession;
     Bundle dataBundle;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +66,22 @@ public class RegisterAsAnECoachActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(mContext);
 
         ToolbarInnerpageBinding toolbarInnerpageBinding = activityRegisterAsAnEcoachBinding.toolbar;
-        toolbarInnerpageBinding.toolbartext.setText(mContext.getResources().getString(R.string.regsiter_as_a_coach));
         toolbarInnerpageBinding.imgBack.setOnClickListener(v -> finish());
 
         final Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             from_where = bundle.getString("FROM");
         }
+
+        Toaster.customToast("Register...");
+
+        if(from_where.equalsIgnoreCase("1")){
+            toolbarInnerpageBinding.toolbartext.setText(mContext.getResources().getString(R.string.upadate_as_a_coach));
+        }else{
+            toolbarInnerpageBinding.toolbartext.setText(mContext.getResources().getString(R.string.regsiter_as_a_coach));
+        }
+
+
 
 //        if(from_where.equalsIgnoreCase("1")){
 //            if (Global.isOnline(mActivity)) {
@@ -79,6 +92,28 @@ public class RegisterAsAnECoachActivity extends AppCompatActivity {
 //        }
 
         initView();
+    }
+
+
+    public void switchToNextFragment(int pos) {
+        activityRegisterAsAnEcoachBinding.viewPager.setCurrentItem(pos); // Switch to the second fragment
+
+
+        // Set the visibility of the save button based on the position
+        if (pos == 1) { // If switching to SecondFragment
+            CoachProfesionalInQualifocationFragment fragment = (CoachProfesionalInQualifocationFragment) viewPagerAdapter.instantiateItem(activityRegisterAsAnEcoachBinding.viewPager, pos);
+            fragment.setSaveButtonVisibility(true);
+        } else if(pos==2){
+            CoachAvailableDateAndSessionFragment fragment = (CoachAvailableDateAndSessionFragment) viewPagerAdapter.instantiateItem(activityRegisterAsAnEcoachBinding.viewPager, pos);
+            fragment.setSaveButtonVisibility(true);
+        }
+        else {
+            // Hide the save button when switching back or to other fragments
+            if (viewPagerAdapter.getItem(pos) instanceof CoachProfesionalInQualifocationFragment) {
+                CoachProfesionalInQualifocationFragment fragment = (CoachProfesionalInQualifocationFragment) viewPagerAdapter.instantiateItem(activityRegisterAsAnEcoachBinding.viewPager, pos);
+                fragment.setSaveButtonVisibility(false);
+            }
+        }
     }
 
     private void initView() {
